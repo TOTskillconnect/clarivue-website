@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Box,
   Image,
@@ -7,26 +7,77 @@ import {
   type ImageProps as ChakraImageProps
 } from '@chakra-ui/react';
 import { WarningIcon } from '@chakra-ui/icons';
+import imageManifest from '../../image-manifest.json';
 
 interface ResponsiveImageProps extends Omit<ChakraImageProps, 'onError' | 'onLoad'> {
   fallbackIcon?: React.ElementType;
   showLoadingState?: boolean;
   priority?: boolean;
   blurDataURL?: string;
+  mobileOptimized?: boolean;
+  sizes?: string;
 }
 
-const generateBlurPlaceholder = async (src: string): Promise<string> => {
-  // Simple placeholder for demo - in production, use a proper image processing service
-  return `data:image/svg+xml;base64,${btoa(
-    `<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
-        </filter>
-      </defs>
-      <rect width="100%" height="100%" fill="#f0f0f0" filter="url(#blur)"/>
-    </svg>`
-  )}`;
+// Get optimized image data from manifest
+const getOptimizedImage = (src: string) => {
+  const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
+  const imageData = (imageManifest.images as Record<string, { optimizedPath: string; blurDataURL: string }>)[cleanSrc];
+  
+  if (imageData) {
+    return {
+      optimizedSrc: `/${imageData.optimizedPath}`,
+      blurDataURL: imageData.blurDataURL,
+      hasOptimized: true
+    };
+  }
+  
+  return {
+    optimizedSrc: src,
+    blurDataURL: undefined,
+    hasOptimized: false
+  };
+};
+
+// Intersection Observer hook for lazy loading
+const useIntersectionObserver = (
+  elementRef: React.RefObject<HTMLElement>,
+  options: IntersectionObserverInit = {}
+) => {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsIntersecting(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: '50px', // Start loading 50px before entering viewport
+        threshold: 0.1,
+        ...options
+      }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [elementRef, options]);
+
+  return isIntersecting;
+};
+
+// Preload critical images
+const preloadImage = (src: string) => {
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'image';
+  link.href = src;
+  document.head.appendChild(link);
 };
 
 export const ResponsiveImage = ({
@@ -35,37 +86,53 @@ export const ResponsiveImage = ({
   fallbackIcon = WarningIcon,
   showLoadingState = true,
   priority = false,
-  blurDataURL,
+  blurDataURL: providedBlurDataURL,
+  mobileOptimized = true,
+  sizes,
   ...props
 }: ResponsiveImageProps) => {
   const [isLoading, setIsLoading] = useState(showLoadingState);
   const [hasError, setHasError] = useState(false);
-  const [placeholder, setPlaceholder] = useState(blurDataURL);
+  const [shouldLoad, setShouldLoad] = useState(priority);
+  const imageRef = useRef<HTMLDivElement>(null);
+  
+  // Get optimized image data
+  const { optimizedSrc, blurDataURL: manifestBlurDataURL, hasOptimized } = getOptimizedImage(src || '');
+  const finalBlurDataURL = providedBlurDataURL || manifestBlurDataURL;
+  
+  // Use intersection observer for lazy loading (unless priority)
+  const isIntersecting = useIntersectionObserver(imageRef, {
+    rootMargin: mobileOptimized ? '100px' : '50px' // Larger margin for mobile
+  });
 
+  // Determine if image should load
   useEffect(() => {
-    if (!blurDataURL && src) {
-      let isCurrent = true;
-      generateBlurPlaceholder(src).then((data) => {
-        if (isCurrent) setPlaceholder(data);
-      });
-      return () => {
-        isCurrent = false; // abort stale update
-      };
+    if (priority || isIntersecting) {
+      setShouldLoad(true);
     }
-  }, [src, blurDataURL]);
+  }, [priority, isIntersecting]);
 
-  const handleLoad = () => {
+  // Preload critical images
+  useEffect(() => {
+    if (priority && optimizedSrc) {
+      preloadImage(optimizedSrc);
+    }
+  }, [priority, optimizedSrc]);
+
+  const handleLoad = useCallback(() => {
     setIsLoading(false);
-  };
+  }, []);
 
-  const handleError = () => {
+  const handleError = useCallback(() => {
     setIsLoading(false);
     setHasError(true);
-  };
+  }, []);
 
+  // Error state
   if (hasError) {
     return (
       <Box
+        ref={imageRef}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -85,35 +152,50 @@ export const ResponsiveImage = ({
   }
 
   return (
-    <Box position="relative" {...props}>
-      {placeholder && isLoading && (
+    <Box ref={imageRef} position="relative" {...props}>
+      {/* Blur placeholder */}
+      {finalBlurDataURL && isLoading && shouldLoad && (
         <Box
           position="absolute"
           top={0}
           left={0}
           right={0}
           bottom={0}
-          backgroundImage={`url(${placeholder})`}
+          backgroundImage={`url(${finalBlurDataURL})`}
           backgroundSize="cover"
           backgroundPosition="center"
           filter="blur(20px)"
           transform="scale(1.1)"
+          zIndex={1}
         />
       )}
-      <Image
-        src={src}
-        alt={alt}
-        onLoad={handleLoad}
-        onError={handleError}
-        loading={priority ? 'eager' : 'lazy'}
-        style={{
-          opacity: isLoading ? 0 : 1,
-          transition: 'opacity 0.2s',
-          willChange: 'transform',
-        }}
-        {...props}
-      />
-      {isLoading && !placeholder && (
+      
+      {/* Main image */}
+      {shouldLoad && (
+        <Image
+          src={optimizedSrc}
+          alt={alt}
+          onLoad={handleLoad}
+          onError={handleError}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          sizes={sizes || (mobileOptimized ? 
+            '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' : 
+            undefined
+          )}
+          style={{
+            opacity: isLoading ? 0 : 1,
+            transition: 'opacity 0.3s ease-in-out',
+            willChange: isLoading ? 'opacity' : 'auto',
+            zIndex: 2,
+            position: 'relative'
+          }}
+          {...(props as any)}
+        />
+      )}
+      
+      {/* Loading skeleton */}
+      {isLoading && !finalBlurDataURL && shouldLoad && (
         <Skeleton
           position="absolute"
           top={0}
@@ -123,7 +205,32 @@ export const ResponsiveImage = ({
           startColor="gray.100"
           endColor="gray.300"
           borderRadius={props.borderRadius}
+          zIndex={1}
         />
+      )}
+      
+      {/* Placeholder for non-priority images not yet in viewport */}
+      {!shouldLoad && (
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          bg="gray.50"
+          borderRadius={props.borderRadius}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Box
+            w="40%"
+            h="40%"
+            bg="gray.200"
+            borderRadius="md"
+            opacity={0.5}
+          />
+        </Box>
       )}
     </Box>
   );

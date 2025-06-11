@@ -374,7 +374,14 @@ export const HeroSection = () => {
                 opacity={1}
                 zIndex={2}
                 boxShadow="0px 8px 32px rgba(0, 0, 0, 0.15)"
-                loading="eager"
+                priority={true}
+                mobileOptimized={false}
+                sizes="(max-width: 768px) 400px, (max-width: 1024px) 650px, (max-width: 1280px) 700px, 750px"
+                transition="all 0.3s ease-in-out"
+                _hover={{
+                  transform: "translateX(-50%) scale(1.02)",
+                  boxShadow: "0px 12px 36px rgba(0, 0, 0, 0.2)"
+                }}
               />
               
               {/* Right Side Image */}
@@ -384,12 +391,13 @@ export const HeroSection = () => {
                 w={{ md: "320px", lg: "340px", xl: "360px" }}
                 position="absolute"
                 right={{ md: "-150px", lg: "-120px", xl: "-100px" }}
-                top="60%"
+                top="90%"
                 transform="translateY(-50%)"
                 borderRadius="24px"
                 zIndex={1}
                 boxShadow="0px 8px 32px rgba(0, 0, 0, 0.12)"
-                loading="lazy"
+                mobileOptimized={false}
+                sizes="(max-width: 768px) 180px, (max-width: 1024px) 320px, (max-width: 1280px) 340px, 360px"
                 _hover={{
                   transform: "translateY(-52%) scale(1.02)",
                   transition: "all 0.3s ease-in-out",

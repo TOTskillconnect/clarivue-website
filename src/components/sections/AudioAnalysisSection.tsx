@@ -2,6 +2,7 @@ import { Box, Container, Text, HStack, VStack, Circle, Progress, Image } from '@
 import { motion } from 'framer-motion'
 import { keyframes } from '@emotion/react'
 import { ClarivueIcon } from '../icons/ClarivueIcon'
+import { ResponsiveImage } from '../common/ResponsiveImage'
 
 const MotionBox = motion(Box)
 
@@ -107,16 +108,20 @@ export const AudioAnalysisSection = () => {
             >
               {/* Mobile Clarivue Icon */}
               <Box 
-                width={{ base: "100px", sm: "120px", md: "140px" }}
-                height={{ base: "100px", sm: "120px", md: "140px" }}
-                mb={4}
+                w={{ base: "100px", sm: "120px", md: "140px", lg: "160px" }}
+                h={{ base: "100px", sm: "120px", md: "140px", lg: "160px" }}
+                mx="auto"
+                mb={{ base: 6, md: 8 }}
               >
-                <Image
+                <ResponsiveImage
                   src="/clarivue-icon-new.png"
-                  alt="Clarivue"
-                  width="100%"
-                  height="100%"
+                  alt="Clarivue AI Analysis"
+                  w="100%"
+                  h="100%"
                   objectFit="contain"
+                  priority={false}
+                  mobileOptimized={true}
+                  sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, 160px"
                 />
               </Box>
 
@@ -131,14 +136,17 @@ export const AudioAnalysisSection = () => {
 
               {/* Mobile Analysis Results */}
               <Box width="100%" maxW={{ base: "320px", sm: "400px", md: "500px" }}>
-                <Image
+                <ResponsiveImage
                   src="/mock-up-results.png"
-                  alt="Analysis Results"
+                  alt="AI Analysis Results showing confidence and tone metrics"
                   width="100%"
                   height="auto"
                   objectFit="contain"
                   borderRadius="12px"
                   boxShadow="0px 2px 12px rgba(0, 0, 0, 0.08)"
+                  priority={false}
+                  mobileOptimized={true}
+                  sizes="(max-width: 640px) 320px, (max-width: 768px) 400px, 500px"
                 />
               </Box>
             </VStack>
@@ -168,24 +176,37 @@ export const AudioAnalysisSection = () => {
                 height="140px"
                 zIndex={2}
               >
-                <Image
+                <ResponsiveImage
                   src="/clarivue-icon-new.png"
-                  alt="Clarivue"
+                  alt="Clarivue AI Analysis"
                   width="100%"
                   height="100%"
                   objectFit="contain"
+                  priority={false}
+                  mobileOptimized={false}
+                  sizes="140px"
                 />
               </Box>
 
               {/* Right side - Analysis Content */}
               <Box flex="1" pl={8}>
-                <Image
-                  src="/mock-up-results.png"
-                  alt="Analysis Results"
-                  width="100%"
-                  height="auto"
-                  objectFit="contain"
-                />
+                {/* Results Image */}
+                <Box 
+                  w="100%" 
+                  maxW={{ base: "320px", sm: "380px", md: "450px", lg: "500px" }}
+                  mx="auto"
+                >
+                  <ResponsiveImage
+                    src="/mock-up-results.png"
+                    alt="AI Analysis Results showing confidence and tone metrics"
+                    w="100%"
+                    borderRadius={{ base: "12px", md: "16px" }}
+                    boxShadow="0px 8px 32px rgba(0, 0, 0, 0.12)"
+                    priority={false}
+                    mobileOptimized={true}
+                    sizes="(max-width: 640px) 320px, (max-width: 768px) 380px, (max-width: 1024px) 450px, 500px"
+                  />
+                </Box>
               </Box>
             </HStack>
           </VStack>

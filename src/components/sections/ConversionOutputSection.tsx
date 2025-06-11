@@ -1,6 +1,7 @@
-import { Box, Container, Text, SimpleGrid, Button, VStack, Image, Heading, HStack, IconButton, useBreakpointValue } from '@chakra-ui/react'
+import { Box, Container, Text, SimpleGrid, Button, VStack, Heading, HStack, IconButton, useBreakpointValue } from '@chakra-ui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import { useState, useRef, useEffect } from 'react'
+import { ResponsiveImage } from '../common/ResponsiveImage'
 
 interface FeatureCardProps {
   tag: string;
@@ -80,12 +81,19 @@ const FeatureCard = ({ tag, title, description, imageSrc, imageAlt, bgColor, isM
       transform={{ base: "scale(1.05)", md: "scale(1.2)", lg: "scale(1.3) translateY(-5%)" }}
       transformOrigin="center center"
     >
-      <Image
+      <ResponsiveImage
         src={imageSrc}
         alt={imageAlt}
         width="100%"
         height="100%"
         objectFit="contain"
+        priority={false}
+        mobileOptimized={true}
+        sizes={isMobile ? 
+          "(max-width: 640px) 280px, (max-width: 768px) 320px, 400px" : 
+          "(max-width: 1024px) 300px, (max-width: 1280px) 350px, 400px"
+        }
+        showLoadingState={true}
       />
     </Box>
   </Box>

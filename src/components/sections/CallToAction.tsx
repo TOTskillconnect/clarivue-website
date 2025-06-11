@@ -1,5 +1,6 @@
 import { Box, Container, Heading, Button, HStack, VStack, Image } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
+import { ResponsiveImage } from '../common/ResponsiveImage'
 
 const float = keyframes`
   0% { transform: translate(0, 0) rotate(-15deg); }
@@ -28,18 +29,27 @@ export const CallToAction = () => {
             position="relative"
             zIndex={2}
           >
-            {/* Mobile Game Pad - Positioned at top */}
-            <Box 
+            {/* Mobile Game Pad - Top Position */}
+            <Box
+              display={{ base: "block", md: "none" }}
               position="relative"
-              mb={{ base: 2, md: 4 }}
+              w={{ base: "120px", sm: "140px" }}
+              h={{ base: "120px", sm: "140px" }}
+              mx="auto"
+              mb={6}
             >
-              <Image
+              <ResponsiveImage
                 src="/game-pad.png"
-                alt="Game controller decoration"
-                width={{ base: "120px", sm: "140px", md: "160px" }}
-                height={{ base: "120px", sm: "140px", md: "160px" }}
-                animation={`${float} 3s ease-in-out infinite`}
-                filter="drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15))"
+                alt="Gaming controller representing interactive interview experience"
+                w="100%"
+                h="100%"
+                objectFit="contain"
+                priority={false}
+                mobileOptimized={true}
+                sizes="(max-width: 640px) 120px, 140px"
+                style={{
+                  animation: 'float 3s ease-in-out infinite',
+                }}
               />
             </Box>
 
@@ -155,13 +165,18 @@ export const CallToAction = () => {
             transform="translateY(-50%)"
             display={{ base: 'none', lg: 'block' }}
           >
-            <Image
-              src="/game-pad.png"
+            <ResponsiveImage
+              src="/gamepad.png"
               alt="Game controller decoration"
               width="160px"
               height="160px"
-              animation={`${float} 3s ease-in-out infinite`}
-              filter="drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15))"
+              priority={false}
+              mobileOptimized={false}
+              sizes="160px"
+              style={{
+                animation: `${float} 3s ease-in-out infinite`,
+                filter: "drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15))"
+              }}
             />
           </Box>
         </Box>

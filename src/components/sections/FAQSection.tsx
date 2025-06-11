@@ -67,7 +67,10 @@ export const FAQSection = () => {
               background="linear-gradient(45deg, #98F2B3, #87CEEB, #98F2B3, #87CEEB)"
               backgroundSize="400% 400%"
               borderRadius={{ base: "16px", md: "20px", lg: "24px" }}
-              animation="gradientShift 8s ease infinite"
+              animation={{
+                base: 'none',
+                '(prefers-reduced-motion: no-preference)': 'gradientShift 8s ease infinite'
+              }}
               sx={{
                 '@keyframes gradientShift': {
                   '0%': { backgroundPosition: '0% 50%' },
@@ -96,12 +99,13 @@ export const FAQSection = () => {
               p={{ base: 3, md: 4, lg: 5 }}
             >
               {FAQ_ITEMS.map((item, index) => {
-                const buttonId = `faq-button-${index}`;
-                const panelId = `faq-panel-${index}`;
+                const safeId = item.question.replace(/\s+/g, '-').toLowerCase();
+                const buttonId = `faq-button-${safeId}`;
+                const panelId = `faq-panel-${safeId}`;
                 
                 return (
                   <AccordionItem
-                    key={index}
+                    key={safeId}
                     border="none"
                     mb={{ base: 2, md: 3 }}
                   >
