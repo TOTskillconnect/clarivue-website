@@ -10,12 +10,12 @@ const ConversationSection = lazy(() => import('../components/sections/Conversati
 const ConversionOutputSection = lazy(() => import('../components/sections/ConversionOutputSection').then(mod => ({ default: mod.ConversionOutputSection })));
 const AudioAnalysisSection = lazy(() => import('../components/sections/AudioAnalysisSection').then(mod => ({ default: mod.AudioAnalysisSection })));
 const UserTestimonialsSection = lazy(() => import('../components/sections/UserTestimonialsSection').then(mod => ({ default: mod.UserTestimonialsSection })));
-const CallToAction = lazy(() => import('../components/sections/CallToAction').then(mod => ({ default: mod.CallToAction })));
 const FAQSection = lazy(() => import('../components/sections/FAQSection').then(mod => ({ default: mod.FAQSection })));
+const CallToAction = lazy(() => import('../components/sections/CallToAction').then(mod => ({ default: mod.CallToAction })));
 
 export default function Home() {
   return (
-    <Box as="main">
+    <Box width="100%" overflow="hidden">
       <Suspense fallback={<LoadingSpinner size="xl" fullscreen />}>
         <HeroSection />
       </Suspense>
@@ -37,11 +37,11 @@ export default function Home() {
       </Suspense>
 
       <Suspense fallback={<LoadingSpinner />}>
-        <CallToAction />
+        <FAQSection />
       </Suspense>
 
       <Suspense fallback={<LoadingSpinner />}>
-        <FAQSection />
+        <CallToAction />
       </Suspense>
     </Box>
   )

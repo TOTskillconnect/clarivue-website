@@ -203,7 +203,7 @@ BackgroundDecorations.displayName = 'BackgroundDecorations'
 export const HeroSection = () => {
   return (
     <Box
-      bgGradient="linear(180deg, #1E2A78 0%, #5F9DF7 65%, #C1EFFF 100%)"
+      bgGradient="linear(to-b, secondary.700, secondary.500 65%, primary.100)"
       minH="90vh"
       pt={{ base: "80px", md: "140px" }}
       pb={0}

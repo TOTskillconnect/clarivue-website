@@ -1,46 +1,41 @@
-import { Box, Button, Stack, Link as ChakraLink } from '@chakra-ui/react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Box, Button, Stack, Link } from '@chakra-ui/react'
 
 export const NavMenu = () => {
   return (
     <Stack direction="row" spacing={8} align="center">
       <Box display={{ base: 'none', md: 'flex' }} gap={6}>
-        <ChakraLink
-          as={RouterLink}
-          to="/"
+        <Link
+          href="/"
           fontWeight="medium"
           color="gray.600"
           _hover={{ color: 'blue.500' }}
         >
           Home
-        </ChakraLink>
-        <ChakraLink
-          as={RouterLink}
-          to="/explore"
+        </Link>
+        <Link
+          href="/explore"
           fontWeight="medium"
           color="gray.600"
           _hover={{ color: 'blue.500' }}
         >
           Explore
-        </ChakraLink>
-        <ChakraLink
-          as={RouterLink}
-          to="/skills"
+        </Link>
+        <Link
+          href="/skills"
           fontWeight="medium"
           color="gray.600"
           _hover={{ color: 'blue.500' }}
         >
           Skills
-        </ChakraLink>
-        <ChakraLink
-          as={RouterLink}
-          to="/community"
+        </Link>
+        <Link
+          href="/community"
           fontWeight="medium"
           color="gray.600"
           _hover={{ color: 'blue.500' }}
         >
           Community
-        </ChakraLink>
+        </Link>
       </Box>
       
       <Stack direction="row" spacing={4}>

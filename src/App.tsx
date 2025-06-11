@@ -1,27 +1,17 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { theme } from './theme/index'
+import { ErrorBoundary } from './components/error/ErrorBoundary'
 import { Layout } from './components/layout/Layout'
-import { Home } from './pages/Home'
-import theme from './theme'
+import Home from './app/page'
 
-// Initialize React Query client
-const queryClient = new QueryClient()
-
-function App() {
+export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <Router>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-            </Routes>
-          </Layout>
-        </Router>
-      </ChakraProvider>
-    </QueryClientProvider>
+    <ChakraProvider theme={theme}>
+      <ErrorBoundary>
+        <Layout>
+          <Home />
+        </Layout>
+      </ErrorBoundary>
+    </ChakraProvider>
   )
 }
-
-export default App

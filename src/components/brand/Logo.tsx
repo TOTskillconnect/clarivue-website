@@ -1,9 +1,8 @@
-import { Box, Image } from '@chakra-ui/react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Box, Image, Link } from '@chakra-ui/react'
 
 export const Logo = () => {
   return (
-    <Box as={RouterLink} to="/" _hover={{ cursor: 'pointer' }}>
+    <Link href="/" _hover={{ textDecoration: 'none' }}>
       <Image
         src="/logo-transparent.png"
         alt="Clarivue"
@@ -20,6 +19,6 @@ export const Logo = () => {
           </Box>
         }
       />
-    </Box>
+    </Link>
   )
 } 

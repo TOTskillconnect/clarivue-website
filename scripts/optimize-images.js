@@ -121,6 +121,20 @@ async function generateImageManifest(results) {
 
 async function main() {
   try {
+    // Save the game pad image first
+    const gamePadBuffer = Buffer.from(`
+      <svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M400 250C400 331.797 331.797 400 250 400C168.203 400 100 331.797 100 250C100 168.203 168.203 100 250 100C331.797 100 400 168.203 400 250Z" fill="url(#paint0_linear)"/>
+        <defs>
+          <linearGradient id="paint0_linear" x1="100" y1="100" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#86EFAC"/>
+            <stop offset="1" stop-color="#93C5FD"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    `);
+    await fs.writeFile(join(PUBLIC_DIR, 'game-pad.png'), gamePadBuffer);
+
     await ensureOptimizedDir();
     const results = await processDirectory(PUBLIC_DIR);
     await generateImageManifest(results);

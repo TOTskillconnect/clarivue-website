@@ -52,14 +52,27 @@ export const CallToAction = () => {
             </HStack>
           </Box>
 
-          {/* Logo watermark */}
-          <Box
-            position="absolute"
-            right={4}
-            top="50%"
+          {/* Decorative elements */}
+          <HStack 
+            position="absolute" 
+            right={4} 
+            top="50%" 
             transform="translateY(-50%)"
+            spacing={6}
             opacity={1}
           >
+            {/* Game pad */}
+            <Image
+              src="/game-pad.svg"
+              alt="Game controller decoration"
+              width="150px"
+              height="150px"
+              transform="rotate(-15deg)"
+              opacity={0.8}
+              filter="drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1))"
+            />
+            
+            {/* Logo watermark */}
             <Image
               src="/white-logo-clarivue.png"
               alt="Clarivue-logo-white"
@@ -67,7 +80,7 @@ export const CallToAction = () => {
               height="172px"
               opacity={1}
             />
-          </Box>
+          </HStack>
         </Box>
       </Container>
     </Box>

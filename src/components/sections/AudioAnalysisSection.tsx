@@ -26,7 +26,7 @@ const AudioWave = () => {
             <MotionBox
               key={i}
               width="5px"
-              bgGradient="linear(to-b, #86CCEB, #1076D1)"
+              bgGradient="linear(to-b, primary.300, primary.500)"
               borderRadius="full"
               initial={{ height: "20%" }}
               animate={{

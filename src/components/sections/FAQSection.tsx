@@ -15,24 +15,27 @@ export const FAQSection = () => {
   return (
     <Box 
       as="section"
-      py={20} 
+      py={12} 
       bg="gray.50"
       role="region"
       aria-labelledby="faq-heading"
     >
       <Container maxW="container.xl">
-        <Box textAlign="center" mb={16}>
+        <Box textAlign="center" mb={8}>
           <Heading
             as="h2"
             id="faq-heading"
-            textStyle="h2"
-            mb={4}
+            fontSize={{ base: "32px", md: "40px" }}
+            fontWeight="700"
+            color="primary.500"
+            letterSpacing="-0.02em"
+            mb={2}
           >
             Frequently Asked Questions
           </Heading>
         </Box>
 
-        <Box maxW="900px" mx="auto">
+        <Box maxW="800px" mx="auto">
           <Accordion allowToggle>
             {FAQ_ITEMS.map((item, index) => {
               const buttonId = `faq-button-${index}`;
@@ -42,50 +45,54 @@ export const FAQSection = () => {
                 <AccordionItem
                   key={index}
                   border="none"
-                  mb={4}
+                  mb={3}
                 >
                   <h3>
                     <AccordionButton
                       id={buttonId}
                       aria-controls={panelId}
                       bg="white"
-                      p={6}
+                      py={4}
+                      px={5}
                       borderRadius="16px"
+                      boxShadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
                       border="1px solid"
-                      borderColor="gray.200"
-                      _hover={{ bg: 'gray.100' }}
+                      borderColor="gray.100"
+                      _hover={{ bg: 'gray.50' }}
                       _expanded={{
-                        bg: 'white',
+                        bg: 'primary.50',
+                        color: 'primary.700',
                         borderBottomRadius: '0',
-                        boxShadow: 'md'
                       }}
                     >
                       <Box flex="1" textAlign="left">
                         <Text
-                          fontSize="20px"
+                          fontSize={{ base: "16px", md: "18px" }}
                           fontWeight="600"
-                          color="gray.800"
+                          color="inherit"
+                          letterSpacing="-0.01em"
                         >
                           {item.question}
                         </Text>
                       </Box>
-                      <AccordionIcon color="primary.500" fontSize="24px" />
+                      <AccordionIcon color="inherit" fontSize="20px" />
                     </AccordionButton>
                   </h3>
                   <AccordionPanel
                     id={panelId}
                     aria-labelledby={buttonId}
-                    pb={6}
-                    px={6}
-                    pt={4}
-                    bg="white"
+                    pb={4}
+                    px={5}
+                    pt={3}
+                    bg="primary.50"
                     borderBottomRadius="16px"
-                    boxShadow="md"
-                    border="1px solid"
-                    borderTop="none"
-                    borderColor="gray.200"
+                    boxShadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
                   >
-                    <Text textStyle="body">
+                    <Text 
+                      fontSize={{ base: "14px", md: "16px" }}
+                      color="gray.700"
+                      lineHeight="1.6"
+                    >
                       {item.answer}
                     </Text>
                   </AccordionPanel>

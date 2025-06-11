@@ -22,12 +22,12 @@ const FooterLink = ({ href, children }: { href: string; children: string }) => (
 
 export const Footer = () => {
   return (
-    <Box py={16}>
-      <Container maxW="container.xl">
+    <Box py={16} width="100%" bg="gray.50">
+      <Container maxW="100%" px={4}>
         <Box
-          bg="gray.50"
-          borderRadius="10px"
-          p={8}
+          borderRadius={{ base: 0, md: "10px" }}
+          p={{ base: 4, md: 8 }}
+          mx={{ base: 0, md: 4 }}
         >
           <Grid
             templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(5, 1fr)' }}
