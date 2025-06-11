@@ -60,7 +60,7 @@ export const CallToAction = () => {
             transform="translateY(-50%)"
           >
             <Image
-              src="/clarivue-logo-light.png"
+              src="/white-logo-clarivue.png"
               alt="Clarivue"
               width="172px"
               height="172px"

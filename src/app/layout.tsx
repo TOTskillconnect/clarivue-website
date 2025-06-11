@@ -24,6 +24,8 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content={SITE.DESCRIPTION} />
         <meta name="theme-color" content={theme.colors.primary[500]} />
+        <meta name="msapplication-TileColor" content={theme.colors.primary[500]} />
+        <meta name="msapplication-config" content="/favicon-clarivue/browserconfig.xml" />
         
         {/* OpenGraph meta tags */}
         <meta property="og:type" content="website" />
@@ -41,10 +43,14 @@ export default function RootLayout({
         <meta name="twitter:site" content={SITE.SOCIAL.TWITTER} />
 
         {/* Favicon links */}
+        <link rel="shortcut icon" href="/favicon-clarivue/favicon.ico" />
         <link rel="icon" type="image/x-icon" href="/favicon-clarivue/favicon.ico" />
-        <link rel="icon" type="image/svg+xml" href="/favicon-clarivue/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-clarivue/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-clarivue/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="96x96" href="/favicon-clarivue/favicon-96x96.png" />
-        <link rel="apple-touch-icon" href="/favicon-clarivue/apple-touch-icon.png" />
+        <link rel="icon" type="image/svg+xml" href="/favicon-clarivue/favicon.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon-clarivue/apple-touch-icon.png" />
+        <link rel="mask-icon" href="/favicon-clarivue/safari-pinned-tab.svg" color={theme.colors.primary[500]} />
         <link rel="manifest" href="/favicon-clarivue/site.webmanifest" />
 
         {/* Structured Data */}
