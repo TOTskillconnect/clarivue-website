@@ -37,10 +37,7 @@ export default defineConfig({
     // Enable source maps for debugging (disable in production if needed)
     sourcemap: false,
     // Fix for production builds
-    target: 'esnext',
-    commonjsOptions: {
-      include: [/framer-motion/, /node_modules/]
-    }
+    target: 'esnext'
   },
 
   // Optimize dependencies
@@ -55,7 +52,10 @@ export default defineConfig({
       '@emotion/styled',
       'framer-motion'
     ],
-    exclude: ['@emotion/is-prop-valid']
+    exclude: ['@emotion/is-prop-valid'],
+    esbuildOptions: {
+      target: 'esnext'
+    }
   },
 
   // Server configuration for development
@@ -87,6 +87,6 @@ export default defineConfig({
 
   // Define global constants
   define: {
-    __DEV__: JSON.stringify(false)
+    __DEV__: JSON.stringify(process.env.NODE_ENV === 'development')
   }
 })
