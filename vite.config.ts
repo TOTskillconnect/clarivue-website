@@ -35,7 +35,12 @@ export default defineConfig({
     // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
     // Enable source maps for debugging (disable in production if needed)
-    sourcemap: false
+    sourcemap: false,
+    // Fix for production builds
+    target: 'esnext',
+    commonjsOptions: {
+      include: [/framer-motion/, /node_modules/]
+    }
   },
 
   // Optimize dependencies
@@ -43,12 +48,14 @@ export default defineConfig({
     include: [
       'react',
       'react-dom',
+      'react/jsx-runtime',
       '@chakra-ui/react',
       '@chakra-ui/icons',
       '@emotion/react',
       '@emotion/styled',
       'framer-motion'
-    ]
+    ],
+    exclude: ['@emotion/is-prop-valid']
   },
 
   // Server configuration for development
@@ -76,5 +83,10 @@ export default defineConfig({
         outputStyle: 'compressed'
       }
     }
+  },
+
+  // Define global constants
+  define: {
+    __DEV__: JSON.stringify(false)
   }
 })
