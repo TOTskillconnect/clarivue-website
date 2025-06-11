@@ -45,7 +45,7 @@ export const Footer = () => {
         />
       </Box>
 
-      <Container maxW="75%" px={4} position="relative" zIndex={2}>
+      <Container maxW="70%" px={4} position="relative" zIndex={2}>
         <Box
           bg="white"
           borderRadius="16px"
@@ -71,7 +71,7 @@ export const Footer = () => {
                 <Link href="#">RSS</Link>
               </HStack>
               <Text fontSize="10px" color="gray.600">
-                © 2025 Clarivue Technologies, Inc
+                © 2025 Skillconnect Technologies, Inc
               </Text>
             </VStack>
 

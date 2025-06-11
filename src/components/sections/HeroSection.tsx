@@ -205,7 +205,7 @@ export const HeroSection = () => {
     <Box
       bgGradient="linear(to-b, secondary.700, secondary.500 65%, primary.100)"
       minH="90vh"
-      pt={{ base: "80px", md: "140px" }}
+      pt={{ base: "100px", md: "140px" }}
       pb={0}
       overflow="hidden"
       position="relative"
@@ -217,8 +217,8 @@ export const HeroSection = () => {
           <Box textAlign="center" maxW="900px">
             <Heading
               as="h1"
-              fontSize={{ base: "48px", md: "72px" }}
-              lineHeight={{ base: "56px", md: "80px" }}
+              fontSize={{ base: "36px", sm: "48px", md: "72px" }}
+              lineHeight={{ base: "44px", sm: "56px", md: "80px" }}
               color="gray.50"
               mb={8}
               fontWeight="bold"
@@ -227,8 +227,8 @@ export const HeroSection = () => {
               Your AI Interview Co-Pilot
             </Heading>
             <Text
-              fontSize={{ base: "20px", md: "24px" }}
-              lineHeight={{ base: "32px", md: "36px" }}
+              fontSize={{ base: "18px", sm: "20px", md: "24px" }}
+              lineHeight={{ base: "28px", sm: "32px", md: "36px" }}
               color="white"
               mb={3}
               fontWeight="600"
@@ -236,11 +236,12 @@ export const HeroSection = () => {
               Real-time notes. Live follow-up questions. Instant scoring.
             </Text>
             <Text
-              fontSize={{ base: "18px", md: "20px" }}
-              lineHeight={{ base: "28px", md: "32px" }}
+              fontSize={{ base: "16px", sm: "18px", md: "20px" }}
+              lineHeight={{ base: "24px", sm: "28px", md: "32px" }}
               color="whiteAlpha.900"
               maxW="815px"
               mx="auto"
+              px={{ base: 2, sm: 0 }}
             >
               Purpose-built for recruiting, trusted by modern hiring teams.
             </Text>
@@ -251,9 +252,9 @@ export const HeroSection = () => {
             background="linear-gradient(135deg, #98F2B3, #87CEEB)"
             color="gray.800"
             size="lg"
-            height="81px"
-            px="8"
-            fontSize="23px"
+            height={{ base: "60px", md: "81px" }}
+            px={{ base: "6", md: "8" }}
+            fontSize={{ base: "18px", md: "23px" }}
             fontWeight="600"
             borderRadius="16px"
             _hover={{ 
@@ -268,77 +269,134 @@ export const HeroSection = () => {
           </Button>
 
           {/* Loved by text */}
-          <Text fontSize="20px" color="gray.50" textAlign="center">
+          <Text fontSize={{ base: "16px", md: "20px" }} color="gray.50" textAlign="center">
             Loved by recruiters, hiring managers, and leaders at:
           </Text>
 
           {/* Brand Logos */}
           <BrandLogos />
 
-          {/* Images Container */}
-          <Box position="relative" w="full" mt={1} h="558px">
-            {/* Left Side Image */}
-            <Box
-              position="absolute"
-              left="-210px"
-              top="60%"
-              transform="translateY(-50%)"
-              zIndex={1}
-              width="360px"
-              transition="all 0.3s ease-in-out"
-              _hover={{
-                transform: "translateY(-52%) scale(1.02)",
-              }}
+          {/* Images Container - Responsive Layout */}
+          <Box 
+            position="relative" 
+            w="full" 
+            mt={1} 
+            h={{ base: "auto", md: "558px" }}
+            display={{ base: "block", md: "block" }}
+          >
+            {/* Mobile Layout - Stack images vertically */}
+            <VStack 
+              spacing={6} 
+              display={{ base: "flex", md: "none" }}
+              pt={6}
+              pb={8}
             >
+              {/* Mobile: Main Dashboard Image */}
+              <Box w="100%" maxW="400px">
+                <ResponsiveImage
+                  src="/interview-dashboards.png"
+                  alt="Interview dashboard showing a UI/UX designer interview"
+                  w="100%"
+                  borderRadius="16px"
+                  boxShadow="0px 6px 20px rgba(0, 0, 0, 0.12)"
+                  loading="eager"
+                />
+              </Box>
+
+              {/* Mobile: Side Images in Row */}
+              <HStack spacing={4} w="100%" justify="center">
+                <Box flex="1" maxW="180px">
+                  <ResponsiveImage
+                    src="/interview-card.png"
+                    alt="Interview candidate scoring card"
+                    w="100%"
+                    borderRadius="12px"
+                    boxShadow="0px 4px 16px rgba(0, 0, 0, 0.1)"
+                    loading="lazy"
+                  />
+                </Box>
+                <Box flex="1" maxW="180px">
+                  <ResponsiveImage
+                    src="/interview-analysis.png"
+                    alt="Interview analysis and shared highlight"
+                    w="100%"
+                    borderRadius="12px"
+                    boxShadow="0px 4px 16px rgba(0, 0, 0, 0.1)"
+                    loading="lazy"
+                  />
+                </Box>
+              </HStack>
+            </VStack>
+
+            {/* Desktop Layout - Absolute positioning */}
+            <Box 
+              position="relative" 
+              display={{ base: "none", md: "block" }}
+              h="558px"
+            >
+              {/* Left Side Image */}
+              <Box
+                position="absolute"
+                left={{ md: "-210px", lg: "-180px", xl: "-210px" }}
+                top="60%"
+                transform="translateY(-50%)"
+                zIndex={1}
+                width={{ md: "320px", lg: "340px", xl: "360px" }}
+                transition="all 0.3s ease-in-out"
+                _hover={{
+                  transform: "translateY(-52%) scale(1.02)",
+                }}
+              >
+                <ResponsiveImage
+                  src="/interview-card.png"
+                  alt="Interview candidate scoring card"
+                  width="100%"
+                  height="auto"
+                  borderRadius="24px"
+                  boxShadow="0px 8px 32px rgba(0, 0, 0, 0.12)"
+                  loading="lazy"
+                  _hover={{
+                    boxShadow: "0px 12px 36px rgba(0, 0, 0, 0.15)"
+                  }}
+                />
+              </Box>
+
+              {/* Main Dashboard Image */}
               <ResponsiveImage
-                src="/interview-card.png"
-                alt="Interview candidate scoring card"
-                width="100%"
-                height="auto"
+                src="/interview-dashboards.png"
+                alt="Interview dashboard showing a UI/UX designer interview"
+                w={{ md: "650px", lg: "700px", xl: "750px" }}
+                position="absolute"
+                left="50%"
+                bottom="0"
+                transform="translateX(-50%)"
+                borderRadius="24px 24px 0 0"
+                opacity={1}
+                zIndex={2}
+                boxShadow="0px 8px 32px rgba(0, 0, 0, 0.15)"
+                loading="eager"
+              />
+              
+              {/* Right Side Image */}
+              <ResponsiveImage
+                src="/interview-analysis.png"
+                alt="Interview analysis and shared highlight"
+                w={{ md: "320px", lg: "340px", xl: "360px" }}
+                position="absolute"
+                right={{ md: "-150px", lg: "-120px", xl: "-100px" }}
+                top="60%"
+                transform="translateY(-50%)"
                 borderRadius="24px"
+                zIndex={1}
                 boxShadow="0px 8px 32px rgba(0, 0, 0, 0.12)"
                 loading="lazy"
                 _hover={{
+                  transform: "translateY(-52%) scale(1.02)",
+                  transition: "all 0.3s ease-in-out",
                   boxShadow: "0px 12px 36px rgba(0, 0, 0, 0.15)"
                 }}
               />
             </Box>
-
-            {/* Main Dashboard Image */}
-            <ResponsiveImage
-              src="/interview-dashboards.png"
-              alt="Interview dashboard showing a UI/UX designer interview"
-              w="750px"
-              position="absolute"
-              left="50%"
-              bottom="0"
-              transform="translateX(-50%)"
-              borderRadius="24px 24px 0 0"
-              opacity={1}
-              zIndex={2}
-              boxShadow="0px 8px 32px rgba(0, 0, 0, 0.15)"
-              loading="eager"
-            />
-            
-            {/* Right Side Image */}
-            <ResponsiveImage
-              src="/interview-analysis.png"
-              alt="Interview analysis and shared highlight"
-              w="360px"
-              position="absolute"
-              right="-100px"
-              top="60%"
-              transform="translateY(-50%)"
-              borderRadius="24px"
-              zIndex={1}
-              boxShadow="0px 8px 32px rgba(0, 0, 0, 0.12)"
-              loading="lazy"
-              _hover={{
-                transform: "translateY(-52%) scale(1.02)",
-                transition: "all 0.3s ease-in-out",
-                boxShadow: "0px 12px 36px rgba(0, 0, 0, 0.15)"
-              }}
-            />
           </Box>
         </VStack>
       </Container>

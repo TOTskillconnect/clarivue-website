@@ -25,20 +25,22 @@ const StarBubble = ({ size, left, top, delay }: { size: number, left: string, to
       delay,
       ease: "easeInOut"
     }}
+    display={{ base: 'none', md: 'block' }}
   />
 )
 
 export const InterviewTechSection = () => {
   return (
-    <Box py={14} bg="gray.50">
-      <Container maxW="container.xl">
+    <Box py={{ base: 10, md: 14 }} bg="#F2F9FF">
+      <Container maxW="container.xl" px={{ base: 4, md: 6 }}>
         <Box
           bg="primary.500"
-          borderRadius="16px"
+          borderRadius={{ base: "16px", md: "20px", lg: "24px" }}
           border="1px solid #9A999D"
           boxShadow="0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07)"
-          height="320px"
-          px={8}
+          minH={{ base: "400px", md: "450px", lg: "500px" }}
+          px={{ base: 6, md: 8 }}
+          py={{ base: 8, md: 10 }}
           position="relative"
           overflow="visible"
           display="flex"
@@ -46,7 +48,7 @@ export const InterviewTechSection = () => {
           alignItems="center"
           justifyContent="center"
         >
-          {/* Star Bubbles */}
+          {/* Star Bubbles - Desktop Only */}
           <StarBubble size={20} left="10%" top="20%" delay={0} />
           <StarBubble size={15} left="85%" top="15%" delay={1} />
           <StarBubble size={25} left="20%" top="70%" delay={1.5} />
@@ -58,18 +60,19 @@ export const InterviewTechSection = () => {
           <Box
             bg="primary.50"
             border="1px solid #9ECDF3"
-            borderRadius="24px"
-            py={2}
-            px={4}
+            borderRadius={{ base: "20px", md: "24px" }}
+            py={{ base: 2, md: 3 }}
+            px={{ base: 4, md: 6 }}
             width="fit-content"
-            position="absolute"
-            top="32px"
-            left="50%"
-            transform="translateX(-50%)"
+            position={{ base: "relative", md: "absolute" }}
+            top={{ base: "auto", md: "32px" }}
+            left={{ base: "auto", md: "50%" }}
+            transform={{ base: "none", md: "translateX(-50%)" }}
             boxShadow="0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07)"
+            mb={{ base: 6, md: 0 }}
           >
             <Text
-              fontSize="18px"
+              fontSize={{ base: "16px", md: "18px" }}
               fontWeight="700"
               color="gray.700"
               display="flex"
@@ -79,35 +82,37 @@ export const InterviewTechSection = () => {
               whiteSpace="nowrap"
             >
               Interview Intelligence System
-              <Box as="span" ml={2} fontSize="20px">✨</Box>
+              <Box as="span" ml={2} fontSize={{ base: "18px", md: "20px" }}>✨</Box>
             </Text>
           </Box>
 
           {/* Main Content */}
           <Text
-            fontSize="22px"
+            fontSize={{ base: "18px", sm: "20px", md: "22px" }}
             fontWeight="600"
-            lineHeight="32px"
+            lineHeight={{ base: "28px", sm: "30px", md: "32px" }}
             fontFamily="Inter"
             color="white"
             textAlign="center"
-            maxW="800px"
+            maxW={{ base: "100%", md: "800px" }}
             mx="auto"
-            mt="80px"
-            mb="60px"
+            mt={{ base: 4, md: "80px" }}
+            mb={{ base: 8, md: "60px" }}
+            px={{ base: 2, md: 0 }}
           >
             Our intelligent system joins your interviews to capture answers, read between the lines, suggest smart follow-ups, and score candidates — so you never miss what really matters.
           </Text>
 
           {/* Platform Icon */}
           <Box
-            position="absolute"
-            width="215px"
-            height="221px"
-            left="50%"
-            bottom="-110px"
-            transform="translateX(-50%)"
+            position={{ base: "relative", md: "absolute" }}
+            width={{ base: "180px", md: "200px", lg: "215px" }}
+            height={{ base: "185px", md: "205px", lg: "221px" }}
+            left={{ base: "auto", md: "50%" }}
+            bottom={{ base: "auto", md: "-110px" }}
+            transform={{ base: "none", md: "translateX(-50%)" }}
             zIndex={2}
+            mt={{ base: 4, md: 0 }}
           >
             <MotionImage
               src="/platform-icon.png"

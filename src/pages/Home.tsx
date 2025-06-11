@@ -7,6 +7,7 @@ import { Footer } from '../components/layout/Footer'
 import { HeroSection } from '../components/sections/HeroSection'
 import { AudioAnalysisSection } from '../components/sections/AudioAnalysisSection'
 import { UserTestimonialsSection } from '../components/sections/UserTestimonialsSection'
+import { FAQSection } from '../components/sections/FAQSection'
 
 export const Home = () => {
   return (
@@ -29,18 +30,23 @@ export const Home = () => {
         <AudioAnalysisSection />
       </Box>
 
+      {/* Conversion Output Section */}
+      <Box bg="#F2F9FF" width="100%">
+        <ConversionOutputSection />
+      </Box>
+
       {/* User Testimonials Section */}
       <Box width="100%">
         <UserTestimonialsSection />
       </Box>
 
-      {/* Conversion Output Section */}
-      <Box bg="gray.50" width="100%">
-        <ConversionOutputSection />
+      {/* FAQ Section */}
+      <Box bg="#F2F9FF" width="100%">
+        <FAQSection />
       </Box>
 
       {/* Call to Action */}
-      <Box bg="gray.50" width="100%">
+      <Box bg="#F2F9FF" width="100%">
         <CallToAction />
       </Box>
 

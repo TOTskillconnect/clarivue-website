@@ -63,15 +63,15 @@ export const ConversationSection = () => {
   return (
     <Box 
       as="section" 
-      py={{ base: 8, md: 16 }}
+      py={{ base: 8, md: 12, lg: 16 }}
       bg="#F2F9FF"
       id="features"
     >
-      <Container maxW="container.xl">
-        <Box textAlign="center" mb={{ base: 8, md: 16 }}>
+      <Container maxW="container.xl" px={{ base: 4, md: 6 }}>
+        <Box textAlign="center" mb={{ base: 8, md: 12, lg: 16 }}>
           <Heading
             as="h2"
-            fontSize={{ base: "32px", md: "48px" }}
+            fontSize={{ base: "28px", sm: "32px", md: "40px", lg: "48px" }}
             fontWeight="700"
             color="primary.500"
             mb={{ base: 3, md: 4 }}
@@ -79,24 +79,132 @@ export const ConversationSection = () => {
             Smart Interviews, Smarter Decisions
           </Heading>
           <Text
-            fontSize={{ base: "18px", md: "20px" }}
+            fontSize={{ base: "16px", sm: "18px", md: "20px" }}
             color="gray.600"
             maxW="800px"
             mx="auto"
+            px={{ base: 2, sm: 0 }}
           >
             Let AI handle the heavy lifting while you focus on what matters most: finding your next great hire.
           </Text>
         </Box>
 
-        <Box position="relative">
-          {/* Right side image container - responsive positioning */}
+        {/* Mobile & Small Tablet Layout */}
+        <VStack 
+          spacing={8} 
+          display={{ base: 'flex', lg: 'none' }}
+        >
+          {/* Accordion for Mobile/Tablet */}
+          <Box width="100%">
+            <Accordion
+              allowToggle
+              index={expandedIndex}
+              onChange={(idx) => {
+                const next = Array.isArray(idx) ? idx[0] : idx
+                setExpandedIndex(typeof next === 'number' ? next : -1)
+              }}
+            >
+              {features.map((feature, index) => (
+                <AccordionItem
+                  key={index}
+                  border="none"
+                  mb={{ base: 3, md: 4 }}
+                >
+                  <AccordionButton
+                    bg="white"
+                    p={{ base: 4, sm: 5, md: 6 }}
+                    borderRadius="16px"
+                    border="1px solid"
+                    borderColor="gray.200"
+                    _hover={{ bg: 'gray.50' }}
+                    _expanded={{
+                      bg: 'white',
+                      borderBottomRadius: '0',
+                      boxShadow: 'md'
+                    }}
+                    minH={{ base: '60px', sm: '70px' }}
+                  >
+                    <HStack spacing={{ base: 3, sm: 4 }} flex="1" textAlign="left">
+                      <Icon
+                        as={feature.icon}
+                        boxSize={{ base: 5, sm: 6 }}
+                        color="primary.500"
+                        flexShrink={0}
+                      />
+                      <Text
+                        fontSize={{ base: "14px", sm: "16px", md: "18px" }}
+                        fontWeight="600"
+                        color="gray.800"
+                        noOfLines={2}
+                      >
+                        {feature.title}
+                      </Text>
+                    </HStack>
+                    <AccordionIcon color="primary.500" fontSize={{ base: "20px", sm: "24px" }} />
+                  </AccordionButton>
+                  <AccordionPanel
+                    pb={6}
+                    px={{ base: 4, sm: 5, md: 6 }}
+                    pt={4}
+                    bg="white"
+                    borderBottomRadius="16px"
+                    boxShadow="md"
+                    border="1px solid"
+                    borderTop="none"
+                    borderColor="gray.200"
+                  >
+                    {/* Description Text */}
+                    <Text
+                      fontSize={{ base: "14px", sm: "16px", md: "17px" }}
+                      lineHeight="1.6"
+                      color="gray.600"
+                      mb={4}
+                    >
+                      {feature.description}
+                    </Text>
+
+                    {/* Feature Image - Shows directly in expanded panel */}
+                    <Box
+                      width="100%"
+                      height={{ base: '240px', sm: '280px', md: '320px' }}
+                      borderRadius="16px"
+                      overflow="hidden"
+                      bg={
+                        index === 0
+                          ? 'blue.50'
+                          : index === 1
+                          ? 'purple.50'
+                          : index === 2
+                          ? 'cyan.50'
+                          : 'gray.50'
+                      }
+                      boxShadow="0px 2px 12px rgba(0, 0, 0, 0.08)"
+                    >
+                      <Image
+                        src={feature.image}
+                        alt={feature.title}
+                        objectFit="contain"
+                        width="100%"
+                        height="100%"
+                        p={{ base: 3, sm: 4, md: 5 }}
+                      />
+                    </Box>
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </Box>
+        </VStack>
+
+        {/* Desktop Layout */}
+        <Box position="relative" display={{ base: 'none', lg: 'block' }}>
+          {/* Right side image container */}
           <Box
-            position={{ base: 'static', md: 'absolute' }}
+            position="absolute"
             top={0}
             right={0}
-            width={{ base: '100%', md: '60%' }}
-            height={{ base: '300px', md: '100%' }}
-            mb={{ base: 6, md: 0 }}
+            width="60%"
+            height="100%"
             display="block"
           >
             {features.map((feature, index) => (
@@ -128,15 +236,15 @@ export const ConversationSection = () => {
                   objectFit="contain"
                   width="100%"
                   height="100%"
-                  p={{ base: 3, md: 6 }}
+                  p={6}
                 />
               </Box>
             ))}
           </Box>
 
-          {/* Left side accordion - responsive width */}
+          {/* Left side accordion */}
           <Box
-            width={{ base: '100%', md: '40%' }}
+            width="40%"
             position="relative"
             zIndex={1}
           >
@@ -144,9 +252,9 @@ export const ConversationSection = () => {
               allowToggle
               index={expandedIndex}
               onChange={(idx) => {
-  const next = Array.isArray(idx) ? idx[0] : idx
-  setExpandedIndex(typeof next === 'number' ? next : -1)
-}}
+                const next = Array.isArray(idx) ? idx[0] : idx
+                setExpandedIndex(typeof next === 'number' ? next : -1)
+              }}
             >
               {features.map((feature, index) => (
                 <AccordionItem
@@ -156,7 +264,7 @@ export const ConversationSection = () => {
                 >
                   <AccordionButton
                     bg="white"
-                    p={{ base: 4, md: 6 }}
+                    p={6}
                     borderRadius="16px"
                     border="1px solid"
                     borderColor="gray.200"
@@ -170,11 +278,11 @@ export const ConversationSection = () => {
                     <HStack spacing={4} flex="1" textAlign="left">
                       <Icon
                         as={feature.icon}
-                        boxSize={{ base: 5, md: 6 }}
+                        boxSize={6}
                         color="primary.500"
                       />
                       <Text
-                        fontSize={{ base: "16px", md: "20px" }}
+                        fontSize="20px"
                         fontWeight="600"
                         color="gray.800"
                       >
@@ -195,7 +303,7 @@ export const ConversationSection = () => {
                     borderColor="gray.200"
                   >
                     <Text
-                      fontSize={{ base: "16px", md: "18px" }}
+                      fontSize="18px"
                       lineHeight="1.6"
                       color="gray.600"
                     >
