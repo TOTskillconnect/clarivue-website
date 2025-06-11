@@ -27,12 +27,12 @@ export const UserTestimonialsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((current: number) => (current + 1) % testimonials.length);
-    }, 3000);
+    const timer = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
 
   return (
     <Box 

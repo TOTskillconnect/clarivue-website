@@ -61,10 +61,9 @@ export const CallToAction = () => {
           >
             <Image
               src="/white-logo-clarivue.png"
-              alt="Clarivue"
+              alt="Clarivue-logo-white"
               width="172px"
               height="172px"
-              opacity={0.2}
             />
           </Box>
         </Box>

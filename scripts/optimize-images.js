@@ -1,11 +1,7 @@
 import sharp from 'sharp';
 import { promises as fs } from 'fs';
-import { join, extname, basename, parse, relative, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join, relative, parse, extname, dirname } from 'path';
 import { createHash } from 'crypto';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const PUBLIC_DIR = join(process.cwd(), 'public');
 const OPTIMIZED_DIR = join(process.cwd(), 'public', 'optimized');
