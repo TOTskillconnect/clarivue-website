@@ -16,7 +16,7 @@ export const FAQSection = () => {
     <Box 
       as="section"
       py={12} 
-      bg="gray.50"
+      bg="#F2F9FF"
       role="region"
       aria-labelledby="faq-heading"
     >
@@ -35,8 +35,39 @@ export const FAQSection = () => {
           </Heading>
         </Box>
 
-        <Box maxW="800px" mx="auto">
-          <Accordion allowToggle>
+        <Box maxW="900px" mx="auto" position="relative">
+          {/* Gradient Border Container */}
+          <Box
+            position="absolute"
+            top={-4}
+            left={-4}
+            right={-4}
+            bottom={-4}
+            background="linear-gradient(45deg, #98F2B3, #87CEEB, #98F2B3, #87CEEB)"
+            backgroundSize="400% 400%"
+            borderRadius="24px"
+            animation="gradientShift 8s ease infinite"
+            sx={{
+              '@keyframes gradientShift': {
+                '0%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+                '100%': { backgroundPosition: '0% 50%' },
+              }
+            }}
+            _before={{
+              content: '""',
+              position: 'absolute',
+              top: '3px',
+              left: '3px',
+              right: '3px',
+              bottom: '3px',
+              backgroundColor: '#F2F9FF',
+              borderRadius: '21px',
+              zIndex: 1,
+            }}
+          />
+          
+          <Accordion allowToggle position="relative" zIndex={2}>
             {FAQ_ITEMS.map((item, index) => {
               const buttonId = `faq-button-${index}`;
               const panelId = `faq-panel-${index}`;

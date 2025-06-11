@@ -86,7 +86,7 @@ const FeatureCard = ({ tag, title, description, imageSrc, imageAlt, bgColor }: F
 
 export const ConversionOutputSection = () => {
   return (
-    <Box py={20} bg="gray.50">
+    <Box py={20} bg="#F2F9FF">
       <Container maxW="container.xl">
         {/* Header Section */}
         <Box textAlign="center" mb={16}>

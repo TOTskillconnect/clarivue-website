@@ -248,14 +248,20 @@ export const HeroSection = () => {
 
           {/* CTA Button */}
           <Button
-            bg="primary.50"
-            color="primary.600"
+            background="linear-gradient(135deg, #98F2B3, #87CEEB)"
+            color="gray.800"
             size="lg"
             height="81px"
             px="8"
             fontSize="23px"
+            fontWeight="600"
             borderRadius="16px"
-            _hover={{ bg: 'primary.100' }}
+            _hover={{ 
+              background: "linear-gradient(135deg, #8BE6A8, #7AC4E8)",
+              transform: "translateY(-2px)",
+              boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.15)"
+            }}
+            transition="all 0.3s ease"
             rightIcon={<Box as="span" ml={2}>➜</Box>}
           >
             Get Started Free

@@ -1,8 +1,8 @@
-import { Box, Container, Grid, VStack, Text, Link, Image, HStack, SimpleGrid } from '@chakra-ui/react'
+import { Box, Container, Grid, VStack, Text, Link, Image, HStack } from '@chakra-ui/react'
 
 const FooterSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <VStack align="flex-start" spacing={2}>
-    <Text fontSize="11px" color="gray.600" mb={2}>
+    <Text fontSize="11px" color="gray.600" fontWeight="bold" mb={2}>
       {title}
     </Text>
     {children}
@@ -22,12 +22,36 @@ const FooterLink = ({ href, children }: { href: string; children: string }) => (
 
 export const Footer = () => {
   return (
-    <Box py={16} width="100%" bg="gray.50">
-      <Container maxW="100%" px={4}>
+    <Box py={16} width="100%" bg="primary.500" position="relative" overflow="hidden">
+      {/* Decorative Ribbon */}
+      <Box
+        position="absolute"
+        right={0}
+        top={0}
+        width="100%"
+        height="100%"
+        zIndex={1}
+        opacity={0.8}
+      >
+        <Image
+          src="/decorative-ribbon.png"
+          alt="Decorative ribbon"
+          position="absolute"
+          right={0}
+          top="50%"
+          transform="translateY(-50%)"
+          height="120%"
+          objectFit="cover"
+        />
+      </Box>
+
+      <Container maxW="75%" px={4} position="relative" zIndex={2}>
         <Box
-          borderRadius={{ base: 0, md: "10px" }}
-          p={{ base: 4, md: 8 }}
+          bg="white"
+          borderRadius="16px"
+          p={{ base: 6, md: 8 }}
           mx={{ base: 0, md: 4 }}
+          boxShadow="0px 4px 24px rgba(0, 0, 0, 0.1)"
         >
           <Grid
             templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(5, 1fr)' }}
@@ -51,53 +75,37 @@ export const Footer = () => {
               </Text>
             </VStack>
 
-            {/* Product Links */}
-            <FooterSection title="Product">
+            {/* Features Links */}
+            <FooterSection title="Features">
+              <FooterLink href="#">Live Follow-Up Questions</FooterLink>
+              <FooterLink href="#">Automated Scorecards</FooterLink>
               <FooterLink href="#">Interview Notes</FooterLink>
-              <FooterLink href="#">Intake & Debrief Notes</FooterLink>
-              <FooterLink href="#">AI Job Posts</FooterLink>
-              <FooterLink href="#">Assistant</FooterLink>
-              <FooterLink href="#">Reports</FooterLink>
-              <FooterLink href="#">Privacy & Security</FooterLink>
-              <FooterLink href="#">Integrations</FooterLink>
+              <FooterLink href="#">Enterprise Grade Privacy</FooterLink>
+            </FooterSection>
+
+            {/* Legal Links */}
+            <FooterSection title="Legal">
+              <FooterLink href="#">Terms and Conditions</FooterLink>
+              <FooterLink href="#">Privacy policy</FooterLink>
+              <FooterLink href="#">Cookies</FooterLink>
+              <FooterLink href="#">Disclaimer</FooterLink>
             </FooterSection>
 
             {/* Resources Links */}
             <FooterSection title="Resources">
-              <FooterLink href="#">Interview Quality Evaluation</FooterLink>
-              <FooterLink href="#">Interview Questions Hub</FooterLink>
+              <FooterLink href="#">Blogs</FooterLink>
+              <FooterLink href="#">Recruiter Dictionary</FooterLink>
+              <FooterLink href="#">Trend Tracker</FooterLink>
               <FooterLink href="#">Other Resources</FooterLink>
-              <FooterLink href="#">Compare</FooterLink>
-              <FooterLink href="#">Metaview vs. Microsoft Copilot</FooterLink>
-              <FooterLink href="#">Metaview vs. Zoom AI Companion</FooterLink>
             </FooterSection>
 
-            {/* Customers Links */}
-            <FooterSection title="Customers">
-              <FooterLink href="#">Case Studies</FooterLink>
-              <FooterLink href="#">Wall of Love</FooterLink>
-              <FooterLink href="#">Recruiting Jobs Board</FooterLink>
-              <FooterLink href="#">Pricing</FooterLink>
-              <FooterLink href="#">Careers</FooterLink>
-              <FooterLink href="#">Privacy Policy</FooterLink>
-              <FooterLink href="#">Terms of Service</FooterLink>
+            {/* Compare Links */}
+            <FooterSection title="Compare">
+              <FooterLink href="#">Clarivue vs. Microsoft Copilot</FooterLink>
+              <FooterLink href="#">Clarivue vs. Zoom AI Companion</FooterLink>
+              <FooterLink href="#">Clarivue vs. Metaview</FooterLink>
+              <FooterLink href="#">Clarivue vs. Hirelogic</FooterLink>
             </FooterSection>
-
-            {/* Additional Links */}
-            <SimpleGrid columns={2} spacing={4}>
-              <Box>
-                <FooterLink href="#">Product</FooterLink>
-                <FooterLink href="#">Resources</FooterLink>
-                <FooterLink href="#">Customers</FooterLink>
-                <FooterLink href="#">Pricing</FooterLink>
-              </Box>
-              <Box>
-                <FooterLink href="#">Case Studies</FooterLink>
-                <FooterLink href="#">Wall of Love</FooterLink>
-                <FooterLink href="#">Careers</FooterLink>
-                <FooterLink href="#">Privacy Policy</FooterLink>
-              </Box>
-            </SimpleGrid>
           </Grid>
         </Box>
       </Container>

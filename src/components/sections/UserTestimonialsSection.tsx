@@ -38,7 +38,7 @@ export const UserTestimonialsSection = () => {
     <Box 
       as="section"
       position="relative"
-      bg="gray.50"
+      bg="#F2F9FF"
       py={16}
     >
       <Container maxW="container.xl">
@@ -106,26 +106,20 @@ export const UserTestimonialsSection = () => {
           </Box>
 
           {/* Right side with button */}
-          <Button
-            bg="white"
-            color="primary.500"
-            px={6}
-            py={3}
-            borderRadius="full"
-            fontSize="16px"
-            fontWeight="600"
-            _hover={{
-              bg: "whiteAlpha.900",
-              transform: "translateY(-2px)",
-              boxShadow: "sm"
-            }}
-            transition="all 0.2s"
-          >
-            <HStack spacing={2}>
-              <Text>Check it out</Text>
-              <Box as="span" fontSize="20px">→</Box>
-            </HStack>
-          </Button>
+          <Box>
+            <Button
+              bg="white"
+              color="primary.500"
+              fontSize="18px"
+              fontWeight="600"
+              px={8}
+              py={6}
+              borderRadius="20px"
+              _hover={{ bg: 'gray.100' }}
+            >
+              See Reviews
+            </Button>
+          </Box>
         </Box>
       </Container>
     </Box>

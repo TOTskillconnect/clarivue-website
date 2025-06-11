@@ -17,11 +17,26 @@ const theme = extendTheme({
   },
   styles: {
     global: {
+      '*': {
+        boxSizing: 'border-box',
+      },
+      'html, body': {
+        margin: 0,
+        padding: 0,
+        width: '100%',
+        overflowX: 'hidden',
+      },
+      '#root': {
+        width: '100%',
+        overflowX: 'hidden',
+      },
       body: {
         bg: 'white',
         color: 'gray.800',
         margin: 0,
         padding: 0,
+        width: '100%',
+        overflowX: 'hidden',
       },
     },
   },

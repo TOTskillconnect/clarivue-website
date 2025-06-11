@@ -1,8 +1,15 @@
 import { Box, Container, Heading, Button, HStack, Image } from '@chakra-ui/react'
+import { keyframes } from '@emotion/react'
+
+const float = keyframes`
+  0% { transform: translate(0, 0) rotate(-15deg); }
+  50% { transform: translate(0, -10px) rotate(-12deg); }
+  100% { transform: translate(0, 0) rotate(-15deg); }
+`
 
 export const CallToAction = () => {
   return (
-    <Box py={12}>
+    <Box py={12} bg="#F2F9FF">
       <Container maxW="container.xl">
         <Box
           bg="primary.500"
@@ -52,35 +59,23 @@ export const CallToAction = () => {
             </HStack>
           </Box>
 
-          {/* Decorative elements */}
-          <HStack 
+          {/* Decorative element */}
+          <Box 
             position="absolute" 
-            right={4} 
+            right={12}
             top="50%" 
             transform="translateY(-50%)"
-            spacing={6}
-            opacity={1}
           >
             {/* Game pad */}
             <Image
-              src="/game-pad.svg"
+              src="/game-pad.png"
               alt="Game controller decoration"
-              width="150px"
-              height="150px"
-              transform="rotate(-15deg)"
-              opacity={0.8}
-              filter="drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1))"
+              width="160px"
+              height="160px"
+              animation={`${float} 3s ease-in-out infinite`}
+              filter="drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15))"
             />
-            
-            {/* Logo watermark */}
-            <Image
-              src="/white-logo-clarivue.png"
-              alt="Clarivue-logo-white"
-              width="172px"
-              height="172px"
-              opacity={1}
-            />
-          </HStack>
+          </Box>
         </Box>
       </Container>
     </Box>

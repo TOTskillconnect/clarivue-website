@@ -64,6 +64,7 @@ export const ConversationSection = () => {
     <Box 
       as="section" 
       py={{ base: 8, md: 16 }}
+      bg="#F2F9FF"
       id="features"
     >
       <Container maxW="container.xl">

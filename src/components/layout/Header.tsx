@@ -19,7 +19,7 @@ export const Header = () => {
       py={4}
       bg="transparent"
     >
-      <Container maxW="100%" px={4}>
+      <Container maxW="80%" px={4}>
         <Box
           bg="gray.50"
           boxShadow="0px 0px 2px rgba(23, 26, 31, 0.12), 0px 4px 9px rgba(23, 26, 31, 0.11)"
