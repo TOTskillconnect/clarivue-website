@@ -1,0 +1,2388 @@
+/* Group */
+
+position: absolute;
+width: 1922px;
+height: 7624px;
+
+
+
+/* Container 17 */
+
+position: absolute;
+width: 1920px;
+height: 588px;
+
+background: #F2F9FF;
+
+
+/* Container 16 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 1732px;
+height: 407px;
+left: 94px;
+top: 56px;
+
+background: #1076D1;
+border: 1px solid #9A999D;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 16px;
+
+
+/* interview slots, taking into account the availability of */
+
+position: absolute;
+width: 666px;
+height: 42px;
+left: 509px;
+top: 183px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 27px;
+line-height: 42px;
+/* identical to box height, or 156% */
+text-align: center;
+
+color: #FFFFFF;
+
+
+
+/* Our intelligent system seamlessly coordinates */
+
+position: absolute;
+width: 591px;
+height: 42px;
+left: 545px;
+top: 141px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 27px;
+line-height: 42px;
+/* identical to box height, or 156% */
+
+color: #FFFFFF;
+
+
+
+/* both candidates and interviewers. */
+
+position: absolute;
+width: 450px;
+height: 42px;
+left: 617px;
+top: 225px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 28px;
+line-height: 42px;
+/* identical to box height, or 150% */
+text-align: center;
+
+color: #F6F9FC;
+
+
+
+/* Container 15 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 353px;
+height: 48px;
+left: 676px;
+top: 72px;
+
+background: #DFF6FF;
+border: 1px solid #9ECDF3;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 24px;
+
+
+/* Interview Intelligent Technology */
+
+position: absolute;
+width: 310px;
+height: 44px;
+left: 36px;
+top: 12px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 22px;
+/* or 122% */
+
+color: #171A1F;
+
+
+
+/* Fav list 1 */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: 316px;
+top: 3px;
+
+
+
+/* Group */
+
+position: absolute;
+left: 7.01%;
+right: 10.41%;
+top: 7.03%;
+bottom: 7.08%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 7.01%;
+right: 10.41%;
+top: 7.03%;
+bottom: 7.08%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 7.01%;
+right: 10.41%;
+top: 7.03%;
+bottom: 14.17%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 7.01%;
+right: 10.41%;
+top: 7.03%;
+bottom: 14.17%;
+
+background: #EFB034;
+
+
+/* Group */
+
+position: absolute;
+left: 49.92%;
+right: 10.67%;
+top: 53.5%;
+bottom: 7.08%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 49.92%;
+right: 10.67%;
+top: 53.5%;
+bottom: 7.08%;
+
+background: #EFB034;
+
+
+/* Image 50 */
+
+position: absolute;
+width: 215px;
+height: 221px;
+left: 745px;
+top: 297px;
+
+background: url();
+
+
+/* Untitled screen */
+
+position: absolute;
+width: 1920px;
+height: 2210px;
+
+background: #F2F9FF;
+box-shadow: 0px 3px 6px rgba(18, 15, 40, 0.12);
+
+
+/* You focus on conversation. We handle the rest. */
+
+position: absolute;
+width: 1191px;
+height: 70px;
+left: 408px;
+top: 83px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 54px;
+line-height: 70px;
+/* identical to box height, or 130% */
+
+color: #1074D0;
+
+
+
+/* Clarivue’s AI joins your interviews live — capturing notes, gauging tone, generating follow-up questions, and auto-scoring candidates in real-time.So you can stay present, while still getting everything documented and evaluated. */
+
+position: absolute;
+width: 971px;
+height: 112px;
+left: 475px;
+top: 166px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 36px;
+/* or 150% */
+text-align: center;
+
+color: #171A1F;
+
+
+
+/* Container 32 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 594px;
+height: 798px;
+left: 315px;
+top: 431px;
+
+background: #C1EFFF;
+border: 1px solid #EAF6FF;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 16px;
+
+
+/* Group 5 */
+
+position: absolute;
+width: 504px;
+height: 747px;
+left: 45px;
+top: 0px;
+
+
+
+/* Automated Scorecards, Built from Your JD */
+
+position: absolute;
+width: 379px;
+height: 77px;
+left: 45px;
+top: 523px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 36px;
+/* or 112% */
+
+color: #32312F;
+
+
+
+/* Image 54 */
+
+position: absolute;
+width: 497px;
+height: 478px;
+left: 52px;
+top: 0px;
+
+background: url();
+border-radius: 10px;
+
+
+/* Turn job descriptions into structured evaluation rubrics. Clarivue auto-scores responses based on role-fit — no manual input, no inconsistencies. */
+
+position: absolute;
+width: 504px;
+height: 134px;
+left: 45px;
+top: 613px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 400;
+font-size: 22px;
+line-height: 31px;
+/* or 141% */
+
+color: #323743;
+
+
+
+/* Container 30 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 583px;
+height: 798px;
+left: 315px;
+top: 1303px;
+
+background: linear-gradient(0deg, #1E2A78 0%, #5F9DF7 50%, #C1EFFF 100%);
+border: 1px solid #FFFFFF;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 16px;
+
+
+/* Built for trust from day one. Clarivue meets GDPR, CCPA, and SOC II standards with encrypted data, role-based access controls, and customizable retention policies. */
+
+position: absolute;
+width: 497px;
+height: 105px;
+left: 36px;
+top: 511px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 400;
+font-size: 22px;
+line-height: 31px;
+/* or 141% */
+
+color: #FFFFFF;
+
+
+
+/* Enterprise-Grade Security and Compliance */
+
+position: absolute;
+width: 396px;
+height: 96px;
+left: 52px;
+top: 397px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 48px;
+/* or 150% */
+
+color: #FFFFFF;
+
+
+
+/* Image 52 */
+
+position: absolute;
+width: 515px;
+height: 219px;
+left: 27px;
+top: 62px;
+
+background: url();
+
+
+/* Container 34 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 594px;
+height: 798px;
+left: 1091px;
+top: 431px;
+
+background: #86CCEB;
+border: 1px solid #F3FBF9;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 16px;
+
+
+/* Clarivue actively listens during interviews and suggests tailored follow-up questions in real-time — helping you dig deeper with confidence, without missing a beat. */
+
+position: absolute;
+width: 479px;
+height: 135px;
+left: 49px;
+top: 608px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 400;
+font-size: 21px;
+line-height: 30px;
+/* or 143% */
+
+color: #0B0E1E;
+
+
+
+/* Live Follow-Up Questions and Cues */
+
+position: absolute;
+width: 380px;
+height: 72px;
+left: 49px;
+top: 523px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 32px;
+/* or 100% */
+
+color: #353736;
+
+
+
+/* Image 55 */
+
+position: absolute;
+width: 463px;
+height: 490px;
+left: 65px;
+top: 0px;
+
+background: url();
+border-radius: 10px;
+
+
+/* Container 29 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 589px;
+height: 798px;
+left: 1085px;
+top: 1313px;
+
+background: #FFFFFF;
+border: 1px solid #DEE1E6;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 21.2448px;
+
+
+/* Button 7 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 157px;
+height: 56px;
+left: 32px;
+top: 697px;
+
+background: #FFFFFF;
+border: 1px solid #7497B1;
+border-radius: 28px;
+
+
+/* Learn more */
+
+position: absolute;
+width: 129px;
+height: 37px;
+left: calc(50% - 129px/2 - 0.5px);
+top: calc(50% - 37px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 37px;
+/* identical to box height, or 154% */
+
+color: #494C5C;
+
+
+
+/* Image 57 */
+
+position: absolute;
+width: 569px;
+height: 315px;
+left: -5px;
+top: 84px;
+
+background: url();
+
+
+/* Image 21 */
+
+position: absolute;
+width: 569px;
+height: 361px;
+left: 0px;
+top: -21px;
+
+background: url(.png);
+border-radius: 6px;
+
+
+/* Live Follow-Up Questions and Cues */
+
+position: absolute;
+width: 380px;
+height: 72px;
+left: 32px;
+top: 399px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 32px;
+/* or 100% */
+
+color: #353736;
+
+
+
+/* Clarivue takes notes, tracks insights, and structures feedback — so you can focus fully on the conversation while we handle the documentation. */
+
+position: absolute;
+width: 479px;
+height: 135px;
+left: 32px;
+top: 504px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 400;
+font-size: 21px;
+line-height: 30px;
+/* or 143% */
+
+color: #0B0E1E;
+
+
+
+/* Home */
+
+position: absolute;
+width: 1920px;
+height: 1407px;
+
+background: linear-gradient(180deg, #1E2A78 0%, #5F9DF7 65%, #C1EFFF 100%);
+box-shadow: 0px 3px 6px rgba(18, 15, 40, 0.12);
+
+
+/* Image 48 */
+
+position: absolute;
+width: 412px;
+height: 456px;
+left: 1399px;
+top: 929px;
+
+background: url(.png);
+border-radius: 16px;
+
+
+/* Image 47 */
+
+position: absolute;
+width: 542px;
+height: 365px;
+left: 115px;
+top: 979px;
+
+background: url();
+opacity: 0.94;
+border-radius: 16px;
+
+
+/* Your AI Interview Co-Pilot */
+
+position: absolute;
+width: 1011px;
+height: 106px;
+left: 509px;
+top: 249px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 78px;
+line-height: 106px;
+/* identical to box height, or 136% */
+text-align: center;
+
+color: #F2F9FF;
+
+
+
+/* Button 1 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 280px;
+height: 81px;
+left: 856px;
+top: 557px;
+
+background: #DFF6FF;
+border-radius: 16px;
+
+
+/* Get Started Free */
+
+position: absolute;
+width: 182px;
+height: 38px;
+left: calc(50% - 182px/2 - 20px);
+top: calc(50% - 38px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 23px;
+line-height: 38px;
+/* identical to box height, or 165% */
+
+color: #1E2A78;
+
+
+
+/* Caret right */
+
+position: absolute;
+width: 36px;
+height: 36px;
+left: calc(50% - 36px/2 + 93px);
+top: calc(50% - 36px/2);
+
+
+
+/* Group */
+
+position: absolute;
+left: 34.47%;
+right: 28.19%;
+top: 15.78%;
+bottom: 15.77%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 34.47%;
+right: 28.19%;
+top: 15.78%;
+bottom: 15.77%;
+
+
+
+/* Flat */
+
+position: absolute;
+left: 34.47%;
+right: 28.19%;
+top: 15.78%;
+bottom: 15.77%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 34.47%;
+right: 28.19%;
+top: 15.78%;
+bottom: 15.77%;
+
+background: #1E2A78;
+
+
+/* Image 46 */
+
+position: absolute;
+width: 796px;
+height: 516px;
+left: 634px;
+top: 890px;
+
+background: url(.png);
+opacity: 0.89;
+border-radius: 16px;
+
+
+/* Loved by recruiters, hiring managers, and leaders at: */
+
+position: absolute;
+width: 598px;
+height: 16px;
+left: 707px;
+top: 704px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 16px;
+/* identical to box height, or 80% */
+
+color: #F6F9FC;
+
+
+
+/* Group 4 */
+
+position: absolute;
+width: 1095px;
+height: 38px;
+left: 423px;
+top: 772px;
+
+
+
+/* PEO */
+
+position: absolute;
+width: 59px;
+height: 36px;
+left: 705px;
+top: 773px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 21px;
+line-height: 32px;
+/* or 152% */
+
+color: #FFFFFF;
+
+
+
+/* IMPROBABLE */
+
+position: absolute;
+width: 146px;
+height: 31px;
+left: 995px;
+top: 773px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* or 156% */
+
+color: #FFFFFF;
+
+
+
+/* Brex */
+
+position: absolute;
+width: 61px;
+height: 36px;
+left: 423px;
+top: 772px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 21px;
+line-height: 32px;
+/* or 152% */
+text-align: center;
+
+color: #AAABB3;
+
+
+
+/* Image 15 */
+
+position: absolute;
+width: 29px;
+height: 35px;
+left: 1177px;
+top: 772px;
+
+background: url(.jpg);
+border-radius: 6px;
+
+
+/* SAngelList */
+
+position: absolute;
+width: 140px;
+height: 36px;
+left: 1253px;
+top: 773px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 21px;
+line-height: 32px;
+/* or 152% */
+
+color: #D8D8DC;
+
+
+
+/* Engine */
+
+position: absolute;
+width: 90px;
+height: 36px;
+left: 1428px;
+top: 772px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 21px;
+line-height: 32px;
+/* or 152% */
+
+color: #A5AEB4;
+
+
+
+/* CHRESN */
+
+position: absolute;
+width: 101px;
+height: 34px;
+left: 832px;
+top: 773px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 19px;
+line-height: 30px;
+/* or 158% */
+
+color: #FFFFFF;
+
+
+
+/* Quora */
+
+position: absolute;
+width: 80px;
+height: 36px;
+left: 562px;
+top: 774px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 21px;
+line-height: 32px;
+/* or 152% */
+
+color: #FFFFFF;
+
+
+
+/* Container 35 */
+
+position: absolute;
+width: 1610px;
+height: 96px;
+left: 155px;
+top: 62px;
+
+background: #F6F9FC;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 4px 9px rgba(23, 26, 31, 0.11);
+border-radius: 48px;
+
+
+/* Header Menu 1 */
+
+position: absolute;
+width: 620px;
+height: 46px;
+right: 508px;
+top: calc(50% - 46px/2);
+
+
+
+/* Frame */
+
+position: absolute;
+width: 137.25px;
+height: 46px;
+left: 0px;
+top: 0px;
+
+border-radius: 6px;
+
+
+/* Home */
+
+position: absolute;
+width: 51px;
+height: 28px;
+left: calc(50% - 51px/2);
+top: calc(50% - 28px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+color: #565D6D;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 160.25px;
+height: 46px;
+left: 137.25px;
+top: 0px;
+
+border-radius: 6px;
+
+
+/* Features */
+
+position: absolute;
+width: 74px;
+height: 28px;
+left: calc(50% - 74px/2);
+top: calc(50% - 28px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+color: #424856;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 146.25px;
+height: 46px;
+left: 297.5px;
+top: 0px;
+
+border-radius: 6px;
+
+
+/* Pricing */
+
+position: absolute;
+width: 59px;
+height: 28px;
+left: calc(50% - 59px/2 - 0.5px);
+top: calc(50% - 28px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+color: #565D6D;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 176.25px;
+height: 46px;
+left: 443.75px;
+top: 0px;
+
+border-radius: 6px;
+
+
+/* Resources */
+
+position: absolute;
+width: 89px;
+height: 28px;
+left: calc(50% - 89px/2 - 0.5px);
+top: calc(50% - 28px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+color: #565D6D;
+
+
+
+/* Button 12 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 98px;
+height: 52px;
+right: 178px;
+top: calc(50% - 52px/2 + 3px);
+
+border-radius: 18px;
+
+
+/* Sign in */
+
+position: absolute;
+width: 58px;
+height: 28px;
+left: calc(50% - 58px/2);
+top: calc(50% - 28px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+color: #171A1F;
+
+
+
+/* Button 13 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 135px;
+height: 52px;
+right: 25px;
+top: calc(50% - 52px/2 + 3px);
+
+background: #DFF6FF;
+border-radius: 18px;
+
+
+/* Try Free */
+
+position: absolute;
+width: 71px;
+height: 28px;
+left: calc(50% - 71px/2 + 0.5px);
+top: calc(50% - 28px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+color: #1E2A78;
+
+
+
+/* clarivue_logo_transparentt 1 */
+
+position: absolute;
+width: 208px;
+height: 56px;
+left: 42px;
+top: 20px;
+
+background: url(clarivue_logo_transparentt.png);
+
+
+/* Real-time notes. Live follow-up questions. Instant scoring.Joins live calls to analyze tone, gauge confidence, suggest tailored questions, and auto-score candidates based on your job description. */
+
+position: absolute;
+width: 815px;
+height: 144px;
+left: 590px;
+top: 384px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 36px;
+/* or 150% */
+text-align: center;
+
+color: #FFFFFF;
+
+
+
+/* Conversion output */
+
+position: absolute;
+width: 1920px;
+height: 956px;
+
+background: #F2F9FF;
+box-shadow: 0px 3px 6px rgba(18, 15, 40, 0.12);
+
+
+/* Clarivue will listen to and analyze the interviewtranscript... */
+
+position: absolute;
+width: 1329px;
+height: 156px;
+left: 131px;
+top: 103px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 59px;
+line-height: 78px;
+/* or 132% */
+
+color: #0A8CE4;
+
+
+
+/* Image 59 */
+
+position: absolute;
+width: 876px;
+height: 577px;
+left: 993px;
+top: 234px;
+
+background: url(.png);
+
+
+/* Group 8 */
+
+position: absolute;
+width: 289px;
+height: 312px;
+left: 754px;
+top: 337px;
+
+
+
+/* Oval 1 */
+
+position: absolute;
+width: 239px;
+height: 247px;
+left: 776px;
+top: 369px;
+
+background: #FFFFFF;
+
+
+/* Image 61 */
+
+position: absolute;
+width: 289px;
+height: 312px;
+left: 754px;
+top: 337px;
+
+background: url();
+
+
+/* Image 62 */
+
+position: absolute;
+width: 669px;
+height: 420px;
+left: 127px;
+top: 268px;
+
+background: url();
+
+
+/* Conversion output */
+
+position: absolute;
+width: 1920px;
+height: 1651px;
+
+background: #F2F9FF;
+box-shadow: 0px 3px 6px rgba(18, 15, 40, 0.12);
+
+
+/* Container 49 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 1678px;
+height: 188px;
+left: 110px;
+top: 1251px;
+
+background: #1076D1;
+border: 1px solid #E1F4FE;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 23.4146px;
+
+
+/* See what our excited users are saying about us. */
+
+position: absolute;
+width: 471px;
+height: 32px;
+left: 612px;
+top: 112px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 21px;
+line-height: 32px;
+/* identical to box height, or 152% */
+text-align: center;
+
+color: #FFFFFF;
+
+
+
+/* Love Notes from Our Users */
+
+position: absolute;
+width: 523px;
+height: 58px;
+left: 596px;
+top: 45px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 41px;
+line-height: 58px;
+/* identical to box height, or 141% */
+
+color: #FFFFFF;
+
+
+
+/* Button 10 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 176px;
+height: 76px;
+left: 1453px;
+top: 58px;
+
+background: #FFFFFF;
+border: 1px solid #C3E9FA;
+border-radius: 16px;
+
+
+/* Check it out */
+
+position: absolute;
+width: 103px;
+height: 27px;
+left: calc(50% - 103px/2 + 0.5px);
+top: calc(50% - 27px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 27px;
+/* identical to box height, or 150% */
+
+color: #575979;
+
+
+
+/* Group 9 */
+
+position: absolute;
+width: 65px;
+height: 76px;
+left: 1423px;
+top: 58px;
+
+
+
+/* Rectangle 1 */
+
+position: absolute;
+width: 65px;
+height: 76px;
+left: 1423px;
+top: 58px;
+
+background: #FFFFFF;
+border-radius: 16px;
+
+
+/* Message circle code 1 */
+
+position: absolute;
+width: 46px;
+height: 46px;
+left: 1433px;
+top: 73px;
+
+
+
+/* Group */
+
+position: absolute;
+left: 4.11%;
+right: 8.21%;
+top: 8.2%;
+bottom: 4.11%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 4.11%;
+right: 8.21%;
+top: 8.2%;
+bottom: 4.11%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 29.15%;
+right: 54.15%;
+top: 35.39%;
+bottom: 35.39%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 29.15%;
+right: 54.15%;
+top: 35.39%;
+bottom: 35.39%;
+
+background: #0D99FF;
+
+
+/* Group */
+
+position: absolute;
+left: 54.15%;
+right: 29.15%;
+top: 35.39%;
+bottom: 35.39%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 54.15%;
+right: 29.15%;
+top: 35.39%;
+bottom: 35.39%;
+
+background: #0D99FF;
+
+
+/* Group */
+
+position: absolute;
+left: 4.11%;
+right: 8.21%;
+top: 8.2%;
+bottom: 4.11%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 4.11%;
+right: 8.21%;
+top: 8.2%;
+bottom: 4.11%;
+
+background: #0D99FF;
+
+
+/* white-logo-clarivue 2 */
+
+position: absolute;
+width: 172px;
+height: 172px;
+left: 26px;
+top: 11px;
+
+background: url(white-logo-clarivue);
+
+
+/* Group 26 */
+
+position: absolute;
+width: 496px;
+height: 984px;
+left: 1347px;
+top: 42px;
+
+
+
+/* Clarivue brings everyone on the hiring team into one shared view. Notes, cues, scores, and follow-ups are all centralized and easy to review — whether you’re making decisions solo or with a panel. Sync faster, align better, and give every stakeholder the clarity they need to move forward confidently. */
+
+position: absolute;
+width: 464px;
+height: 196px;
+left: 1363px;
+top: 239px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* or 156% */
+
+color: #0B0E1E;
+
+
+
+/* Collaborate easily across your team */
+
+position: absolute;
+width: 435px;
+height: 78px;
+left: 1365px;
+top: 124px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 33px;
+line-height: 39px;
+/* or 118% */
+
+color: #1074D0;
+
+
+
+/* Group 22 */
+
+position: absolute;
+width: 220px;
+height: 57px;
+left: 1363px;
+top: 42px;
+
+
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 220px;
+height: 57px;
+left: 1363px;
+top: 42px;
+
+background: #007C7A;
+border-radius: 16px;
+
+
+/* FOR Hiring Teams */
+
+position: absolute;
+width: 176px;
+height: 29px;
+left: 1384px;
+top: 58px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+/* or 140% */
+
+color: #FFFFFF;
+
+
+
+/* Container 48 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 496px;
+height: 566px;
+left: 1347px;
+top: 460px;
+
+background: #007C7A;
+border: 1px solid #FBF8F4;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 25.3659px;
+
+
+/* Image 66 */
+
+position: absolute;
+width: 438px;
+height: 502px;
+left: 61px;
+top: 70px;
+
+background: url();
+border-radius: 16px;
+
+
+/* Group 24 */
+
+position: absolute;
+width: 504px;
+height: 985px;
+left: 725px;
+top: 35px;
+
+
+
+/* Container 48 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 496px;
+height: 566px;
+left: 733px;
+top: 454px;
+
+background: #1E2A78;
+border: 1px solid #FBF8F4;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 25.3659px;
+
+
+/* Image 65 */
+
+position: absolute;
+width: 471px;
+height: 502px;
+left: 46px;
+top: 70px;
+
+background: url();
+border-radius: 16px;
+
+
+/* Forget filling out scorecards after every call. Clarivue automatically turns your job description into a scoring framework and evaluates responses as the interview unfolds. Candidate insights are mapped to your criteria, making it easy to see who’s a strong fit — and why. Everything is structured, objective, and ready to share with your team. */
+
+position: absolute;
+width: 496px;
+height: 196px;
+left: 733px;
+top: 229px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* or 156% */
+
+color: #0B0E1E;
+
+
+
+/* Auto-generate & auto-score, straight from your JD */
+
+position: absolute;
+width: 445px;
+height: 86px;
+left: 737px;
+top: 112px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 33px;
+line-height: 43px;
+/* or 130% */
+
+color: #1074D0;
+
+
+
+/* Group 19 */
+
+position: absolute;
+width: 205px;
+height: 58px;
+left: 725px;
+top: 35px;
+
+
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 205px;
+height: 58px;
+left: 725px;
+top: 35px;
+
+background: #1E2A78;
+border-radius: 16px;
+
+
+/* FOR Assessments */
+
+position: absolute;
+width: 193px;
+height: 35px;
+left: 737px;
+top: 51px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+/* or 140% */
+
+color: #FFFFFF;
+
+
+
+/* Group 20 */
+
+position: absolute;
+width: 518px;
+height: 996px;
+left: 110px;
+top: 24px;
+
+
+
+/* Container 47 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 498px;
+height: 566px;
+left: 110px;
+top: 449px;
+
+background: #1076D1;
+border: 1px solid #FFFFFF;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 16px;
+
+
+/* Group 12 */
+
+position: absolute;
+width: 516px;
+height: 913px;
+left: 112px;
+top: 107px;
+
+
+
+/* Group 11 */
+
+position: absolute;
+width: 516px;
+height: 796px;
+left: 112px;
+top: 224px;
+
+
+
+/* Image 64 */
+
+position: absolute;
+width: 460px;
+height: 472px;
+left: 168px;
+top: 548px;
+
+background: url();
+border-radius: 16px;
+
+
+/* Button 11 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 166px;
+height: 62px;
+left: 124px;
+top: 476px;
+
+background: #FFFFFF;
+border: 1px solid #9799A0;
+border-radius: 16px;
+
+
+/* Learn more */
+
+position: absolute;
+width: 107px;
+height: 31px;
+left: calc(50% - 107px/2 - 0.5px);
+top: calc(50% - 31px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 31px;
+/* identical to box height, or 155% */
+
+color: #120140;
+
+
+
+/* We don't just capture what candidates say — it picks up on how they say it. Our AI analyzes vocal tone, confidence levels, and alignment with the role throughout the conversation. You’ll get real-time cues and deeper context, so you can ask better follow-ups and uncover red flags early — all without breaking your flow. */
+
+position: absolute;
+width: 444px;
+height: 206px;
+left: 112px;
+top: 224px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* or 156% */
+
+color: #323743;
+
+
+
+/* Gauge tone, confidence & alignment in real-time */
+
+position: absolute;
+width: 433px;
+height: 86px;
+left: 114px;
+top: 107px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 700;
+font-size: 33px;
+line-height: 43px;
+/* or 130% */
+
+color: #1074D0;
+
+
+
+/* Group 18 */
+
+position: absolute;
+width: 199px;
+height: 54px;
+left: 114px;
+top: 24px;
+
+
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 199px;
+height: 54px;
+left: 114px;
+top: 24px;
+
+background: #3C91E6;
+border-radius: 16px;
+
+
+/* FOR Interviews */
+
+position: absolute;
+width: 161px;
+height: 28px;
+left: 126px;
+top: 38px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+/* identical to box height, or 140% */
+
+color: #FFFFFF;
+
+
+
+/* Line 3 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 0px;
+height: 1004px;
+left: 661px;
+top: 24px;
+
+border: 1px solid #BDC1CA;
+
+
+/* Line 3 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 0px;
+height: 1004px;
+left: 1288px;
+top: 31px;
+
+border: 1px solid #BDC1CA;
+
+
+/* Conversion output */
+
+position: absolute;
+width: 1920px;
+height: 872px;
+
+background: #1076D1;
+box-shadow: 0px 3px 6px rgba(18, 15, 40, 0.12);
+
+
+/* Container 56 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 1918px;
+height: 421px;
+left: -5px;
+top: 423px;
+
+background: #1076D1;
+border: 1px solid #FAF7F4;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+
+
+/* Container 54 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 1090px;
+height: 293px;
+left: 428px;
+top: 64px;
+
+background: #F2F9FF;
+border: 1px solid #1076D1;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 10px;
+
+
+/* AssistantReportsPrivacy & SecurityIntegrations */
+
+position: absolute;
+width: 95px;
+height: 72px;
+left: 494px;
+top: 123px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* or 164% */
+
+color: #575176;
+
+
+
+/* Metaviewvs. Microsoft CopilotMetaview vs. Zoom Al Companion */
+
+position: absolute;
+width: 178px;
+height: 34px;
+left: 684px;
+top: 161px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 17px;
+/* or 155% */
+
+color: #5A5872;
+
+
+
+/* Interview Quality EvaluationInterview Questions Hub */
+
+position: absolute;
+width: 144px;
+height: 48px;
+left: 684px;
+top: 60px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 16px;
+/* or 145% */
+
+color: #635D77;
+
+
+
+/* CareersPrivacy PolicyTerms of Service */
+
+position: absolute;
+width: 89px;
+height: 54px;
+left: 873px;
+top: 178px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* or 164% */
+
+color: #5A5872;
+
+
+
+/* Wall of LoveRecruiting Jobs Board */
+
+position: absolute;
+width: 115px;
+height: 34px;
+left: 873px;
+top: 81px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 17px;
+/* or 155% */
+
+color: #544B71;
+
+
+
+/* @ 2025 Metavlew Technologles, Inc */
+
+position: absolute;
+width: 171px;
+height: 16px;
+left: 259px;
+top: 204px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 16px;
+/* identical to box height, or 160% */
+
+color: #554B5F;
+
+
+
+/* Twitter LinkedIn G2 RSS */
+
+position: absolute;
+width: 126px;
+height: 18px;
+left: 259px;
+top: 181px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #968FA4;
+
+
+
+/* Metaview */
+
+position: absolute;
+width: 69px;
+height: 24px;
+left: 259px;
+top: 37px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+line-height: 24px;
+/* identical to box height, or 160% */
+
+color: #32354C;
+
+
+
+/* Intake & Debrief Notes */
+
+position: absolute;
+width: 118px;
+height: 18px;
+left: 495px;
+top: 81px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #524C6C;
+
+
+
+/* Other Resources */
+
+position: absolute;
+width: 87px;
+height: 18px;
+left: 684px;
+top: 102px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #544668;
+
+
+
+/* Interview Notes */
+
+position: absolute;
+width: 83px;
+height: 18px;
+left: 495px;
+top: 59px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #665A72;
+
+
+
+/* Case Studies */
+
+position: absolute;
+width: 69px;
+height: 18px;
+left: 873px;
+top: 59px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #5A5872;
+
+
+
+/* Al Job Posts */
+
+position: absolute;
+width: 65px;
+height: 18px;
+left: 494px;
+top: 102px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #524C6C;
+
+
+
+/* Compare */
+
+position: absolute;
+width: 48px;
+height: 18px;
+left: 684px;
+top: 139px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #9894A6;
+
+
+
+/* Customers */
+
+position: absolute;
+width: 57px;
+height: 18px;
+left: 873px;
+top: 37px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #9894A6;
+
+
+
+/* Resources */
+
+position: absolute;
+width: 55px;
+height: 18px;
+left: 684px;
+top: 37px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #9A9AA9;
+
+
+
+/* Pricing */
+
+position: absolute;
+width: 36px;
+height: 18px;
+left: 874px;
+top: 156px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #4C4B77;
+
+
+
+/* Product */
+
+position: absolute;
+width: 41px;
+height: 18px;
+left: 495px;
+top: 37px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 18px;
+/* identical to box height, or 164% */
+
+color: #9894A6;
+
+
+
+/* Container 55 */
+
+position: absolute;
+width: 1920px;
+height: 391px;
+left: 0px;
+top: 0px;
+
+background: #F2F9FF;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+
+
+/* Container 53 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 1315px;
+height: 197px;
+left: 302px;
+top: 43px;
+
+background: #1076D1;
+border: 1px solid #FAF7F4;
+box-shadow: 0px 0px 2px rgba(23, 26, 31, 0.12), 0px 0px 1px rgba(23, 26, 31, 0.07);
+border-radius: 10px;
+
+
+/* Ready to try Clarivue? */
+
+position: absolute;
+width: 334px;
+height: 26px;
+left: 47px;
+top: 43px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 32px;
+line-height: 26px;
+/* identical to box height, or 81% */
+
+color: #FFFFFF;
+
+
+
+/* Button 12 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 149px;
+height: 52px;
+left: 52px;
+top: 102px;
+
+background: #DFF6FF;
+border-radius: 26px;
+
+
+/* Start for free */
+
+position: absolute;
+width: 110px;
+height: 28px;
+left: calc(50% - 110px/2 + 0.5px);
+top: calc(50% - 28px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+color: #203843;
+
+
+
+/* Button 13 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 146px;
+height: 52px;
+left: 232px;
+top: 102px;
+
+background: #3C91E6;
+border: 1px solid #DFF6FF;
+border-radius: 6px;
+
+
+/* Booka demo */
+
+position: absolute;
+width: 107px;
+height: 28px;
+left: calc(50% - 107px/2 + 0.5px);
+top: calc(50% - 28px/2);
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+color: #FFFFFF;
+
+
+
+/* white-logo-clarivue 3 */
+
+position: absolute;
+width: 172px;
+height: 172px;
+left: 1096px;
+top: 16px;
+
+background: url(white-logo-clarivue);
