@@ -58,12 +58,14 @@ export const CallToAction = () => {
             right={4}
             top="50%"
             transform="translateY(-50%)"
+            opacity={1}
           >
             <Image
               src="/white-logo-clarivue.png"
               alt="Clarivue-logo-white"
               width="172px"
               height="172px"
+              opacity={1}
             />
           </Box>
         </Box>
