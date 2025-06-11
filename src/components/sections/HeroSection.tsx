@@ -1,69 +1,122 @@
-import { Box, Container, Heading, Text, Button, HStack, Image, VStack } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import { Box, Container, Heading, Text, Button, HStack, VStack } from '@chakra-ui/react'
+import { motion, useAnimation } from 'framer-motion'
 import { keyframes } from '@emotion/react'
+import { useEffect, useCallback, memo, useRef } from 'react'
+import { ResponsiveImage } from '../common/ResponsiveImage'
 
 const MotionBox = motion(Box)
-const MotionHStack = motion(HStack)
 
+// Optimize animations using CSS transform instead of keyframes
 const float = keyframes`
-  0% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
-  100% { transform: translateY(0) rotate(0deg); }
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -20px, 0) rotate(5deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg); }
 `
 
 const pulse = keyframes`
-  0% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.05) rotate(3deg); }
-  100% { transform: scale(1) rotate(0deg); }
+  0% { transform: scale3d(1, 1, 1) rotate(0deg); }
+  50% { transform: scale3d(1.05, 1.05, 1) rotate(3deg); }
+  100% { transform: scale3d(1, 1, 1) rotate(0deg); }
 `
 
-const BrandLogos = () => {
+// Memoize BrandLogos component to prevent unnecessary re-renders
+const BrandLogos = memo(() => {
+  const controls = useAnimation();
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const startAnimation = useCallback(async () => {
+    if (!containerRef.current) return;
+    
+    const scrollWidth = containerRef.current.scrollWidth;
+    const viewportWidth = containerRef.current.offsetWidth;
+    const distance = -(scrollWidth - viewportWidth);
+
+    await controls.start({
+      x: [0, distance],
+      transition: {
+        duration: Math.abs(distance) / 50,
+        repeat: Infinity,
+        ease: "linear",
+        repeatType: "loop"
+      }
+    });
+  }, [controls]);
+
+  useEffect(() => {
+    startAnimation();
+    
+    // Add resize observer to handle viewport changes
+    const resizeObserver = new ResizeObserver(() => {
+      startAnimation();
+    });
+    
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+    
+    return () => {
+      controls.stop(); // cancel animation on unmount
+      resizeObserver.disconnect();
+    };
+  }, [startAnimation, controls]);
+
+  const logos = [
+    { text: "Brex", color: "gray.300", weight: "700" },
+    { text: "Quora", color: "white", weight: "700" },
+    { text: "PEO", color: "white", weight: "700" },
+    { text: "CHRESN", color: "white", weight: "400" },
+    { text: "IMPROBABLE", color: "white", weight: "400" },
+    { text: "SAngelList", color: "gray.300", weight: "700" },
+    { text: "Engine", color: "gray.400", weight: "700" }
+  ];
+
+  const LogoList = memo(() => (
+    <HStack spacing={8} justify="center" flexShrink={0}>
+      {logos.map((logo, index) => (
+        <Text
+          key={`${logo.text}-${index}`}
+          fontSize="21px"
+          fontWeight={logo.weight}
+          color={logo.color}
+          style={{ willChange: 'transform' }}
+        >
+          {logo.text}
+        </Text>
+      ))}
+    </HStack>
+  ));
+
+  LogoList.displayName = 'LogoList';
+
   return (
-    <Box overflow="hidden" width="100%">
-      <MotionHStack
-        spacing={8}
-        justify="center"
-        color="white"
-        mt={8}
-        animate={{
-          x: [0, -1200]
-        }}
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          ease: "linear",
-          repeatType: "loop"
+    <Box 
+      overflow="hidden" 
+      width="100%"
+      ref={containerRef}
+    >
+      <MotionBox
+        display="flex"
+        animate={controls}
+        style={{ 
+          willChange: 'transform',
+          backfaceVisibility: 'hidden',
+          WebkitFontSmoothing: 'antialiased'
         }}
       >
-        {/* Duplicate logos for seamless loop */}
-        <HStack spacing={8} justify="center">
-          <Text fontSize="21px" fontWeight="700" color="gray.300">Brex</Text>
-          <Text fontSize="21px" fontWeight="700">Quora</Text>
-          <Text fontSize="21px" fontWeight="700">PEO</Text>
-          <Text fontSize="21px">CHRESN</Text>
-          <Text fontSize="21px">IMPROBABLE</Text>
-          <Text fontSize="21px" fontWeight="700" color="gray.300">SAngelList</Text>
-          <Text fontSize="21px" fontWeight="700" color="gray.400">Engine</Text>
-        </HStack>
-        {/* Duplicate set for continuous scroll */}
-        <HStack spacing={8} justify="center">
-          <Text fontSize="21px" fontWeight="700" color="gray.300">Brex</Text>
-          <Text fontSize="21px" fontWeight="700">Quora</Text>
-          <Text fontSize="21px" fontWeight="700">PEO</Text>
-          <Text fontSize="21px">CHRESN</Text>
-          <Text fontSize="21px">IMPROBABLE</Text>
-          <Text fontSize="21px" fontWeight="700" color="gray.300">SAngelList</Text>
-          <Text fontSize="21px" fontWeight="700" color="gray.400">Engine</Text>
-        </HStack>
-      </MotionHStack>
+        <LogoList />
+        <LogoList />
+      </MotionBox>
     </Box>
-  )
-}
+  );
+});
 
-const BackgroundDecorations = () => {
+BrandLogos.displayName = 'BrandLogos';
+
+// Memoize BackgroundDecorations for performance
+const BackgroundDecorations = memo(() => {
   return (
     <>
-      {/* Gradient Blob 1 */}
+      {/* Optimize animations using transform3d */}
       <MotionBox
         position="absolute"
         top="5%"
@@ -73,7 +126,16 @@ const BackgroundDecorations = () => {
         borderRadius="full"
         background="radial-gradient(circle, rgba(223,246,255,0.2) 0%, rgba(16,118,209,0.1) 100%)"
         filter="blur(40px)"
-        animation={`${float} 8s ease-in-out infinite`}
+        style={{ willChange: 'transform' }}
+        animate={{
+          y: [-20, 0, -20],
+          rotate: [0, 5, 0]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
         zIndex={0}
       />
 
@@ -134,20 +196,22 @@ const BackgroundDecorations = () => {
       />
     </>
   )
-}
+})
+
+BackgroundDecorations.displayName = 'BackgroundDecorations'
 
 export const HeroSection = () => {
   return (
     <Box
       bgGradient="linear(180deg, #1E2A78 0%, #5F9DF7 65%, #C1EFFF 100%)"
       minH="90vh"
-      pt={{ base: "90px", md: "100px" }}
+      pt={{ base: "80px", md: "140px" }}
       pb={0}
       overflow="hidden"
       position="relative"
     >
       <BackgroundDecorations />
-      <Container maxW="container.xl" position="relative">
+      <Container maxW="container.xl" px={{ base: 4, md: 6 }} position="relative">
         <VStack spacing={5} align="center" maxW="1011px" mx="auto">
           {/* Hero Text */}
           <Box textAlign="center" maxW="900px">
@@ -156,9 +220,9 @@ export const HeroSection = () => {
               fontSize={{ base: "48px", md: "72px" }}
               lineHeight={{ base: "56px", md: "80px" }}
               color="gray.50"
-              mb={4}
+              mb={8}
               fontWeight="bold"
-              whiteSpace="nowrap"
+              whiteSpace={{ base: "normal", md: "nowrap" }}
             >
               Your AI Interview Co-Pilot
             </Heading>
@@ -220,13 +284,14 @@ export const HeroSection = () => {
                 transform: "translateY(-52%) scale(1.02)",
               }}
             >
-              <Image
+              <ResponsiveImage
                 src="/interview-card.png"
                 alt="Interview candidate scoring card"
                 width="100%"
                 height="auto"
                 borderRadius="24px"
                 boxShadow="0px 8px 32px rgba(0, 0, 0, 0.12)"
+                loading="lazy"
                 _hover={{
                   boxShadow: "0px 12px 36px rgba(0, 0, 0, 0.15)"
                 }}
@@ -234,7 +299,7 @@ export const HeroSection = () => {
             </Box>
 
             {/* Main Dashboard Image */}
-            <Image
+            <ResponsiveImage
               src="/interview-dashboards.png"
               alt="Interview dashboard showing a UI/UX designer interview"
               w="750px"
@@ -246,20 +311,22 @@ export const HeroSection = () => {
               opacity={1}
               zIndex={2}
               boxShadow="0px 8px 32px rgba(0, 0, 0, 0.15)"
+              loading="eager"
             />
             
             {/* Right Side Image */}
-            <Image
+            <ResponsiveImage
               src="/interview-analysis.png"
               alt="Interview analysis and shared highlight"
               w="360px"
               position="absolute"
-              right="-210px"
+              right="-100px"
               top="60%"
               transform="translateY(-50%)"
               borderRadius="24px"
               zIndex={1}
               boxShadow="0px 8px 32px rgba(0, 0, 0, 0.12)"
+              loading="lazy"
               _hover={{
                 transform: "translateY(-52%) scale(1.02)",
                 transition: "all 0.3s ease-in-out",

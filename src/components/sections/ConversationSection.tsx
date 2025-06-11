@@ -12,7 +12,8 @@ import {
   AccordionIcon,
   Flex,
   Divider,
-  Icon
+  Icon,
+  Heading
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { 
@@ -46,7 +47,7 @@ const features: Feature[] = [
     icon: EditIcon,
     title: "No More Typing. No More Guesswork.",
     description: "Clarivue automatically takes notes during interviews and structures them clearly — so hiring teams can focus on the conversation. Share-ready summaries and timestamped insights help reduce admin work to zero.",
-    image: "/summary-note-cards-blue.png"
+    image: "/summary-note-cards.png"
   },
   {
     icon: LockIcon,
@@ -61,47 +62,41 @@ export const ConversationSection = () => {
 
   return (
     <Box 
-      id="features"
       as="section" 
-      py={20} 
-      bg="white"
-      scrollMarginTop="100px"
+      py={{ base: 8, md: 16 }}
+      id="features"
     >
       <Container maxW="container.xl">
-        {/* Centered header section */}
-        <Box textAlign="center" mb={16}>
-          <Text
-            fontSize={{ base: "40px", md: "48px", lg: "56px" }}
-            lineHeight={{ base: "48px", md: "56px", lg: "64px" }}
+        <Box textAlign="center" mb={{ base: 8, md: 16 }}>
+          <Heading
+            as="h2"
+            fontSize={{ base: "32px", md: "48px" }}
             fontWeight="700"
             color="primary.500"
-            mb={6}
-            letterSpacing="-0.02em"
+            mb={{ base: 3, md: 4 }}
           >
-            You Lead the Interview, We Handle the Rest
-          </Text>
+            Smart Interviews, Smarter Decisions
+          </Heading>
           <Text
-            fontSize={{ base: "18px", md: "20px", lg: "24px" }}
-            lineHeight={{ base: "28px", md: "32px", lg: "36px" }}
-            color="primary.600"
-            maxW="900px"
+            fontSize={{ base: "18px", md: "20px" }}
+            color="gray.600"
+            maxW="800px"
             mx="auto"
           >
-            From capturing responses and tone to suggesting follow-ups and auto-scoring candidates,{' '}
-            Clarivue takes care of the busywork — so you can focus on connecting with top talents and making smarter hiring decisions.
+            Let AI handle the heavy lifting while you focus on what matters most: finding your next great hire.
           </Text>
         </Box>
 
-        {/* Main content area */}
         <Box position="relative">
-          {/* Right side image container - fixed position */}
+          {/* Right side image container - responsive positioning */}
           <Box
-            position="absolute"
+            position={{ base: 'static', md: 'absolute' }}
             top={0}
             right={0}
-            width="60%"
-            height="100%"
-            display={{ base: 'none', md: 'block' }}
+            width={{ base: '100%', md: '60%' }}
+            height={{ base: '300px', md: '100%' }}
+            mb={{ base: 6, md: 0 }}
+            display="block"
           >
             {features.map((feature, index) => (
               <Box
@@ -118,12 +113,12 @@ export const ConversationSection = () => {
                 overflow="hidden"
                 bg={
                   index === 0
-                    ? 'blue.50'  // Soft blue for live questions
+                    ? 'blue.50'
                     : index === 1
-                    ? 'purple.50'  // Soft purple for scorecards
+                    ? 'purple.50'
                     : index === 2
-                    ? 'cyan.50'  // Soft cyan for note taking
-                    : 'gray.50'  // Soft gray for security
+                    ? 'cyan.50'
+                    : 'gray.50'
                 }
               >
                 <Image
@@ -132,78 +127,80 @@ export const ConversationSection = () => {
                   objectFit="contain"
                   width="100%"
                   height="100%"
-                  p={6}
+                  p={{ base: 3, md: 6 }}
                 />
               </Box>
             ))}
           </Box>
 
-          {/* Left side accordion */}
-          <Box width={{ base: "100%", md: "40%" }} position="relative" zIndex={1}>
+          {/* Left side accordion - responsive width */}
+          <Box
+            width={{ base: '100%', md: '40%' }}
+            position="relative"
+            zIndex={1}
+          >
             <Accordion
               allowToggle
               index={expandedIndex}
-              onChange={(index: number) => setExpandedIndex(index)}
+              onChange={(idx) => {
+  const next = Array.isArray(idx) ? idx[0] : idx
+  setExpandedIndex(typeof next === 'number' ? next : -1)
+}}
             >
               {features.map((feature, index) => (
                 <AccordionItem
                   key={index}
                   border="none"
-                  mb={6}
-                  bg="transparent"
-                  overflow="hidden"
+                  mb={4}
                 >
                   <AccordionButton
-                    p={0}
-                    py={6}
-                    _hover={{ bg: 'transparent' }}
-                    _expanded={{ bg: 'transparent' }}
-                    display="flex"
-                    alignItems="center"
+                    bg="white"
+                    p={{ base: 4, md: 6 }}
+                    borderRadius="16px"
+                    border="1px solid"
+                    borderColor="gray.200"
+                    _hover={{ bg: 'gray.100' }}
+                    _expanded={{
+                      bg: 'white',
+                      borderBottomRadius: '0',
+                      boxShadow: 'md'
+                    }}
                   >
-                    <HStack flex="1" spacing={4} align="center">
-                      <Box
-                        fontSize="20px"
-                        width="32px"
-                        height="32px"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        bg="primary.50"
-                        borderRadius="8px"
-                      >
-                        <Icon 
-                          as={feature.icon} 
-                          boxSize="18px" 
-                          color="primary.500"
-                        />
-                      </Box>
+                    <HStack spacing={4} flex="1" textAlign="left">
+                      <Icon
+                        as={feature.icon}
+                        boxSize={{ base: 5, md: 6 }}
+                        color="primary.500"
+                      />
                       <Text
-                        fontSize="20px"
+                        fontSize={{ base: "16px", md: "20px" }}
                         fontWeight="600"
                         color="gray.800"
-                        letterSpacing="-0.02em"
                       >
                         {feature.title}
                       </Text>
                     </HStack>
-                    <AccordionIcon fontSize="20px" color="gray.400" />
+                    <AccordionIcon color="primary.500" fontSize="24px" />
                   </AccordionButton>
-
-                  <AccordionPanel p={0} pt={4} pb={8}>
+                  <AccordionPanel
+                    pb={6}
+                    px={6}
+                    pt={4}
+                    bg="white"
+                    borderBottomRadius="16px"
+                    boxShadow="md"
+                    border="1px solid"
+                    borderTop="none"
+                    borderColor="gray.200"
+                  >
                     <Text
-                      fontSize="16px"
+                      fontSize={{ base: "16px", md: "18px" }}
                       lineHeight="1.6"
                       color="gray.600"
-                      pr={{ base: 0, md: 8 }}
                     >
                       {feature.description}
                     </Text>
                   </AccordionPanel>
-
-                  {index < features.length - 1 && (
-                    <Divider borderColor="gray.200" opacity={0.6} />
-                  )}
                 </AccordionItem>
               ))}
             </Accordion>
