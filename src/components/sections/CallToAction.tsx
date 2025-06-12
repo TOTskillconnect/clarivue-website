@@ -8,6 +8,12 @@ const float = keyframes`
   100% { transform: translate(0, 0) rotate(-15deg); }
 `
 
+const gamepadFloat = keyframes`
+  0% { transform: translate(0, 0) rotate(-15deg) scale(1); }
+  50% { transform: translate(0, -15px) rotate(-10deg) scale(1.02); }
+  100% { transform: translate(0, 0) rotate(-15deg) scale(1); }
+`
+
 export const CallToAction = () => {
   return (
     <Box py={{ base: 8, md: 10, lg: 12 }} bg="#F2F9FF">
@@ -48,7 +54,7 @@ export const CallToAction = () => {
                 mobileOptimized={true}
                 sizes="(max-width: 640px) 120px, 140px"
                 style={{
-                  animation: `${float} 3s ease-in-out infinite`,
+                  animation: `${gamepadFloat} 3s ease-in-out infinite`,
                   filter: "drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15))"
                 }}
               />
@@ -175,7 +181,7 @@ export const CallToAction = () => {
               mobileOptimized={false}
               sizes="160px"
               style={{
-                animation: `${float} 3s ease-in-out infinite`,
+                animation: `${gamepadFloat} 3s ease-in-out infinite`,
                 filter: "drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15))"
               }}
             />
