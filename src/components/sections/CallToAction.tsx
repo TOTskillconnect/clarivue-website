@@ -39,7 +39,7 @@ export const CallToAction = () => {
               mb={6}
             >
               <ResponsiveImage
-                src="/game-pad.png"
+                src="/gamepad.png"
                 alt="Gaming controller representing interactive interview experience"
                 w="100%"
                 h="100%"
@@ -48,7 +48,8 @@ export const CallToAction = () => {
                 mobileOptimized={true}
                 sizes="(max-width: 640px) 120px, 140px"
                 style={{
-                  animation: 'float 3s ease-in-out infinite',
+                  animation: `${float} 3s ease-in-out infinite`,
+                  filter: "drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15))"
                 }}
               />
             </Box>
