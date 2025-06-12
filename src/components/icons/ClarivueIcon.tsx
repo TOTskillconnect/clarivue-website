@@ -1,25 +1,27 @@
 'use client'
 
 import { Circle, Box } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import { keyframes } from '@emotion/react'
 
-const MotionCircle = motion(Circle)
+const iconAnimation = keyframes`
+  0% { 
+    transform: scale(1) rotate(0deg);
+  }
+  50% { 
+    transform: scale(1.05) rotate(5deg);
+  }
+  100% { 
+    transform: scale(1) rotate(0deg);
+  }
+`
 
 export const ClarivueIcon = () => {
   return (
-    <MotionCircle
+    <Circle
       size="120px"
       bg="primary.500"
       position="relative"
-      animate={{
-        scale: [1, 1.05, 1],
-        rotate: [0, 5, 0]
-      }}
-      transition={{
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }}
+      animation={`${iconAnimation} 4s ease-in-out infinite`}
     >
       <Circle
         size="100px"
@@ -53,6 +55,6 @@ export const ClarivueIcon = () => {
           />
         </Box>
       </Circle>
-    </MotionCircle>
+    </Circle>
   )
 } 

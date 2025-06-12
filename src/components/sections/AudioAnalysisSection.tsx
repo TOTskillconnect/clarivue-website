@@ -1,16 +1,19 @@
 'use client'
 
 import { Box, Container, Text, HStack, VStack, Circle, Progress, Image } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
 import { keyframes } from '@emotion/react'
 import { ClarivueIcon } from '../icons/ClarivueIcon'
 import { ResponsiveImage } from '../common/ResponsiveImage'
 
-const MotionBox = motion(Box)
-
 // Audio wave animation with responsive bar count
 const AudioWave = ({ isMobile = false }: { isMobile?: boolean }) => {
   const bars = isMobile ? 30 : 60 // Reduced bars for mobile
+  
+  const waveAnimation = keyframes`
+    0% { height: 25%; }
+    50% { height: 75%; }
+    100% { height: 25%; }
+  `
   
   return (
     <Box position="relative" height={{ base: "80px", md: "100px", lg: "120px" }} width="100%">
@@ -24,26 +27,19 @@ const AudioWave = ({ isMobile = false }: { isMobile?: boolean }) => {
       >
         {[...Array(bars)].map((_, i) => {
           const heightMultiplier = 1 + (i / bars) * 0.6;
+          const delay = i * 0.025;
           
           return (
-            <MotionBox
+            <Box
               key={i}
               width={{ base: "3px", md: "4px", lg: "5px" }}
               bgGradient="linear(to-b, primary.300, primary.500)"
               borderRadius="full"
-              initial={{ height: "20%" }}
-              animate={{
-                height: [
-                  `${25 * heightMultiplier}%`,
-                  `${(Math.random() * 70 + 50) * heightMultiplier}%`,
-                  `${25 * heightMultiplier}%`
-                ]
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                delay: i * 0.025,
-                ease: "easeInOut"
+              height="25%"
+              animation={`${waveAnimation} 1.5s ease-in-out infinite`}
+              style={{
+                animationDelay: `${delay}s`,
+                transform: `scaleY(${heightMultiplier})`
               }}
               opacity={1}
             />

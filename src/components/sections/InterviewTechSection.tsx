@@ -1,13 +1,30 @@
 'use client'
 
 import { Box, Container, Text, Image, VStack } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import { keyframes } from '@emotion/react'
 
-const MotionImage = motion(Image)
-const MotionBox = motion(Box)
+const starBubbleAnimation = keyframes`
+  0% { 
+    transform: scale(0.8) translateY(0px);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: scale(1.2) translateY(-20px);
+    opacity: 0.6;
+  }
+  100% { 
+    transform: scale(0.8) translateY(0px);
+    opacity: 0.3;
+  }
+`
+
+const rotateAnimation = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`
 
 const StarBubble = ({ size, left, top, delay }: { size: number, left: string, top: string, delay: number }) => (
-  <MotionBox
+  <Box
     position="absolute"
     width={`${size}px`}
     height={`${size}px`}
@@ -15,17 +32,9 @@ const StarBubble = ({ size, left, top, delay }: { size: number, left: string, to
     top={top}
     borderRadius="full"
     bg="rgba(255, 255, 255, 0.1)"
-    initial={{ scale: 0.8, opacity: 0.3 }}
-    animate={{ 
-      scale: [0.8, 1.2, 0.8],
-      opacity: [0.3, 0.6, 0.3],
-      y: [0, -20, 0]
-    }}
-    transition={{
-      duration: 4,
-      repeat: Infinity,
-      delay,
-      ease: "easeInOut"
+    animation={`${starBubbleAnimation} 4s ease-in-out infinite`}
+    style={{
+      animationDelay: `${delay}s`
     }}
     display={{ base: 'none', md: 'block' }}
   />
@@ -116,20 +125,13 @@ export const InterviewTechSection = () => {
             zIndex={2}
             mt={{ base: 4, md: 0 }}
           >
-            <MotionImage
+            <Image
               src="/platform-icon.png"
               alt="Interactive Demo Platform"
               width="100%"
               height="100%"
               objectFit="contain"
-              animate={{
-                rotate: [0, 360]
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear"
-              }}
+              animation={`${rotateAnimation} 20s linear infinite`}
             />
           </Box>
         </Box>

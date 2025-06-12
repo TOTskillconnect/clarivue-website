@@ -14,7 +14,6 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           chakra: ['@chakra-ui/react', '@chakra-ui/icons', '@emotion/react', '@emotion/styled'],
-          motion: ['framer-motion'],
           router: ['react-router-dom'],
         },
         // Optimize chunk file names
@@ -49,8 +48,7 @@ export default defineConfig({
       '@chakra-ui/react',
       '@chakra-ui/icons',
       '@emotion/react',
-      '@emotion/styled',
-      'framer-motion'
+      '@emotion/styled'
     ],
     exclude: ['@emotion/is-prop-valid'],
     esbuildOptions: {

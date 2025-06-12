@@ -1,12 +1,9 @@
 'use client'
 
 import { Box, Container, Heading, Text, Button, HStack, VStack } from '@chakra-ui/react'
-import { motion, useAnimation } from 'framer-motion'
 import { keyframes } from '@emotion/react'
 import { useEffect, useCallback, memo, useRef } from 'react'
 import { ResponsiveImage } from '../common/ResponsiveImage'
-
-const MotionBox = motion(Box)
 
 // Optimize animations using CSS transform instead of keyframes
 const float = keyframes`
@@ -21,47 +18,13 @@ const pulse = keyframes`
   100% { transform: scale3d(1, 1, 1) rotate(0deg); }
 `
 
+const scrollAnimation = keyframes`
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+`
+
 // Memoize BrandLogos component to prevent unnecessary re-renders
 const BrandLogos = memo(() => {
-  const controls = useAnimation();
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const startAnimation = useCallback(async () => {
-    if (!containerRef.current) return;
-    
-    const scrollWidth = containerRef.current.scrollWidth;
-    const viewportWidth = containerRef.current.offsetWidth;
-    const distance = -(scrollWidth - viewportWidth);
-
-    await controls.start({
-      x: [0, distance],
-      transition: {
-        duration: Math.abs(distance) / 50,
-        repeat: Infinity,
-        ease: "linear",
-        repeatType: "loop"
-      }
-    });
-  }, [controls]);
-
-  useEffect(() => {
-    startAnimation();
-    
-    // Add resize observer to handle viewport changes
-    const resizeObserver = new ResizeObserver(() => {
-      startAnimation();
-    });
-    
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
-    
-    return () => {
-      controls.stop(); // cancel animation on unmount
-      resizeObserver.disconnect();
-    };
-  }, [startAnimation, controls]);
-
   const logos = [
     { text: "Brex", color: "gray.300", weight: "700" },
     { text: "Quora", color: "white", weight: "700" },
@@ -94,11 +57,10 @@ const BrandLogos = memo(() => {
     <Box 
       overflow="hidden" 
       width="100%"
-      ref={containerRef}
     >
-      <MotionBox
+      <Box
         display="flex"
-        animate={controls}
+        animation={`${scrollAnimation} 20s linear infinite`}
         style={{ 
           willChange: 'transform',
           backfaceVisibility: 'hidden',
@@ -107,7 +69,7 @@ const BrandLogos = memo(() => {
       >
         <LogoList />
         <LogoList />
-      </MotionBox>
+      </Box>
     </Box>
   );
 });
@@ -119,7 +81,7 @@ const BackgroundDecorations = memo(() => {
   return (
     <>
       {/* Optimize animations using transform3d */}
-      <MotionBox
+      <Box
         position="absolute"
         top="5%"
         left="5%"
@@ -129,20 +91,12 @@ const BackgroundDecorations = memo(() => {
         background="radial-gradient(circle, rgba(223,246,255,0.2) 0%, rgba(16,118,209,0.1) 100%)"
         filter="blur(40px)"
         style={{ willChange: 'transform' }}
-        animate={{
-          y: [-20, 0, -20],
-          rotate: [0, 5, 0]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
+        animation={`${float} 8s ease-in-out infinite`}
         zIndex={0}
       />
 
       {/* Gradient Blob 2 */}
-      <MotionBox
+      <Box
         position="absolute"
         bottom="15%"
         right="10%"
