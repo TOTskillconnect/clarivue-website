@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, Container, Heading, Text, Button, HStack, VStack } from '@chakra-ui/react'
 import { motion, useAnimation } from 'framer-motion'
 import { keyframes } from '@emotion/react'

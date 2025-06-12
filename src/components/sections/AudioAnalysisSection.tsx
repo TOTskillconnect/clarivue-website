@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, Container, Text, HStack, VStack, Circle, Progress, Image } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { keyframes } from '@emotion/react'

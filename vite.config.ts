@@ -37,7 +37,7 @@ export default defineConfig({
     // Enable source maps for debugging (disable in production if needed)
     sourcemap: false,
     // Fix for production builds
-    target: 'esnext'
+    target: 'es2020'
   },
 
   // Optimize dependencies
@@ -54,7 +54,7 @@ export default defineConfig({
     ],
     exclude: ['@emotion/is-prop-valid'],
     esbuildOptions: {
-      target: 'esnext'
+      target: 'es2020'
     }
   },
 
@@ -83,10 +83,5 @@ export default defineConfig({
         outputStyle: 'compressed'
       }
     }
-  },
-
-  // Define global constants
-  define: {
-    __DEV__: JSON.stringify(process.env.NODE_ENV === 'development')
   }
 })

@@ -1,3 +1,5 @@
+'use client'
+
 import { ChakraProvider, Box } from '@chakra-ui/react'
 import { theme } from './theme/index'
 import { ErrorBoundary } from './components/error/ErrorBoundary'
