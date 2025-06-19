@@ -39,8 +39,9 @@ export const Header = () => {
       color="gray.700"
       _hover={{ color: 'primary.500' }}
       py={3}
-      width="100px"
+      width="100%"
       textAlign="center"
+      whiteSpace="nowrap"
     >
       {children}
     </Link>
@@ -110,7 +111,7 @@ export const Header = () => {
               py={1.5}
               h="32px"
               _hover={{ bg: 'primary.100' }}
-              display={{ base: 'flex', md: 'none' }}
+              display="none"
               mr={1}
             >
               Try Free
@@ -140,8 +141,8 @@ export const Header = () => {
             <Logo />
           </DrawerHeader>
 
-          <DrawerBody py={8}>
-            <VStack spacing={6} align="stretch">
+          <DrawerBody py={8} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+            <VStack spacing={6} align="center" width="100%" maxW="300px">
               <MobileNavLink href="#features" onClick={scrollToFeatures}>
                 Features
               </MobileNavLink>
@@ -153,14 +154,15 @@ export const Header = () => {
               </MobileNavLink>
               
               {/* Mobile Action Buttons */}
-              <Box pt={8} borderTop="1px solid" borderColor="gray.200">
-                <VStack spacing={4}>
+              <Box pt={8} borderTop="1px solid" borderColor="gray.200" width="100%">
+                <VStack spacing={4} align="center">
                   <Button
                     variant="secondary"
                     width="100%"
                     height="48px"
                     fontSize="18px"
                     onClick={onClose}
+                    whiteSpace="nowrap"
                   >
                     Sign in
                   </Button>
@@ -173,6 +175,7 @@ export const Header = () => {
                     width="100%"
                     _hover={{ bg: 'primary.100' }}
                     onClick={onClose}
+                    whiteSpace="nowrap"
                   >
                     Try Free
                   </Button>

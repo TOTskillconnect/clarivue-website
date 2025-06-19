@@ -18,24 +18,6 @@ const pulse = keyframes`
   100% { transform: scale3d(1, 1, 1) rotate(0deg); }
 `
 
-const scrollAnimation = keyframes`
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-`
-
-// Memoize static data to prevent recreation on every render
-const LOGO_DATA = [
-  { src: "/brandsocials/KaiOS-Logo.wine.svg", alt: "KaiOS" },
-  { src: "/brandsocials/Libra-Logo.wine.svg", alt: "Libra" },
-  { src: "/brandsocials/Fitbit-Logo.wine.svg", alt: "Fitbit" },
-  { src: "/brandsocials/OnePlus-Logo.wine.svg", alt: "OnePlus" },
-  { src: "/brandsocials/Foxtel-Logo.wine.svg", alt: "Foxtel" },
-  { src: "/brandsocials/square-logo.wine.svg", alt: "Square" },
-  { src: "/brandsocials/plaidlogo.wine.svg", alt: "Plaid" },
-  { src: "/brandsocials/nest-labs-logo-svgrepo-com.svg", alt: "Nest Labs" },
-  { src: "/brandsocials/brex-1.svg", alt: "Brex" }
-] as const;
-
 // Memoize static data for floating overlays
 const TONE_STATES = ["Confident", "Neutral", "Hesitant"] as const;
 const TONE_COLORS = {
@@ -56,94 +38,6 @@ const METRICS_DATA = [
   { icon: "🧮", label: "Data Structures", score: 7.9, color: "yellow" },
   { icon: "🧪", label: "Testing", score: 8.2, color: "green" }
 ] as const;
-
-// Memoize individual logo component to prevent unnecessary re-renders
-const LogoItem = memo(({ logo, index }: { logo: (typeof LOGO_DATA)[number]; index: number }) => {
-  const handleMouseEnter = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
-    e.currentTarget.style.opacity = '1';
-    e.currentTarget.style.transform = 'scale(1.05)';
-  }, []);
-
-  const handleMouseLeave = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
-    e.currentTarget.style.opacity = '0.85';
-    e.currentTarget.style.transform = 'scale(1)';
-  }, []);
-
-  const logoStyle = useMemo(() => ({
-    height: window?.innerWidth > 768 ? '100px' : '75px',
-    width: window?.innerWidth > 768 ? '300px' : '250px',
-    maxWidth: '100%',
-    maxHeight: '100%',
-    objectFit: 'contain' as const,
-    filter: 'brightness(0) invert(1)',
-    opacity: 0.85,
-    transition: 'all 0.3s ease',
-    fontWeight: 'bold',
-    willChange: 'transform, opacity'
-  }), []);
-
-  return (
-    <Box
-      key={`${logo.alt}-${index}`}
-      height={{ base: "80px", md: "100px" }}
-      width={{ base: "300px", md: "300px" }}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      flexShrink={0}
-    >
-      <img
-        src={logo.src}
-        alt={logo.alt}
-        style={logoStyle}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        loading="lazy"
-        decoding="async"
-      />
-    </Box>
-  );
-});
-
-LogoItem.displayName = 'LogoItem';
-
-// Memoize BrandLogos component to prevent unnecessary re-renders
-const BrandLogos = memo(() => {
-  const LogoList = memo(() => (
-    <Box display="flex" alignItems="center" gap={{ base: 2, md: 3 }} flexShrink={0}>
-      {LOGO_DATA.map((logo, index) => (
-        <LogoItem key={`${logo.alt}-${index}`} logo={logo} index={index} />
-      ))}
-    </Box>
-  ));
-
-  LogoList.displayName = 'LogoList';
-
-  const containerStyle = useMemo(() => ({
-    willChange: 'transform',
-    backfaceVisibility: 'hidden' as const,
-    WebkitFontSmoothing: 'antialiased' as const
-  }), []);
-
-  return (
-    <Box 
-      width="100%"
-      overflow="hidden"
-      px={{ base: 4, md: 6 }}
-    >
-      <Box
-        display="flex"
-        animation={`${scrollAnimation} 20s linear infinite`}
-        style={containerStyle}
-      >
-        <LogoList />
-        <LogoList />
-      </Box>
-    </Box>
-  );
-});
-
-BrandLogos.displayName = 'BrandLogos';
 
 // Memoize BackgroundDecorations for performance
 const BackgroundDecorations = memo(() => {
@@ -317,6 +211,9 @@ const FloatingUIOverlays = memo(() => {
   const [toneIndex, setToneIndex] = useState(0);
   const [showSecondQuestion, setShowSecondQuestion] = useState(false);
   const [showScorecard, setShowScorecard] = useState(false);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const [showAIThinking, setShowAIThinking] = useState(false);
+  const [showFollowUp, setShowFollowUp] = useState(false);
 
   const metrics = useMemo(() => METRICS_DATA, []);
 
@@ -353,34 +250,201 @@ const FloatingUIOverlays = memo(() => {
   }, []);
 
   // Memoize base overlay styles with responsive sizing
-  const overlayBaseStyles = useMemo(() => ({
-    position: 'absolute' as const,
-    backdropFilter: 'blur(16px)',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderRadius: '12px',
-    padding: window?.innerWidth < 768 ? '8px' : '12px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-    border: '1px solid rgba(255, 255, 255, 0.3)',
-    zIndex: 10
-  }), []);
+  const overlayBaseStyles = useMemo(() => {
+    let padding, borderRadius;
+    
+    if (window?.innerWidth < 480) {
+      // Extra small mobile - reduced padding
+      padding = '3px';
+      borderRadius = '4px';
+    } else if (window?.innerWidth < 768) {
+      // Small mobile - reduced padding
+      padding = '4px';
+      borderRadius = '6px';
+    } else if (window?.innerWidth < 1024) {
+      // Tablet
+      padding = '10px';
+      borderRadius = '10px';
+    } else if (window?.innerWidth < 1440) {
+      // Small desktop
+      padding = '14px';
+      borderRadius = '12px';
+    } else {
+      // Large desktop
+      padding = '20px';
+      borderRadius = '16px';
+    }
 
-  // Responsive sizing utilities - Reduced by 50%
-  const getResponsiveSize = useCallback((baseSize: number, mobileMultiplier: number = 0.35, tabletMultiplier: number = 0.42) => {
-    if (window?.innerWidth < 768) return baseSize * mobileMultiplier; // Mobile (50% reduction)
-    if (window?.innerWidth < 1024) return baseSize * tabletMultiplier; // Tablet (50% reduction)
-    return baseSize * 0.5; // Desktop (50% reduction)
+    return {
+      position: 'absolute' as const,
+      backdropFilter: 'blur(16px)',
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      borderRadius,
+      padding,
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+      border: '1px solid rgba(255, 255, 255, 0.3)',
+      zIndex: 10
+    };
+  }, []);
+
+  // Responsive sizing utilities - Proper web vs mobile sizing
+  const getResponsiveSize = useCallback((baseSize: number) => {
+    if (window?.innerWidth < 768) return baseSize * 0.4; // Mobile: smaller size
+    if (window?.innerWidth < 1024) return baseSize * 0.7; // Tablet: medium size  
+    return baseSize * 1.0; // Desktop: full size
   }, []);
 
   const getResponsiveFontSize = useCallback((desktopSize: string, mobileSize: string, tabletSize?: string) => {
-    const sizes = {
-      desktop: parseInt(desktopSize) * 0.5, // 50% reduction
-      mobile: parseInt(mobileSize) * 0.5,   // 50% reduction
-      tablet: tabletSize ? parseInt(tabletSize) * 0.5 : parseInt(mobileSize) * 0.5
-    };
+    const baseMobile = parseInt(mobileSize);
+    const baseTablet = tabletSize ? parseInt(tabletSize) : baseMobile * 1.2;
+    const baseDesktop = parseInt(desktopSize);
     
-    if (window?.innerWidth < 768) return `${sizes.mobile}px`; // Mobile
-    if (window?.innerWidth < 1024) return `${sizes.tablet}px`; // Tablet
-    return `${sizes.desktop}px`; // Desktop
+    if (window?.innerWidth < 480) {
+      // Extra small mobile: 60% of mobile size - reduced further
+      return `${Math.round(baseMobile * 0.6)}px`;
+    } else if (window?.innerWidth < 768) {
+      // Small mobile: 80% of mobile size - reduced from full size
+      return `${Math.round(baseMobile * 0.8)}px`;
+    } else if (window?.innerWidth < 1024) {
+      // Tablet: 110% of mobile size
+      return `${Math.round(baseMobile * 1.1)}px`;
+    } else if (window?.innerWidth < 1440) {
+      // Small desktop: 120% of desktop size
+      return `${Math.round(baseDesktop * 1.2)}px`;
+    } else {
+      // Large desktop: 150% of desktop size
+      return `${Math.round(baseDesktop * 1.5)}px`;
+    }
+  }, []);
+
+  // Special font size for scorecard - 25% larger than regular
+  const getScorecardFontSize = useCallback((desktopSize: string, mobileSize: string, tabletSize?: string) => {
+    const regularSize = getResponsiveFontSize(desktopSize, mobileSize, tabletSize);
+    const sizeValue = parseInt(regularSize);
+    return `${Math.round(sizeValue * 1.25)}px`; // 25% larger
+  }, [getResponsiveFontSize]);
+
+  // Updated overlay dimensions for better mobile adaptation
+  const getOverlayDimensions = useCallback(() => {
+    if (window?.innerWidth < 480) {
+      // Extra small mobile: very compact sizes - reduced further
+      return {
+        conversation: { width: '100px', maxWidth: '100px', minHeight: 'auto' },
+        tone: { width: '60px', minWidth: '60px', minHeight: 'auto' },
+        scorecard: { width: '70px', minHeight: 'auto' }
+      };
+    } else if (window?.innerWidth < 768) {
+      // Small mobile: compact sizes - reduced further
+      return {
+        conversation: { width: '120px', maxWidth: '120px', minHeight: 'auto' },
+        tone: { width: '70px', minWidth: '70px', minHeight: 'auto' },
+        scorecard: { width: '85px', minHeight: 'auto' }
+      };
+    } else if (window?.innerWidth < 1024) {
+      // Tablet: medium sizes
+      return {
+        conversation: { width: '200px', maxWidth: '200px', minHeight: 'auto' },
+        tone: { width: '110px', minWidth: '110px', minHeight: 'auto' },
+        scorecard: { width: '140px', minHeight: 'auto' }
+      };
+    } else if (window?.innerWidth < 1440) {
+      // Small desktop: moderate sizes
+      return {
+        conversation: { width: '350px', maxWidth: '350px', minHeight: '150px' },
+        tone: { width: '170px', minWidth: '170px', minHeight: '100px' },
+        scorecard: { width: '240px', minHeight: '200px' }
+      };
+    } else {
+      // Large desktop: full sizes
+      return {
+        conversation: { width: '420px', maxWidth: '420px', minHeight: '180px' },
+        tone: { width: '200px', minWidth: '200px', minHeight: '120px' },
+        scorecard: { width: '280px', minHeight: '238px' }
+      };
+    }
+  }, []);
+
+  // Get positioning offsets to prevent overlap with better mobile adaptation
+  const getOverlayPositioning = useCallback(() => {
+    if (window?.innerWidth < 480) {
+      // Extra small mobile positioning - reduced margins, scorecard moved down 20%
+      return {
+        conversation: { bottom: '4px', left: '4px' },
+        tone: { top: '4px', left: '50%', transform: 'translateX(-50%)' },
+        scorecard: { top: 'calc(40% + 20px)', right: '4px' }
+      };
+    } else if (window?.innerWidth < 768) {
+      // Small mobile positioning - reduced margins, scorecard moved down 20%
+      return {
+        conversation: { bottom: '6px', left: '6px' },
+        tone: { top: '6px', left: '50%', transform: 'translateX(-50%)' },
+        scorecard: { top: 'calc(45% + 25px)', right: '6px' }
+      };
+    } else if (window?.innerWidth < 1024) {
+      // Tablet positioning
+      return {
+        conversation: { bottom: '12px', left: '12px' },
+        tone: { top: '12px', left: '50%', transform: 'translateX(-50%)' },
+        scorecard: { top: 'calc(28% + 35px)', right: '12px' }
+      };
+    } else if (window?.innerWidth < 1440) {
+      // Small desktop positioning
+      return {
+        conversation: { bottom: '16px', left: '16px' },
+        tone: { top: '16px', left: '50%', transform: 'translateX(-50%)' },
+        scorecard: { top: 'calc(22% + 60px)', right: '16px' }
+      };
+    } else {
+      // Large desktop positioning
+      return {
+        conversation: { bottom: '20px', left: '20px' },
+        tone: { top: '20px', left: '50%', transform: 'translateX(-50%)' },
+        scorecard: { top: 'calc(25% + 80px)', right: '20px' }
+      };
+    }
+  }, []);
+
+  // Animated microphone component (moved inside to access getResponsiveFontSize)
+  const AnimatedMicrophone = memo(() => (
+    <motion.div
+      animate={{ 
+        scale: [1, 1.1, 1],
+        opacity: [0.7, 1, 0.7]
+      }}
+      transition={{ 
+        duration: 2, 
+        repeat: Infinity, 
+        ease: "easeInOut" 
+      }}
+      style={{ 
+        fontSize: getResponsiveFontSize('16px', '12px', '14px'),
+        marginRight: '4px'
+      }}
+    >
+      🎤
+    </motion.div>
+  ));
+
+  AnimatedMicrophone.displayName = 'AnimatedMicrophone';
+
+  // Helper function for responsive spacing
+  const getResponsiveSpacing = useCallback((type: 'gap' | 'margin' | 'padding') => {
+    if (window?.innerWidth < 480) {
+      // Extra small mobile - reduced spacing
+      return type === 'gap' ? '1px' : type === 'margin' ? '0.5px' : '1px';
+    } else if (window?.innerWidth < 768) {
+      // Small mobile - reduced spacing
+      return type === 'gap' ? '2px' : type === 'margin' ? '1px' : '2px';
+    } else if (window?.innerWidth < 1024) {
+      // Tablet
+      return type === 'gap' ? '4px' : type === 'margin' ? '3px' : '4px';
+    } else if (window?.innerWidth < 1440) {
+      // Small desktop
+      return type === 'gap' ? '5px' : type === 'margin' ? '4px' : '5px';
+    } else {
+      // Large desktop
+      return type === 'gap' ? '6px' : type === 'margin' ? '5px' : '6px';
+    }
   }, []);
 
   // Memoize current tone data
@@ -390,12 +454,21 @@ const FloatingUIOverlays = memo(() => {
     icon: TONE_ICONS[TONE_STATES[toneIndex]]
   }), [toneIndex]);
 
-  useEffect(() => {
-    // Show second question after 6 seconds
-    const questionTimer = setTimeout(() => {
-      setShowSecondQuestion(true);
-    }, 6000);
+  // Handle typewriter completion
+  const handleTypingComplete = useCallback(() => {
+    setIsTypingComplete(true);
+    // Show AI thinking indicator after typing completes
+    setTimeout(() => {
+      setShowAIThinking(true);
+    }, 500);
+    // Show follow-up after AI thinking pause
+    setTimeout(() => {
+      setShowAIThinking(false);
+      setShowFollowUp(true);
+    }, 2000);
+  }, []);
 
+  useEffect(() => {
     // Show scorecard after 8 seconds
     const scorecardTimer = setTimeout(() => {
       setShowScorecard(true);
@@ -407,7 +480,6 @@ const FloatingUIOverlays = memo(() => {
     }, 4000);
 
     return () => {
-      clearTimeout(questionTimer);
       clearTimeout(scorecardTimer);
       clearInterval(toneTimer);
     };
@@ -432,44 +504,48 @@ const FloatingUIOverlays = memo(() => {
         }}
         style={{
           ...overlayBaseStyles,
-          bottom: getResponsiveSize(20, 0.3, 0.4) + 'px',
-          left: getResponsiveSize(20, 0.3, 0.4) + 'px',
-          maxWidth: window?.innerWidth < 768 ? '140px' : window?.innerWidth < 1024 ? '190px' : '300px',
+          bottom: getOverlayPositioning().conversation.bottom,
+          left: getOverlayPositioning().conversation.left,
+          maxWidth: getOverlayDimensions().conversation.maxWidth,
+          minHeight: getOverlayDimensions().conversation.minHeight,
           backgroundColor: 'rgba(255, 255, 255, 0.95)',
         }}
         whileHover={{ 
-          scale: window?.innerWidth < 768 ? 1.01 : 1.02, 
+          scale: getOverlayDimensions().conversation.width === '140px' ? 1.01 : 1.02, 
           y: -4,
           boxShadow: '0 6px 15px rgba(0, 0, 0, 0.25)',
           transition: { duration: 0.2 }
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: window?.innerWidth < 768 ? '3px' : '5px' }}>
-          <motion.span 
-            style={{ fontSize: getResponsiveFontSize('18px', '14px', '16px'), marginTop: '1px' }}
-            animate={{ 
-              rotate: [0, 5, -5, 0],
-              scale: [1, 1.05, 1]
-            }}
-            transition={{ 
-              rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-              scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }
-            }}
-          >
-            💬
-          </motion.span>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: getResponsiveSpacing('gap') }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <AnimatedMicrophone />
+            <motion.span 
+              style={{ fontSize: getResponsiveFontSize('18px', '14px', '16px'), marginTop: '1px' }}
+              animate={{ 
+                rotate: [0, 5, -5, 0],
+                scale: [1, 1.05, 1]
+              }}
+              transition={{ 
+                rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+                scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }
+              }}
+            >
+              💬
+            </motion.span>
+          </div>
           <div style={{ flex: 1 }}>
-            {/* Main Prompt with staggered animation */}
+            {/* Main Prompt with typewriter animation */}
             <motion.div 
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 2 }}
               style={{
-                marginBottom: window?.innerWidth < 768 ? '4px' : '6px',
-                padding: window?.innerWidth < 768 ? '3px 4px' : '4px 6px',
+                marginBottom: getResponsiveSpacing('margin'),
+                padding: getResponsiveSpacing('padding'),
                 backgroundColor: 'rgba(66, 153, 225, 0.1)',
                 borderRadius: '4px',
-                borderLeft: window?.innerWidth < 768 ? '2px solid #4299E1' : '3px solid #4299E1'
+                borderLeft: window?.innerWidth < 480 ? '1px solid #4299E1' : window?.innerWidth < 768 ? '2px solid #4299E1' : '3px solid #4299E1'
               }}
             >
               <motion.div 
@@ -480,12 +556,12 @@ const FloatingUIOverlays = memo(() => {
                   fontSize: getResponsiveFontSize('11px', '8px', '9px'),
                   fontWeight: '600', 
                   color: '#4299E1',
-                  marginBottom: window?.innerWidth < 768 ? '1px' : '2px',
+                  marginBottom: getResponsiveSpacing('margin'),
                   textTransform: 'uppercase',
                   letterSpacing: '0.3px'
                 }}
               >
-                AI PROMPT
+                CANDIDATE RESPONSE
               </motion.div>
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
@@ -498,13 +574,62 @@ const FloatingUIOverlays = memo(() => {
                   fontWeight: '600'
                 }}
               >
-                Can you walk me through a challenge you led?
+                <TypewriterText 
+                  text="I led the redesign of our onboarding flow, which improved activation by 30%..."
+                  delay={3000}
+                  onComplete={handleTypingComplete}
+                />
               </motion.div>
             </motion.div>
 
+            {/* AI Thinking Indicator */}
+            <AnimatePresence>
+              {showAIThinking && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    padding: getResponsiveSpacing('padding'),
+                    backgroundColor: 'rgba(147, 51, 234, 0.1)',
+                    borderRadius: '3px',
+                    marginBottom: getResponsiveSpacing('margin'),
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                >
+                  <motion.div
+                    animate={{ 
+                      boxShadow: [
+                        '0 0 0 0 rgba(147, 51, 234, 0.4)',
+                        '0 0 0 6px rgba(147, 51, 234, 0)',
+                        '0 0 0 0 rgba(147, 51, 234, 0)'
+                      ]
+                    }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    style={{
+                      width: window?.innerWidth < 480 ? '4px' : '6px',
+                      height: window?.innerWidth < 480 ? '4px' : '6px',
+                      backgroundColor: '#9333EA',
+                      borderRadius: '50%'
+                    }}
+                  />
+                  <span style={{ 
+                    fontSize: getResponsiveFontSize('11px', '8px', '9px'),
+                    color: '#9333EA',
+                    fontWeight: '500'
+                  }}>
+                    AI analyzing...
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Suggested Follow-up with progressive reveal */}
             <AnimatePresence>
-              {showSecondQuestion && (
+              {showFollowUp && (
                 <motion.div
                   initial={{ opacity: 0, height: 0, y: -15, scale: 0.9 }}
                   animate={{ 
@@ -520,10 +645,10 @@ const FloatingUIOverlays = memo(() => {
                     scale: { type: "spring", stiffness: 200 }
                   }}
                   style={{
-                    padding: window?.innerWidth < 768 ? '2px 4px 2px 7px' : '3px 6px 3px 10px',
+                    padding: getResponsiveSpacing('padding'),
                     backgroundColor: 'rgba(56, 161, 105, 0.08)',
                     borderRadius: '3px',
-                    borderLeft: window?.innerWidth < 768 ? '1px solid #38A169' : '2px solid #38A169',
+                    borderLeft: window?.innerWidth < 480 ? '1px solid #38A169' : window?.innerWidth < 768 ? '1px solid #38A169' : '2px solid #38A169',
                     position: 'relative'
                   }}
                 >
@@ -533,11 +658,11 @@ const FloatingUIOverlays = memo(() => {
                     transition={{ duration: 0.4, delay: 0.3 }}
                     style={{
                       position: 'absolute',
-                      left: window?.innerWidth < 768 ? '3px' : '4px',
+                      left: window?.innerWidth < 480 ? '2px' : window?.innerWidth < 768 ? '3px' : '4px',
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      width: window?.innerWidth < 768 ? '1.5px' : '2px',
-                      height: window?.innerWidth < 768 ? '1.5px' : '2px',
+                      width: window?.innerWidth < 480 ? '1px' : window?.innerWidth < 768 ? '1.5px' : '2px',
+                      height: window?.innerWidth < 480 ? '1px' : window?.innerWidth < 768 ? '1.5px' : '2px',
                       backgroundColor: '#38A169',
                       borderRadius: '50%'
                     }} 
@@ -555,7 +680,19 @@ const FloatingUIOverlays = memo(() => {
                       letterSpacing: '0.3px'
                     }}
                   >
-                    SUGGESTED FOLLOW-UP
+                    <motion.span
+                      animate={{ 
+                        boxShadow: [
+                          '0 0 0 0 rgba(56, 161, 105, 0.4)',
+                          '0 0 0 4px rgba(56, 161, 105, 0)',
+                          '0 0 0 0 rgba(56, 161, 105, 0)'
+                        ]
+                      }}
+                      transition={{ duration: 2, repeat: 2 }}
+                      style={{ padding: '1px 2px', borderRadius: '2px' }}
+                    >
+                      SUGGESTED FOLLOW-UP
+                    </motion.span>
                   </motion.div>
                   <motion.div 
                     initial={{ opacity: 0, y: 10 }}
@@ -568,7 +705,7 @@ const FloatingUIOverlays = memo(() => {
                       fontWeight: '500'
                     }}
                   >
-                    Ask about team leadership experience
+                    "Ask about how they collaborated with cross-functional teams"
                   </motion.div>
                 </motion.div>
               )}
@@ -577,7 +714,7 @@ const FloatingUIOverlays = memo(() => {
         </div>
       </motion.div>
 
-      {/* Tone Dial - Right Side, 30% from top - Mobile Optimized */}
+      {/* Tone Dial - Top Center - Mobile Optimized */}
       <motion.div
         initial={{ opacity: 0, y: -40, x: 40, scale: 0.7, rotate: -10 }}
         animate={{ 
@@ -596,23 +733,25 @@ const FloatingUIOverlays = memo(() => {
         }}
         style={{
           ...overlayBaseStyles,
-          top: window?.innerWidth < 768 ? '20%' : window?.innerWidth < 1024 ? '23%' : '25%',
-          right: getResponsiveSize(20, 0.3, 0.4) + 'px',
+          top: getOverlayPositioning().tone.top,
+          left: getOverlayPositioning().tone.left,
+          transform: getOverlayPositioning().tone.transform,
           backgroundColor: 'rgba(255, 255, 255, 0.95)',
-          minWidth: window?.innerWidth < 768 ? '70px' : window?.innerWidth < 1024 ? '100px' : '130px'
+          minWidth: getOverlayDimensions().tone.minWidth,
+          minHeight: getOverlayDimensions().tone.minHeight
         }}
         whileHover={{ 
-          scale: window?.innerWidth < 768 ? 1.02 : 1.04, 
+          scale: getOverlayDimensions().tone.minWidth === '80px' ? 1.02 : getOverlayDimensions().tone.minWidth === '120px' ? 1.04 : 1.04, 
           y: -4,
           boxShadow: '0 8px 18px rgba(99, 102, 241, 0.3)',
           transition: { duration: 0.2 }
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: window?.innerWidth < 768 ? '2px' : '4px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: getResponsiveSpacing('gap') }}>
           <motion.div
             style={{
               fontSize: getResponsiveFontSize('16px', '12px', '14px'),
-              padding: window?.innerWidth < 768 ? '1px' : '2px',
+              padding: getResponsiveSpacing('padding'),
               borderRadius: '50%',
               backgroundColor: 'rgba(99, 102, 241, 0.1)'
             }}
@@ -636,7 +775,7 @@ const FloatingUIOverlays = memo(() => {
                 fontSize: getResponsiveFontSize('10px', '7px', '8px'),
                 fontWeight: '600', 
                 color: '#6366F1',
-                marginBottom: window?.innerWidth < 768 ? '2px' : '3px',
+                marginBottom: getResponsiveSpacing('margin'),
                 textTransform: 'uppercase',
                 letterSpacing: '0.3px'
               }}
@@ -657,8 +796,8 @@ const FloatingUIOverlays = memo(() => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: window?.innerWidth < 768 ? '1.5px' : '3px',
-                padding: window?.innerWidth < 768 ? '1px 2px' : '2px 4px',
+                gap: getResponsiveSpacing('gap'),
+                padding: getResponsiveSpacing('padding'),
                 backgroundColor: `${currentToneData.color}15`,
                 borderRadius: '6px',
                 border: `1px solid ${currentToneData.color}30`
@@ -679,7 +818,7 @@ const FloatingUIOverlays = memo(() => {
               </motion.span>
               <motion.div 
                 style={{ 
-                  fontSize: getResponsiveFontSize('13px', '9px', '11px'),
+                  fontSize: getResponsiveFontSize('13px', '10px', '11px'),
                   fontWeight: '700', 
                   color: currentToneData.color
                 }}
@@ -700,7 +839,6 @@ const FloatingUIOverlays = memo(() => {
             initial={{ opacity: 0, y: -40, x: 40, scale: 0.7 }}
             animate={{ 
               opacity: 1, 
-              y: [0, -6, 0], 
               x: 0, 
               scale: 1
             }}
@@ -708,26 +846,24 @@ const FloatingUIOverlays = memo(() => {
             transition={{ 
               opacity: { duration: 1.2, delay: 0.5 },
               x: { duration: 1.2, delay: 0.5, type: "spring", stiffness: 70, damping: 15 },
-              scale: { duration: 1.2, delay: 0.5, type: "spring", stiffness: 70, damping: 15 },
-              y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }
+              scale: { duration: 1.2, delay: 0.5, type: "spring", stiffness: 70, damping: 15 }
             }}
             style={{
               position: 'absolute',
-              top: window?.innerWidth < 768 ? 'calc(20% + 35px)' : window?.innerWidth < 1024 ? 'calc(23% + 40px)' : 'calc(25% + 50px)',
-              right: getResponsiveSize(20, 0.3, 0.4) + 'px',
+              top: getOverlayPositioning().scorecard.top,
+              right: getOverlayPositioning().scorecard.right,
               backgroundColor: 'rgba(255, 255, 255, 0.7)',
               backdropFilter: 'blur(16px)',
               borderRadius: '6px',
-              padding: window?.innerWidth < 768 ? '4px' : '6px',
+              padding: window?.innerWidth < 480 ? '3px' : window?.innerWidth < 768 ? '4px' : window?.innerWidth < 1024 ? '8px' : '16px',
               boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)',
               border: '1px solid rgba(255, 255, 255, 0.3)',
-              width: window?.innerWidth < 768 ? '90px' : window?.innerWidth < 1024 ? '120px' : '160px',
+              width: getOverlayDimensions().scorecard.width,
+              minHeight: getOverlayDimensions().scorecard.minHeight,
               zIndex: 10
             }}
             whileHover={{ 
-              scale: window?.innerWidth < 768 ? 1.005 : 1.01, 
-              y: -4,
-              boxShadow: '0 8px 20px rgba(0, 0, 0, 0.25)',
+              scale: window?.innerWidth < 480 ? 1.005 : window?.innerWidth < 768 ? 1.005 : window?.innerWidth < 1024 ? 1.01 : 1.02, 
               transition: { duration: 0.2 }
             }}
           >
@@ -736,17 +872,17 @@ const FloatingUIOverlays = memo(() => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1 }}
               style={{ 
-                fontSize: getResponsiveFontSize('10px', '7px', '8px'),
-                fontWeight: '600', 
-                color: '#374151',
-                marginBottom: window?.innerWidth < 768 ? '3px' : '4px',
+                fontSize: getScorecardFontSize('12px', '9px', '10px'),
+                fontWeight: '700', 
+                color: '#1076D1',
+                marginBottom: getResponsiveSpacing('margin'),
                 textTransform: 'uppercase',
                 letterSpacing: '0.3px'
               }}
             >
-              📊 SCORECARD
+              SCORECARD
             </motion.div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: window?.innerWidth < 768 ? '1px' : '1.5px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: window?.innerWidth < 480 ? '0.5px' : window?.innerWidth < 768 ? '1px' : '1.5px' }}>
               {metrics.map((metric, index) => (
                 <motion.div
                   key={metric.label}
@@ -762,29 +898,25 @@ const FloatingUIOverlays = memo(() => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: window?.innerWidth < 768 ? '1px 0' : '1.5px 0',
+                    padding: window?.innerWidth < 480 ? '0.5px 0' : window?.innerWidth < 768 ? '1px 0' : '1.5px 0',
                     borderBottom: index < metrics.length - 1 ? '1px solid rgba(0, 0, 0, 0.05)' : 'none'
                   }}
-                  whileHover={{ 
-                    x: window?.innerWidth < 768 ? 0.5 : 1, 
-                    transition: { duration: 0.1 }
-                  }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: window?.innerWidth < 768 ? '1.5px' : '3px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: getResponsiveSpacing('gap') }}>
                     <motion.span 
-                      style={{ fontSize: getResponsiveFontSize('11px', '8px', '9px') }}
-                      animate={{ rotate: [0, 5, -5, 0] }}
+                      style={{ fontSize: getScorecardFontSize('13px', '10px', '11px') }}
+                      animate={{ rotate: [0, 2, -2, 0] }}
                       transition={{ 
-                        duration: 3 + index, 
+                        duration: 6 + index, 
                         repeat: Infinity, 
                         ease: "easeInOut",
-                        delay: index * 0.5
+                        delay: index * 1
                       }}
                     >
                       {metric.icon}
                     </motion.span>
                     <span style={{ 
-                      fontSize: getResponsiveFontSize('11px', '8px', '9px'),
+                      fontSize: getScorecardFontSize('13px', '10px', '11px'),
                       fontWeight: '500', 
                       color: '#1F2937'
                     }}>
@@ -802,9 +934,9 @@ const FloatingUIOverlays = memo(() => {
                     }}
                     style={{
                       ...getScoreStyles(getScoreColor(metric.score)),
-                      padding: window?.innerWidth < 768 ? '0.5px 1.5px' : '1px 2.5px',
+                      padding: window?.innerWidth < 480 ? '0.5px 1px' : window?.innerWidth < 768 ? '0.5px 1.5px' : window?.innerWidth < 1024 ? '1px 2.5px' : '1px 2.5px',
                       borderRadius: '3px',
-                      fontSize: getResponsiveFontSize('10px', '7px', '8px'),
+                      fontSize: getScorecardFontSize('14px', '10px', '12px'),
                       fontWeight: '600'
                     }}
                   >
@@ -852,12 +984,55 @@ const usePerformanceOptimization = () => {
   }, []);
 };
 
+// Typewriter animation component
+const TypewriterText = memo(({ text, delay = 0, onComplete }: { text: string; delay?: number; onComplete?: () => void }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      let index = 0;
+      const typeInterval = setInterval(() => {
+        if (index <= text.length) {
+          setDisplayedText(text.slice(0, index));
+          index++;
+        } else {
+          clearInterval(typeInterval);
+          setIsComplete(true);
+          onComplete?.();
+        }
+      }, 50); // 50ms per character
+
+      return () => clearInterval(typeInterval);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [text, delay, onComplete]);
+
+  return (
+    <span>
+      {displayedText}
+      {!isComplete && (
+        <motion.span
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
+          style={{ marginLeft: '2px' }}
+        >
+          |
+        </motion.span>
+      )}
+    </span>
+  );
+});
+
+TypewriterText.displayName = 'TypewriterText';
+
 export const HeroSection = memo(() => {
   usePerformanceOptimization();
 
   const sectionStyle = useMemo(() => ({
     bgGradient: "linear(to-b, secondary.700, secondary.500 65%, primary.100)",
-    minH: { base: "135vh", md: "110vh" },
+    minH: { base: "100vh", sm: "110vh", md: "110vh" },
     pt: { base: "100px", md: "140px" },
     pb: 0,
     overflow: "hidden",
@@ -941,14 +1116,6 @@ export const HeroSection = memo(() => {
           >
             Get Started Free
           </Button>
-
-          {/* Loved by text */}
-          <Text fontSize={{ base: "16px", md: "20px" }} color="gray.50" textAlign="center">
-            Loved by recruiters, hiring managers, and leaders at:
-          </Text>
-
-          {/* Brand Logos */}
-          <BrandLogos />
         </VStack>
       </Container>
 

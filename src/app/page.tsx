@@ -6,6 +6,7 @@ import { LoadingSpinner } from '../components/loading/LoadingSpinner';
 
 // Lazy load components
 const HeroSection = lazy(() => import('../components/sections/HeroSection').then(mod => ({ default: mod.HeroSection })));
+const TrustedBySection = lazy(() => import('../components/sections/TrustedBySection').then(mod => ({ default: mod.TrustedBySection })));
 const ConversationSection = lazy(() => import('../components/sections/ConversationSection').then(mod => ({ default: mod.ConversationSection })));
 const ConversionOutputSection = lazy(() => import('../components/sections/ConversionOutputSection').then(mod => ({ default: mod.ConversionOutputSection })));
 const AudioAnalysisSection = lazy(() => import('../components/sections/AudioAnalysisSection').then(mod => ({ default: mod.AudioAnalysisSection })));
@@ -18,6 +19,10 @@ export default function Home() {
     <Box width="100%" overflow="hidden">
       <Suspense fallback={<LoadingSpinner size="xl" fullscreen />}>
         <HeroSection />
+      </Suspense>
+
+      <Suspense fallback={<LoadingSpinner />}>
+        <TrustedBySection />
       </Suspense>
 
       <Suspense fallback={<LoadingSpinner />}>
