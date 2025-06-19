@@ -134,8 +134,9 @@ export const TrustedBySection = memo(() => {
           maxW="800px"
           mx="auto"
           px={{ base: 2, sm: 0 }}
-          whiteSpace="nowrap"
+          whiteSpace={{ base: "normal", md: "nowrap" }}
           mb={{ base: 6, md: 9 }}
+          lineHeight={{ base: "1.3", md: "1.2" }}
         >
           Loved by recruiters and hiring managers at:
         </Text>

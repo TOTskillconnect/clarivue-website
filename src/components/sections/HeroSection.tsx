@@ -256,33 +256,33 @@ const FloatingUIOverlays = memo(() => {
     if (window?.innerWidth < 480) {
       // Extra small mobile - reduced padding
       padding = '3px';
-      borderRadius = '4px';
+      borderRadius = '6px';
     } else if (window?.innerWidth < 768) {
       // Small mobile - reduced padding
       padding = '4px';
-      borderRadius = '6px';
+      borderRadius = '8px';
     } else if (window?.innerWidth < 1024) {
       // Tablet
       padding = '10px';
-      borderRadius = '10px';
+      borderRadius = '16px';
     } else if (window?.innerWidth < 1440) {
       // Small desktop
       padding = '14px';
-      borderRadius = '12px';
+      borderRadius = '20px';
     } else {
       // Large desktop
       padding = '20px';
-      borderRadius = '16px';
+      borderRadius = '24px';
     }
 
     return {
       position: 'absolute' as const,
-      backdropFilter: 'blur(16px)',
-      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      backdropFilter: 'blur(20px)',
+      backgroundColor: 'rgba(255, 255, 255, 0.95)',
       borderRadius,
       padding,
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-      border: '1px solid rgba(255, 255, 255, 0.3)',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)',
+      border: '1px solid rgba(255, 255, 255, 0.6)',
       zIndex: 10
     };
   }, []);
@@ -543,9 +543,9 @@ const FloatingUIOverlays = memo(() => {
               style={{
                 marginBottom: getResponsiveSpacing('margin'),
                 padding: getResponsiveSpacing('padding'),
-                backgroundColor: 'rgba(66, 153, 225, 0.1)',
-                borderRadius: '4px',
-                borderLeft: window?.innerWidth < 480 ? '1px solid #4299E1' : window?.innerWidth < 768 ? '2px solid #4299E1' : '3px solid #4299E1'
+                backgroundColor: 'rgba(66, 153, 225, 0.12)',
+                borderRadius: window?.innerWidth < 480 ? '4px' : window?.innerWidth < 768 ? '6px' : '12px',
+                borderLeft: window?.innerWidth < 480 ? '1px solid #4299E1' : window?.innerWidth < 768 ? '2px solid #4299E1' : '4px solid #4299E1'
               }}
             >
               <motion.div 
@@ -592,8 +592,8 @@ const FloatingUIOverlays = memo(() => {
                   transition={{ duration: 0.3 }}
                   style={{
                     padding: getResponsiveSpacing('padding'),
-                    backgroundColor: 'rgba(147, 51, 234, 0.1)',
-                    borderRadius: '3px',
+                    backgroundColor: 'rgba(147, 51, 234, 0.12)',
+                    borderRadius: window?.innerWidth < 480 ? '4px' : window?.innerWidth < 768 ? '6px' : '10px',
                     marginBottom: getResponsiveSpacing('margin'),
                     display: 'flex',
                     alignItems: 'center',
@@ -646,9 +646,9 @@ const FloatingUIOverlays = memo(() => {
                   }}
                   style={{
                     padding: getResponsiveSpacing('padding'),
-                    backgroundColor: 'rgba(56, 161, 105, 0.08)',
-                    borderRadius: '3px',
-                    borderLeft: window?.innerWidth < 480 ? '1px solid #38A169' : window?.innerWidth < 768 ? '1px solid #38A169' : '2px solid #38A169',
+                    backgroundColor: 'rgba(56, 161, 105, 0.12)',
+                    borderRadius: window?.innerWidth < 480 ? '4px' : window?.innerWidth < 768 ? '6px' : '10px',
+                    borderLeft: window?.innerWidth < 480 ? '1px solid #38A169' : window?.innerWidth < 768 ? '2px solid #38A169' : '3px solid #38A169',
                     position: 'relative'
                   }}
                 >
@@ -798,9 +798,9 @@ const FloatingUIOverlays = memo(() => {
                 alignItems: 'center',
                 gap: getResponsiveSpacing('gap'),
                 padding: getResponsiveSpacing('padding'),
-                backgroundColor: `${currentToneData.color}15`,
-                borderRadius: '6px',
-                border: `1px solid ${currentToneData.color}30`
+                backgroundColor: `${currentToneData.color}18`,
+                borderRadius: window?.innerWidth < 480 ? '6px' : window?.innerWidth < 768 ? '8px' : '12px',
+                border: `1px solid ${currentToneData.color}40`
               }}
             >
               <motion.span 
@@ -852,12 +852,12 @@ const FloatingUIOverlays = memo(() => {
               position: 'absolute',
               top: getOverlayPositioning().scorecard.top,
               right: getOverlayPositioning().scorecard.right,
-              backgroundColor: 'rgba(255, 255, 255, 0.7)',
-              backdropFilter: 'blur(16px)',
-              borderRadius: '6px',
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(20px)',
+              borderRadius: window?.innerWidth < 480 ? '6px' : window?.innerWidth < 768 ? '8px' : '16px',
               padding: window?.innerWidth < 480 ? '3px' : window?.innerWidth < 768 ? '4px' : window?.innerWidth < 1024 ? '8px' : '16px',
-              boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)',
+              border: '1px solid rgba(255, 255, 255, 0.6)',
               width: getOverlayDimensions().scorecard.width,
               minHeight: getOverlayDimensions().scorecard.minHeight,
               zIndex: 10
@@ -1032,9 +1032,9 @@ export const HeroSection = memo(() => {
 
   const sectionStyle = useMemo(() => ({
     bgGradient: "linear(to-b, secondary.700, secondary.500 65%, primary.100)",
-    minH: { base: "100vh", sm: "110vh", md: "110vh" },
+    minH: { base: "100vh", sm: "95vh", md: "100vh", lg: "105vh" },
     pt: { base: "100px", md: "140px" },
-    pb: 0,
+    pb: { base: 4, sm: 6, md: 8 },
     overflow: "hidden",
     position: "relative" as const
   }), []);
@@ -1053,7 +1053,8 @@ export const HeroSection = memo(() => {
     justifyContent: "center",
     px: { base: 4, md: 6 },
     zIndex: 3,
-    mt: { base: 10, md: 14 }
+    mt: { base: 8, sm: 10, md: 12, lg: 14 },
+    mb: { base: 4, sm: 6, md: 8 }
   }), []);
 
   return (
