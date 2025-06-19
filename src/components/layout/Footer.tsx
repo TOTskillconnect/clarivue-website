@@ -75,14 +75,6 @@ export const Footer = () => {
               </Text>
             </VStack>
 
-            {/* Features Links */}
-            <FooterSection title="Features">
-              <FooterLink href="#">Live Follow-Up Questions</FooterLink>
-              <FooterLink href="#">Automated Scorecards</FooterLink>
-              <FooterLink href="#">Interview Notes</FooterLink>
-              <FooterLink href="#">Enterprise Grade Privacy</FooterLink>
-            </FooterSection>
-
             {/* Legal Links */}
             <FooterSection title="Legal">
               <FooterLink href="#">Terms and Conditions</FooterLink>

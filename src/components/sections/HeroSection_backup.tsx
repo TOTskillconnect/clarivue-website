@@ -2,7 +2,7 @@
 
 import { Box, Container, Heading, Text, Button, HStack, VStack } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
-import { useEffect, useCallback, memo, useRef, useState, useMemo } from 'react'
+import { useEffect, useCallback, memo, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // Optimize animations using CSS transform instead of keyframes
@@ -23,118 +23,49 @@ const scrollAnimation = keyframes`
   100% { transform: translateX(-50%); }
 `
 
-// Memoize static data to prevent recreation on every render
-const LOGO_DATA = [
-  { src: "/brandsocials/KaiOS-Logo.wine.svg", alt: "KaiOS" },
-  { src: "/brandsocials/Libra-Logo.wine.svg", alt: "Libra" },
-  { src: "/brandsocials/Fitbit-Logo.wine.svg", alt: "Fitbit" },
-  { src: "/brandsocials/OnePlus-Logo.wine.svg", alt: "OnePlus" },
-  { src: "/brandsocials/Foxtel-Logo.wine.svg", alt: "Foxtel" },
-  { src: "/brandsocials/square-logo.wine.svg", alt: "Square" },
-  { src: "/brandsocials/plaidlogo.wine.svg", alt: "Plaid" },
-  { src: "/brandsocials/nest-labs-logo-svgrepo-com.svg", alt: "Nest Labs" },
-  { src: "/brandsocials/brex-1.svg", alt: "Brex" }
-] as const;
-
-// Memoize static data for floating overlays
-const TONE_STATES = ["Confident", "Neutral", "Hesitant"] as const;
-const TONE_COLORS = {
-  "Confident": "#38A169",
-  "Neutral": "#4299E1", 
-  "Hesitant": "#E53E3E"
-} as const;
-const TONE_ICONS = {
-  "Confident": "📈",
-  "Neutral": "➖", 
-  "Hesitant": "📉"
-} as const;
-const METRICS_DATA = [
-  { icon: "🧠", label: "Leadership", score: 8.7, color: "green" },
-  { icon: "🛠️", label: "Problem Solving", score: 7.1, color: "yellow" },
-  { icon: "⚛️", label: "React Native", score: 5.9, color: "red" },
-  { icon: "🧱", label: "Systems Design", score: 6.5, color: "yellow" },
-  { icon: "🧮", label: "Data Structures", score: 7.9, color: "yellow" },
-  { icon: "🧪", label: "Testing", score: 8.2, color: "green" }
-] as const;
-
-// Memoize individual logo component to prevent unnecessary re-renders
-const LogoItem = memo(({ logo, index }: { logo: (typeof LOGO_DATA)[number]; index: number }) => {
-  const handleMouseEnter = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
-    e.currentTarget.style.opacity = '1';
-    e.currentTarget.style.transform = 'scale(1.05)';
-  }, []);
-
-  const handleMouseLeave = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
-    e.currentTarget.style.opacity = '0.85';
-    e.currentTarget.style.transform = 'scale(1)';
-  }, []);
-
-  const logoStyle = useMemo(() => ({
-    height: window?.innerWidth > 768 ? '100px' : '75px',
-    width: window?.innerWidth > 768 ? '300px' : '250px',
-    maxWidth: '100%',
-    maxHeight: '100%',
-    objectFit: 'contain' as const,
-    filter: 'brightness(0) invert(1)',
-    opacity: 0.85,
-    transition: 'all 0.3s ease',
-    fontWeight: 'bold',
-    willChange: 'transform, opacity'
-  }), []);
-
-  return (
-    <Box
-      key={`${logo.alt}-${index}`}
-      height={{ base: "80px", md: "100px" }}
-      width={{ base: "300px", md: "300px" }}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      flexShrink={0}
-    >
-      <img
-        src={logo.src}
-        alt={logo.alt}
-        style={logoStyle}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        loading="lazy"
-        decoding="async"
-      />
-    </Box>
-  );
-});
-
-LogoItem.displayName = 'LogoItem';
-
 // Memoize BrandLogos component to prevent unnecessary re-renders
 const BrandLogos = memo(() => {
+  const logos = [
+    { text: "Brex", color: "gray.300", weight: "700" },
+    { text: "Quora", color: "white", weight: "700" },
+    { text: "PEO", color: "white", weight: "700" },
+    { text: "CHRESN", color: "white", weight: "400" },
+    { text: "IMPROBABLE", color: "white", weight: "400" },
+    { text: "SAngelList", color: "gray.300", weight: "700" },
+    { text: "Engine", color: "gray.400", weight: "700" }
+  ];
+
   const LogoList = memo(() => (
-    <Box display="flex" alignItems="center" gap={{ base: 2, md: 3 }} flexShrink={0}>
-      {LOGO_DATA.map((logo, index) => (
-        <LogoItem key={`${logo.alt}-${index}`} logo={logo} index={index} />
+    <HStack spacing={8} justify="center" flexShrink={0}>
+      {logos.map((logo, index) => (
+        <Text
+          key={`${logo.text}-${index}`}
+          fontSize="21px"
+          fontWeight={logo.weight}
+          color={logo.color}
+          style={{ willChange: 'transform' }}
+        >
+          {logo.text}
+        </Text>
       ))}
-    </Box>
+    </HStack>
   ));
 
   LogoList.displayName = 'LogoList';
 
-  const containerStyle = useMemo(() => ({
-    willChange: 'transform',
-    backfaceVisibility: 'hidden' as const,
-    WebkitFontSmoothing: 'antialiased' as const
-  }), []);
-
   return (
     <Box 
+      overflow="hidden" 
       width="100%"
-      overflow="hidden"
-      px={{ base: 4, md: 6 }}
     >
       <Box
         display="flex"
         animation={`${scrollAnimation} 20s linear infinite`}
-        style={containerStyle}
+        style={{ 
+          willChange: 'transform',
+          backfaceVisibility: 'hidden',
+          WebkitFontSmoothing: 'antialiased'
+        }}
       >
         <LogoList />
         <LogoList />
@@ -147,8 +78,6 @@ BrandLogos.displayName = 'BrandLogos';
 
 // Memoize BackgroundDecorations for performance
 const BackgroundDecorations = memo(() => {
-  const floatStyle = useMemo(() => ({ willChange: 'transform' }), []);
-  
   return (
     <>
       {/* Optimize animations using transform3d */}
@@ -161,7 +90,7 @@ const BackgroundDecorations = memo(() => {
         borderRadius="full"
         background="radial-gradient(circle, rgba(223,246,255,0.2) 0%, rgba(16,118,209,0.1) 100%)"
         filter="blur(40px)"
-        style={floatStyle}
+        style={{ willChange: 'transform' }}
         animation={`${float} 8s ease-in-out infinite`}
         zIndex={0}
       />
@@ -223,11 +152,11 @@ const BackgroundDecorations = memo(() => {
       />
     </>
   )
-});
+})
 
-BackgroundDecorations.displayName = 'BackgroundDecorations';
+BackgroundDecorations.displayName = 'BackgroundDecorations'
 
-// Video Component for main display - Optimized
+// Video Component for main display
 const MainVideo = memo(() => {
   const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -235,42 +164,6 @@ const MainVideo = memo(() => {
   const handleVideoError = useCallback(() => {
     setVideoError(true);
   }, []);
-
-  const videoContainerStyle = useMemo(() => ({
-    w: { base: "95vw", sm: "90vw", md: "85vw", lg: "80vw", xl: "75vw", "2xl": "70vw" },
-    maxW: { base: "450px", sm: "600px", md: "900px", lg: "1200px", xl: "1400px", "2xl": "1600px" },
-    minW: { base: "320px", md: "600px" },
-    mx: "auto",
-    position: "relative" as const,
-    borderRadius: { base: "24px 24px 0 0", md: "32px 32px 0 0" },
-    overflow: "hidden",
-    boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)",
-    zIndex: 2,
-    aspectRatio: { base: "16/10", md: "16/9" },
-    transition: "all 0.3s ease-in-out",
-    _hover: {
-      transform: "scale(1.02)",
-      boxShadow: "0 35px 60px -12px rgba(59, 130, 246, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1)"
-    }
-  }), []);
-
-  const videoStyle = useMemo(() => ({
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover' as const,
-    display: 'block',
-    borderRadius: window?.innerWidth > 768 ? '32px 32px 0 0' : '24px 24px 0 0'
-  }), []);
-
-  const fallbackStyle = useMemo(() => ({
-    width: "100%",
-    height: "100%",
-    backgroundImage: "url('/interview-dashboards.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    minHeight: { base: "200px", sm: "300px", md: "400px", lg: "500px" }
-  }), []);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -283,15 +176,50 @@ const MainVideo = memo(() => {
   if (videoError) {
     // Fallback to original image if video fails
     return (
-      <Box {...videoContainerStyle}>
-        <Box {...fallbackStyle} />
+      <Box
+        w={{ base: "95vw", sm: "90vw", md: "85vw", lg: "80vw", xl: "75vw", "2xl": "70vw" }}
+        maxW={{ base: "450px", sm: "600px", md: "900px", lg: "1200px", xl: "1400px", "2xl": "1600px" }}
+        minW={{ base: "320px", md: "600px" }}
+        mx="auto"
+        position="relative"
+        borderRadius={{ base: "24px 24px 0 0", md: "32px 32px 0 0" }}
+        overflow="hidden"
+        boxShadow="0 25px 50px -12px rgba(59, 130, 246, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)"
+        zIndex={2}
+        aspectRatio={{ base: "16/10", md: "16/9" }}
+      >
+        <Box
+          width="100%"
+          height="100%"
+          backgroundImage="url('/interview-dashboards.png')"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          backgroundRepeat="no-repeat"
+          minHeight={{ base: "200px", sm: "300px", md: "400px", lg: "500px" }}
+        />
         <FloatingUIOverlays />
       </Box>
     );
   }
 
   return (
-    <Box {...videoContainerStyle}>
+    <Box
+      w={{ base: "95vw", sm: "90vw", md: "85vw", lg: "80vw", xl: "75vw", "2xl": "70vw" }}
+      maxW={{ base: "450px", sm: "600px", md: "900px", lg: "1200px", xl: "1400px", "2xl": "1600px" }}
+      minW={{ base: "320px", md: "600px" }}
+      mx="auto"
+      position="relative"
+      borderRadius={{ base: "24px 24px 0 0", md: "32px 32px 0 0" }}
+      overflow="hidden"
+      boxShadow="0 25px 50px -12px rgba(59, 130, 246, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)"
+      zIndex={2}
+      aspectRatio={{ base: "16/10", md: "16/9" }}
+      transition="all 0.3s ease-in-out"
+      _hover={{
+        transform: "scale(1.02)",
+        boxShadow: "0 35px 60px -12px rgba(59, 130, 246, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1)"
+      }}
+    >
       <video
         ref={videoRef}
         autoPlay
@@ -299,8 +227,13 @@ const MainVideo = memo(() => {
         muted
         playsInline
         onError={handleVideoError}
-        style={videoStyle}
-        preload="metadata"
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
+          borderRadius: window?.innerWidth > 768 ? '32px 32px 0 0' : '24px 24px 0 0'
+        }}
       >
         <source src="/hero-video-clarivue.mp4" type="video/mp4" />
         Your browser does not support the video tag.
@@ -312,22 +245,42 @@ const MainVideo = memo(() => {
 
 MainVideo.displayName = 'MainVideo';
 
-// Floating UI Overlays Component - Optimized with performance improvements
+// Floating UI Overlays Component - now positioned within video frame
 const FloatingUIOverlays = memo(() => {
   const [toneIndex, setToneIndex] = useState(0);
   const [showSecondQuestion, setShowSecondQuestion] = useState(false);
   const [showScorecard, setShowScorecard] = useState(false);
 
-  const metrics = useMemo(() => METRICS_DATA, []);
+  const toneStates = ["Confident", "Neutral", "Hesitant"];
 
-  // Memoize expensive calculations
-  const getScoreColor = useCallback((score: number) => {
+  const toneColors = {
+    "Confident": "#38A169",
+    "Neutral": "#4299E1", 
+    "Hesitant": "#E53E3E"
+  };
+
+  const toneIcons = {
+    "Confident": "📈",
+    "Neutral": "➖", 
+    "Hesitant": "📉"
+  };
+
+  const metrics = [
+    { icon: "🧠", label: "Leadership", score: 8.7, color: "green" },
+    { icon: "🛠️", label: "Problem Solving", score: 7.1, color: "yellow" },
+    { icon: "⚛️", label: "React Native", score: 5.9, color: "red" },
+    { icon: "🧱", label: "Systems Design", score: 6.5, color: "yellow" },
+    { icon: "🧮", label: "Data Structures", score: 7.9, color: "yellow" },
+    { icon: "🧪", label: "Testing", score: 8.2, color: "green" }
+  ];
+
+  const getScoreColor = (score: number) => {
     if (score >= 8) return "green";
     if (score >= 6) return "yellow";
     return "red";
-  }, []);
+  };
 
-  const getScoreStyles = useCallback((color: string) => {
+  const getScoreStyles = (color: string) => {
     switch (color) {
       case "green":
         return {
@@ -350,45 +303,7 @@ const FloatingUIOverlays = memo(() => {
       default:
         return {};
     }
-  }, []);
-
-  // Memoize base overlay styles with responsive sizing
-  const overlayBaseStyles = useMemo(() => ({
-    position: 'absolute' as const,
-    backdropFilter: 'blur(16px)',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderRadius: '12px',
-    padding: window?.innerWidth < 768 ? '8px' : '12px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-    border: '1px solid rgba(255, 255, 255, 0.3)',
-    zIndex: 10
-  }), []);
-
-  // Responsive sizing utilities - Reduced by 50%
-  const getResponsiveSize = useCallback((baseSize: number, mobileMultiplier: number = 0.35, tabletMultiplier: number = 0.42) => {
-    if (window?.innerWidth < 768) return baseSize * mobileMultiplier; // Mobile (50% reduction)
-    if (window?.innerWidth < 1024) return baseSize * tabletMultiplier; // Tablet (50% reduction)
-    return baseSize * 0.5; // Desktop (50% reduction)
-  }, []);
-
-  const getResponsiveFontSize = useCallback((desktopSize: string, mobileSize: string, tabletSize?: string) => {
-    const sizes = {
-      desktop: parseInt(desktopSize) * 0.5, // 50% reduction
-      mobile: parseInt(mobileSize) * 0.5,   // 50% reduction
-      tablet: tabletSize ? parseInt(tabletSize) * 0.5 : parseInt(mobileSize) * 0.5
-    };
-    
-    if (window?.innerWidth < 768) return `${sizes.mobile}px`; // Mobile
-    if (window?.innerWidth < 1024) return `${sizes.tablet}px`; // Tablet
-    return `${sizes.desktop}px`; // Desktop
-  }, []);
-
-  // Memoize current tone data
-  const currentToneData = useMemo(() => ({
-    state: TONE_STATES[toneIndex],
-    color: TONE_COLORS[TONE_STATES[toneIndex]],
-    icon: TONE_ICONS[TONE_STATES[toneIndex]]
-  }), [toneIndex]);
+  };
 
   useEffect(() => {
     // Show second question after 6 seconds
@@ -403,7 +318,7 @@ const FloatingUIOverlays = memo(() => {
 
     // Tone cycle every 4 seconds
     const toneTimer = setInterval(() => {
-      setToneIndex((prev) => (prev + 1) % TONE_STATES.length);
+      setToneIndex((prev) => (prev + 1) % toneStates.length);
     }, 4000);
 
     return () => {
@@ -413,9 +328,20 @@ const FloatingUIOverlays = memo(() => {
     };
   }, []);
 
+  const overlayBaseStyles = {
+    position: 'absolute' as const,
+    backdropFilter: 'blur(16px)',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: '12px',
+    padding: '12px',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    zIndex: 10
+  };
+
   return (
     <>
-      {/* Conversation Card - Bottom Left - Mobile Optimized */}
+      {/* Conversation Card - Bottom Left */}
       <motion.div
         initial={{ opacity: 0, y: 40, x: -40, scale: 0.7 }}
         animate={{ 
@@ -432,21 +358,21 @@ const FloatingUIOverlays = memo(() => {
         }}
         style={{
           ...overlayBaseStyles,
-          bottom: getResponsiveSize(20, 0.3, 0.4) + 'px',
-          left: getResponsiveSize(20, 0.3, 0.4) + 'px',
-          maxWidth: window?.innerWidth < 768 ? '140px' : window?.innerWidth < 1024 ? '190px' : '300px',
+          bottom: window?.innerWidth > 768 ? '20px' : '15px',
+          left: window?.innerWidth > 768 ? '20px' : '15px',
+          maxWidth: window?.innerWidth > 768 ? '320px' : '240px',
           backgroundColor: 'rgba(255, 255, 255, 0.95)',
         }}
         whileHover={{ 
-          scale: window?.innerWidth < 768 ? 1.01 : 1.02, 
-          y: -4,
-          boxShadow: '0 6px 15px rgba(0, 0, 0, 0.25)',
+          scale: 1.05, 
+          y: -8,
+          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.25)',
           transition: { duration: 0.2 }
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: window?.innerWidth < 768 ? '3px' : '5px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
           <motion.span 
-            style={{ fontSize: getResponsiveFontSize('18px', '14px', '16px'), marginTop: '1px' }}
+            style={{ fontSize: '18px', marginTop: '2px' }}
             animate={{ 
               rotate: [0, 5, -5, 0],
               scale: [1, 1.05, 1]
@@ -465,11 +391,11 @@ const FloatingUIOverlays = memo(() => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 2 }}
               style={{
-                marginBottom: window?.innerWidth < 768 ? '4px' : '6px',
-                padding: window?.innerWidth < 768 ? '3px 4px' : '4px 6px',
+                marginBottom: '12px',
+                padding: '8px 12px',
                 backgroundColor: 'rgba(66, 153, 225, 0.1)',
-                borderRadius: '4px',
-                borderLeft: window?.innerWidth < 768 ? '2px solid #4299E1' : '3px solid #4299E1'
+                borderRadius: '8px',
+                borderLeft: '3px solid #4299E1'
               }}
             >
               <motion.div 
@@ -477,12 +403,12 @@ const FloatingUIOverlays = memo(() => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 2.3 }}
                 style={{ 
-                  fontSize: getResponsiveFontSize('11px', '8px', '9px'),
+                  fontSize: window?.innerWidth > 768 ? '11px' : '9px', 
                   fontWeight: '600', 
                   color: '#4299E1',
-                  marginBottom: window?.innerWidth < 768 ? '1px' : '2px',
+                  marginBottom: '3px',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.3px'
+                  letterSpacing: '0.5px'
                 }}
               >
                 AI PROMPT
@@ -492,9 +418,9 @@ const FloatingUIOverlays = memo(() => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 2.5 }}
                 style={{ 
-                  fontSize: getResponsiveFontSize('14px', '10px', '12px'),
+                  fontSize: window?.innerWidth > 768 ? '14px' : '12px', 
                   color: '#1A202C',
-                  lineHeight: '1.2',
+                  lineHeight: '1.4',
                   fontWeight: '600'
                 }}
               >
@@ -520,10 +446,10 @@ const FloatingUIOverlays = memo(() => {
                     scale: { type: "spring", stiffness: 200 }
                   }}
                   style={{
-                    padding: window?.innerWidth < 768 ? '2px 4px 2px 7px' : '3px 6px 3px 10px',
+                    padding: '6px 12px 6px 20px',
                     backgroundColor: 'rgba(56, 161, 105, 0.08)',
-                    borderRadius: '3px',
-                    borderLeft: window?.innerWidth < 768 ? '1px solid #38A169' : '2px solid #38A169',
+                    borderRadius: '6px',
+                    borderLeft: '2px solid #38A169',
                     position: 'relative'
                   }}
                 >
@@ -533,11 +459,11 @@ const FloatingUIOverlays = memo(() => {
                     transition={{ duration: 0.4, delay: 0.3 }}
                     style={{
                       position: 'absolute',
-                      left: window?.innerWidth < 768 ? '3px' : '4px',
+                      left: '8px',
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      width: window?.innerWidth < 768 ? '1.5px' : '2px',
-                      height: window?.innerWidth < 768 ? '1.5px' : '2px',
+                      width: '4px',
+                      height: '4px',
                       backgroundColor: '#38A169',
                       borderRadius: '50%'
                     }} 
@@ -547,12 +473,12 @@ const FloatingUIOverlays = memo(() => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                     style={{ 
-                      fontSize: getResponsiveFontSize('10px', '7px', '8px'),
+                      fontSize: window?.innerWidth > 768 ? '10px' : '8px', 
                       fontWeight: '600', 
                       color: '#38A169',
-                      marginBottom: '1px',
+                      marginBottom: '2px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.3px'
+                      letterSpacing: '0.5px'
                     }}
                   >
                     SUGGESTED FOLLOW-UP
@@ -562,9 +488,9 @@ const FloatingUIOverlays = memo(() => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.6 }}
                     style={{ 
-                      fontSize: getResponsiveFontSize('13px', '9px', '11px'),
+                      fontSize: window?.innerWidth > 768 ? '13px' : '11px', 
                       color: '#2D3748',
-                      lineHeight: '1.2',
+                      lineHeight: '1.3',
                       fontWeight: '500'
                     }}
                   >
@@ -577,7 +503,7 @@ const FloatingUIOverlays = memo(() => {
         </div>
       </motion.div>
 
-      {/* Tone Dial - Right Side, 30% from top - Mobile Optimized */}
+      {/* Tone Dial - Right Side, 30% from top */}
       <motion.div
         initial={{ opacity: 0, y: -40, x: 40, scale: 0.7, rotate: -10 }}
         animate={{ 
@@ -596,23 +522,23 @@ const FloatingUIOverlays = memo(() => {
         }}
         style={{
           ...overlayBaseStyles,
-          top: window?.innerWidth < 768 ? '20%' : window?.innerWidth < 1024 ? '23%' : '25%',
-          right: getResponsiveSize(20, 0.3, 0.4) + 'px',
+          top: window?.innerWidth > 768 ? '30%' : '25%',
+          right: window?.innerWidth > 768 ? '20px' : '15px',
           backgroundColor: 'rgba(255, 255, 255, 0.95)',
-          minWidth: window?.innerWidth < 768 ? '70px' : window?.innerWidth < 1024 ? '100px' : '130px'
+          minWidth: window?.innerWidth > 768 ? '140px' : '120px'
         }}
         whileHover={{ 
-          scale: window?.innerWidth < 768 ? 1.02 : 1.04, 
-          y: -4,
-          boxShadow: '0 8px 18px rgba(99, 102, 241, 0.3)',
+          scale: 1.08, 
+          y: -8,
+          boxShadow: '0 15px 35px rgba(99, 102, 241, 0.3)',
           transition: { duration: 0.2 }
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: window?.innerWidth < 768 ? '2px' : '4px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <motion.div
             style={{
-              fontSize: getResponsiveFontSize('16px', '12px', '14px'),
-              padding: window?.innerWidth < 768 ? '1px' : '2px',
+              fontSize: '16px',
+              padding: '4px',
               borderRadius: '50%',
               backgroundColor: 'rgba(99, 102, 241, 0.1)'
             }}
@@ -633,12 +559,12 @@ const FloatingUIOverlays = memo(() => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 2.2 }}
               style={{ 
-                fontSize: getResponsiveFontSize('10px', '7px', '8px'),
+                fontSize: window?.innerWidth > 768 ? '10px' : '9px', 
                 fontWeight: '600', 
                 color: '#6366F1',
-                marginBottom: window?.innerWidth < 768 ? '2px' : '3px',
+                marginBottom: '4px',
                 textTransform: 'uppercase',
-                letterSpacing: '0.3px'
+                letterSpacing: '0.5px'
               }}
             >
               TONE ANALYSIS
@@ -657,15 +583,15 @@ const FloatingUIOverlays = memo(() => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: window?.innerWidth < 768 ? '1.5px' : '3px',
-                padding: window?.innerWidth < 768 ? '1px 2px' : '2px 4px',
-                backgroundColor: `${currentToneData.color}15`,
-                borderRadius: '6px',
-                border: `1px solid ${currentToneData.color}30`
+                gap: '6px',
+                padding: '4px 8px',
+                backgroundColor: `${toneColors[toneStates[toneIndex] as keyof typeof toneColors]}15`,
+                borderRadius: '12px',
+                border: `1px solid ${toneColors[toneStates[toneIndex] as keyof typeof toneColors]}30`
               }}
             >
               <motion.span 
-                style={{ fontSize: getResponsiveFontSize('12px', '9px', '10px') }}
+                style={{ fontSize: '12px' }}
                 animate={{ 
                   rotate: [0, 10, -10, 0],
                   scale: [1, 1.1, 1]
@@ -675,25 +601,25 @@ const FloatingUIOverlays = memo(() => {
                   scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
                 }}
               >
-                {currentToneData.icon}
+                {toneIcons[toneStates[toneIndex] as keyof typeof toneIcons]}
               </motion.span>
               <motion.div 
                 style={{ 
-                  fontSize: getResponsiveFontSize('13px', '9px', '11px'),
+                  fontSize: window?.innerWidth > 768 ? '13px' : '12px', 
                   fontWeight: '700', 
-                  color: currentToneData.color
+                  color: toneColors[toneStates[toneIndex] as keyof typeof toneColors]
                 }}
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
-                {currentToneData.state}
+                {toneStates[toneIndex]}
               </motion.div>
             </motion.div>
           </div>
         </div>
       </motion.div>
 
-      {/* Skills Scorecard - Right Side, below Tone - Mobile Optimized */}
+      {/* Skills Scorecard - Right Side, below Tone */}
       <AnimatePresence>
         {showScorecard && (
           <motion.div
@@ -713,21 +639,21 @@ const FloatingUIOverlays = memo(() => {
             }}
             style={{
               position: 'absolute',
-              top: window?.innerWidth < 768 ? 'calc(20% + 35px)' : window?.innerWidth < 1024 ? 'calc(23% + 40px)' : 'calc(25% + 50px)',
-              right: getResponsiveSize(20, 0.3, 0.4) + 'px',
+              top: window?.innerWidth > 768 ? 'calc(30% + 95px)' : 'calc(25% + 85px)',
+              right: window?.innerWidth > 768 ? '20px' : '15px',
               backgroundColor: 'rgba(255, 255, 255, 0.7)',
               backdropFilter: 'blur(16px)',
-              borderRadius: '6px',
-              padding: window?.innerWidth < 768 ? '4px' : '6px',
-              boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)',
+              borderRadius: '12px',
+              padding: '12px',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
               border: '1px solid rgba(255, 255, 255, 0.3)',
-              width: window?.innerWidth < 768 ? '90px' : window?.innerWidth < 1024 ? '120px' : '160px',
+              width: window?.innerWidth > 768 ? '240px' : '200px',
               zIndex: 10
             }}
             whileHover={{ 
-              scale: window?.innerWidth < 768 ? 1.005 : 1.01, 
-              y: -4,
-              boxShadow: '0 8px 20px rgba(0, 0, 0, 0.25)',
+              scale: 1.02, 
+              y: -8,
+              boxShadow: '0 15px 40px rgba(0, 0, 0, 0.25)',
               transition: { duration: 0.2 }
             }}
           >
@@ -736,17 +662,17 @@ const FloatingUIOverlays = memo(() => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1 }}
               style={{ 
-                fontSize: getResponsiveFontSize('10px', '7px', '8px'),
+                fontSize: window?.innerWidth > 768 ? '10px' : '9px', 
                 fontWeight: '600', 
                 color: '#374151',
-                marginBottom: window?.innerWidth < 768 ? '3px' : '4px',
+                marginBottom: '8px',
                 textTransform: 'uppercase',
-                letterSpacing: '0.3px'
+                letterSpacing: '0.5px'
               }}
             >
               📊 SCORECARD
             </motion.div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: window?.innerWidth < 768 ? '1px' : '1.5px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
               {metrics.map((metric, index) => (
                 <motion.div
                   key={metric.label}
@@ -762,17 +688,17 @@ const FloatingUIOverlays = memo(() => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: window?.innerWidth < 768 ? '1px 0' : '1.5px 0',
+                    padding: '3px 0',
                     borderBottom: index < metrics.length - 1 ? '1px solid rgba(0, 0, 0, 0.05)' : 'none'
                   }}
                   whileHover={{ 
-                    x: window?.innerWidth < 768 ? 0.5 : 1, 
+                    x: 2, 
                     transition: { duration: 0.1 }
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: window?.innerWidth < 768 ? '1.5px' : '3px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <motion.span 
-                      style={{ fontSize: getResponsiveFontSize('11px', '8px', '9px') }}
+                      style={{ fontSize: '11px' }}
                       animate={{ rotate: [0, 5, -5, 0] }}
                       transition={{ 
                         duration: 3 + index, 
@@ -784,7 +710,7 @@ const FloatingUIOverlays = memo(() => {
                       {metric.icon}
                     </motion.span>
                     <span style={{ 
-                      fontSize: getResponsiveFontSize('11px', '8px', '9px'),
+                      fontSize: window?.innerWidth > 768 ? '11px' : '10px', 
                       fontWeight: '500', 
                       color: '#1F2937'
                     }}>
@@ -802,9 +728,9 @@ const FloatingUIOverlays = memo(() => {
                     }}
                     style={{
                       ...getScoreStyles(getScoreColor(metric.score)),
-                      padding: window?.innerWidth < 768 ? '0.5px 1.5px' : '1px 2.5px',
-                      borderRadius: '3px',
-                      fontSize: getResponsiveFontSize('10px', '7px', '8px'),
+                      padding: '2px 5px',
+                      borderRadius: '5px',
+                      fontSize: window?.innerWidth > 768 ? '10px' : '9px',
                       fontWeight: '600'
                     }}
                   >
@@ -822,70 +748,19 @@ const FloatingUIOverlays = memo(() => {
 
 FloatingUIOverlays.displayName = 'FloatingUIOverlays';
 
-// Performance optimization hook
-const usePerformanceOptimization = () => {
-  useEffect(() => {
-    // Optimize animations for low-end devices
-    const connection = (navigator as any).connection;
-    const isSlowConnection = connection && (
-      connection.effectiveType === 'slow-2g' || 
-      connection.effectiveType === '2g' ||
-      connection.saveData
-    );
-
-    if (isSlowConnection) {
-      document.documentElement.style.setProperty('--animation-duration', '0.1s');
-    }
-
-    // Preload critical resources
-    const criticalImages = ['/hero-video-clarivue.mp4', '/interview-dashboards.png'];
-    criticalImages.forEach(src => {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = src;
-      document.head.appendChild(link);
-    });
-
-    return () => {
-      // Cleanup if needed
-    };
-  }, []);
-};
-
-export const HeroSection = memo(() => {
-  usePerformanceOptimization();
-
-  const sectionStyle = useMemo(() => ({
-    bgGradient: "linear(to-b, secondary.700, secondary.500 65%, primary.100)",
-    minH: { base: "135vh", md: "110vh" },
-    pt: { base: "100px", md: "140px" },
-    pb: 0,
-    overflow: "hidden",
-    position: "relative" as const
-  }), []);
-
-  const containerStyle = useMemo(() => ({
-    maxW: "container.xl",
-    px: { base: 4, md: 6 },
-    position: "relative" as const,
-    zIndex: 5
-  }), []);
-
-  const videoContainerStyle = useMemo(() => ({
-    position: "relative" as const,
-    w: "100%",
-    display: "flex",
-    justifyContent: "center",
-    px: { base: 4, md: 6 },
-    zIndex: 3,
-    mt: { base: 10, md: 14 }
-  }), []);
-
+export const HeroSection = () => {
   return (
-    <Box {...sectionStyle}>
+    <Box
+      bgGradient="linear(to-b, secondary.700, secondary.500 65%, primary.100)"
+      minH={{ base: "135vh", md: "110vh" }}
+      pt={{ base: "100px", md: "140px" }}
+      pb={0}
+      overflow="hidden"
+      position="relative"
+    >
       <BackgroundDecorations />
       
-      <Container {...containerStyle}>
+      <Container maxW="container.xl" px={{ base: 4, md: 6 }} position="relative" zIndex={5}>
         <VStack spacing={5} align="center" maxW="1011px" mx="auto">
           {/* Hero Text */}
           <Box textAlign="center" maxW="900px">
@@ -953,9 +828,17 @@ export const HeroSection = memo(() => {
       </Container>
 
       {/* Video Container - Properly contained */}
-      <Box {...videoContainerStyle}>
+      <Box 
+        position="relative"
+        w="100%"
+        display="flex"
+        justifyContent="center"
+        px={{ base: 4, md: 6 }}
+        zIndex={3}
+        mt={6}
+      >
         <MainVideo />
       </Box>
     </Box>
   )
-}); 
+} 

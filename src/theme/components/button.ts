@@ -27,16 +27,29 @@ export const Button: ComponentStyleConfig = {
     },
   },
   variants: {
-    solid: {
-      bg: 'primary.500',
+    primary: {
+      bg: 'brand.primary',
       color: 'white',
       _hover: {
-        bg: 'primary.600',
-        _disabled: {
-          bg: 'primary.500',
-        },
+        bg: 'brand.dark',
+        transform: 'translateY(-2px)',
       },
-      _active: { bg: 'primary.700' },
+    },
+    secondary: {
+      bg: 'transparent',
+      color: 'brand.primary',
+      border: '2px solid',
+      borderColor: 'brand.primary',
+      _hover: {
+        bg: 'brand.light',
+      },
+    },
+    gradient: {
+      bgGradient: 'linear(135deg, #10B981, #3B82F6)',
+      color: 'white',
+      _hover: {
+        bgGradient: 'linear(135deg, #059669, #2563EB)',
+      },
     },
     outline: {
       border: '2px solid',

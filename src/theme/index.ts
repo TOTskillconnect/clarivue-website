@@ -48,8 +48,14 @@ const theme = extendTheme({
       p: 6,
     },
     gradientBg: {
-      bgGradient: 'linear(180deg, secondary.700 0%, secondary.500 65%, primary.100 100%)',
+      bgGradient: 'linear(180deg, #1E2A78 0%, #5F9DF7 65%, #C1EFFF 100%)',
     },
+    heroGradient: {
+      bgGradient: 'linear(135deg, brand.primary 0%, brand.secondary 100%)',
+    },
+    ctaGradient: {
+      bgGradient: 'linear(135deg, #10B981 0%, #3B82F6 100%)',
+    }
   },
   textStyles: {
     h1: {
