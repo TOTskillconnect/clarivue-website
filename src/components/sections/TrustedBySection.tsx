@@ -111,11 +111,14 @@ BrandLogos.displayName = 'BrandLogos';
 
 export const TrustedBySection = memo(() => {
   const sectionStyle = useMemo(() => ({
-    bg: "#F2F9FF",
+    bg: { base: "blue.50", sm: "blue.50", md: "blue.50", lg: "blue.50" },
+    backgroundColor: "#F2F9FF",
     pt: { base: 16, md: 20 },
     pb: { base: 12, md: 15 },
     borderTop: "1px solid",
-    borderColor: "gray.200"
+    borderColor: "gray.200",
+    width: "100%",
+    position: "relative" as const
   }), []);
 
   const containerStyle = useMemo(() => ({

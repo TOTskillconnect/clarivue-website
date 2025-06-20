@@ -137,6 +137,11 @@ const MainVideo = memo(() => {
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      console.log('Mobile detection:', {
+        screenWidth: window.innerWidth,
+        isMobile: mobile,
+        userAgent: navigator.userAgent.substring(0, 50) + '...'
+      });
       setIsMobile(mobile);
     };
     
@@ -178,14 +183,19 @@ const MainVideo = memo(() => {
   }, []);
 
   const handleImageLoad = useCallback(() => {
+    console.log('✅ GIF loaded successfully on mobile device');
     setVideoLoaded(true);
     setVideoError(false);
   }, []);
 
-  const handleImageError = useCallback(() => {
-    console.error('GIF loading error');
+  const handleImageError = useCallback((error: any) => {
+    console.error('GIF loading error:', error);
+    console.error('Failed to load:', '/hero-video-clarivue.gif');
+    console.error('Mobile detection:', isMobile);
+    console.error('User Agent:', navigator.userAgent);
+    console.error('Screen width:', window.innerWidth);
     setVideoError(true);
-  }, []);
+  }, [isMobile]);
 
   const videoContainerStyle = useMemo(() => ({
     w: { base: "95vw", sm: "90vw", md: "85vw", lg: "80vw", xl: "75vw", "2xl": "70vw" },
@@ -257,7 +267,7 @@ const MainVideo = memo(() => {
       {isMobile ? (
         // Mobile: Use GIF for better performance and compatibility
         <img
-          src="@hero-video-clarivue.gif"
+          src="/hero-video-clarivue.gif"
           alt="Clarivue AI Interview Co-Pilot Demo"
           style={mediaStyle}
           onLoad={handleImageLoad}
@@ -1083,7 +1093,7 @@ const usePerformanceOptimization = () => {
       // Preload GIF for mobile devices
       const gifPreloader = document.createElement('link');
       gifPreloader.rel = 'prefetch';
-      gifPreloader.href = '@hero-video-clarivue.gif';
+      gifPreloader.href = '/hero-video-clarivue.gif';
       gifPreloader.as = 'image';
       document.head.appendChild(gifPreloader);
     } else {
