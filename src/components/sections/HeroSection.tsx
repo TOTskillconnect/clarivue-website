@@ -126,11 +126,24 @@ const BackgroundDecorations = memo(() => {
 
 BackgroundDecorations.displayName = 'BackgroundDecorations';
 
-// Video Component for main display - Optimized
+// Video Component for main display - Optimized with mobile GIF support
 const MainVideo = memo(() => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleVideoLoad = useCallback(() => {
     setVideoLoaded(true);
@@ -164,6 +177,16 @@ const MainVideo = memo(() => {
     }
   }, []);
 
+  const handleImageLoad = useCallback(() => {
+    setVideoLoaded(true);
+    setVideoError(false);
+  }, []);
+
+  const handleImageError = useCallback(() => {
+    console.error('GIF loading error');
+    setVideoError(true);
+  }, []);
+
   const videoContainerStyle = useMemo(() => ({
     w: { base: "95vw", sm: "90vw", md: "85vw", lg: "80vw", xl: "75vw", "2xl": "70vw" },
     maxW: { base: "450px", sm: "600px", md: "900px", lg: "1200px", xl: "1400px", "2xl": "1600px" },
@@ -182,7 +205,7 @@ const MainVideo = memo(() => {
     }
   }), []);
 
-  const videoStyle = useMemo(() => ({
+  const mediaStyle = useMemo(() => ({
     width: '100%',
     height: '100%',
     objectFit: 'cover' as const,
@@ -209,42 +232,58 @@ const MainVideo = memo(() => {
   }), [videoLoaded]);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      // Preload the video
-      video.load();
-      
-      // Add event listeners
-      video.addEventListener('loadeddata', handleVideoLoad);
-      video.addEventListener('canplay', handleCanPlay);
-      video.addEventListener('error', handleVideoError);
-      
-      return () => {
-        video.removeEventListener('loadeddata', handleVideoLoad);
-        video.removeEventListener('canplay', handleCanPlay);
-        video.removeEventListener('error', handleVideoError);
-      };
+    if (!isMobile) {
+      const video = videoRef.current;
+      if (video) {
+        // Preload the video
+        video.load();
+        
+        // Add event listeners
+        video.addEventListener('loadeddata', handleVideoLoad);
+        video.addEventListener('canplay', handleCanPlay);
+        video.addEventListener('error', handleVideoError);
+        
+        return () => {
+          video.removeEventListener('loadeddata', handleVideoLoad);
+          video.removeEventListener('canplay', handleCanPlay);
+          video.removeEventListener('error', handleVideoError);
+        };
+      }
     }
-  }, [handleVideoLoad, handleCanPlay, handleVideoError]);
+  }, [handleVideoLoad, handleCanPlay, handleVideoError, isMobile]);
 
   return (
     <Box {...videoContainerStyle}>
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        style={videoStyle}
-        poster="" // Remove any poster to avoid flash
-        crossOrigin="anonymous"
-      >
-        <source src="/hero-video-clarivue.mp4" type="video/mp4" />
-        {/* Add multiple formats for better compatibility */}
-        <source src="/hero-video-clarivue.webm" type="video/webm" />
-        <source src="/hero-video-clarivue.ogv" type="video/ogg" />
-      </video>
+      {isMobile ? (
+        // Mobile: Use GIF for better performance and compatibility
+        <img
+          src="/hero-video-clarivue.gif"
+          alt="Clarivue AI Interview Co-Pilot Demo"
+          style={mediaStyle}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
+          loading="eager"
+          decoding="async"
+        />
+      ) : (
+        // Desktop: Use video for better quality
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          style={mediaStyle}
+          poster="" // Remove any poster to avoid flash
+          crossOrigin="anonymous"
+        >
+          <source src="/hero-video-clarivue.mp4" type="video/mp4" />
+          {/* Add multiple formats for better compatibility */}
+          <source src="/hero-video-clarivue.webm" type="video/webm" />
+          <source src="/hero-video-clarivue.ogv" type="video/ogg" />
+        </video>
+      )}
       
       {/* Loading indicator */}
       <Box style={loadingStyle}>
@@ -1037,19 +1076,31 @@ const usePerformanceOptimization = () => {
       document.documentElement.style.setProperty('--animation-duration', '0.1s');
     }
 
-    // Preload video with proper priority
-    const videoPreloader = document.createElement('link');
-    videoPreloader.rel = 'prefetch';
-    videoPreloader.href = '/hero-video-clarivue.mp4';
-    videoPreloader.as = 'video';
-    document.head.appendChild(videoPreloader);
+    // Detect mobile device for appropriate preloading
+    const isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // Preload GIF for mobile devices
+      const gifPreloader = document.createElement('link');
+      gifPreloader.rel = 'prefetch';
+      gifPreloader.href = '/hero-video-clarivue.gif';
+      gifPreloader.as = 'image';
+      document.head.appendChild(gifPreloader);
+    } else {
+      // Preload video with proper priority for desktop
+      const videoPreloader = document.createElement('link');
+      videoPreloader.rel = 'prefetch';
+      videoPreloader.href = '/hero-video-clarivue.mp4';
+      videoPreloader.as = 'video';
+      document.head.appendChild(videoPreloader);
 
-    // Preload alternative video formats if available
-    const webmPreloader = document.createElement('link');
-    webmPreloader.rel = 'prefetch';
-    webmPreloader.href = '/hero-video-clarivue.webm';
-    webmPreloader.as = 'video';
-    document.head.appendChild(webmPreloader);
+      // Preload alternative video formats if available
+      const webmPreloader = document.createElement('link');
+      webmPreloader.rel = 'prefetch';
+      webmPreloader.href = '/hero-video-clarivue.webm';
+      webmPreloader.as = 'video';
+      document.head.appendChild(webmPreloader);
+    }
 
     // Add global CSS for loading spinner animation
     const style = document.createElement('style');
@@ -1063,8 +1114,12 @@ const usePerformanceOptimization = () => {
 
     return () => {
       // Cleanup preload links
-      document.head.removeChild(videoPreloader);
-      document.head.removeChild(webmPreloader);
+      const preloadLinks = document.querySelectorAll('link[rel="prefetch"]');
+      preloadLinks.forEach(link => {
+        if (link.getAttribute('href')?.includes('hero-video-clarivue')) {
+          document.head.removeChild(link);
+        }
+      });
       document.head.removeChild(style);
     };
   }, []);
