@@ -18,6 +18,11 @@ const pulse = keyframes`
   100% { transform: scale3d(1, 1, 1) rotate(0deg); }
 `
 
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`
+
 // Memoize static data for floating overlays
 const TONE_STATES = ["Confident", "Neutral", "Hesitant"] as const;
 const TONE_COLORS = {
@@ -123,11 +128,40 @@ BackgroundDecorations.displayName = 'BackgroundDecorations';
 
 // Video Component for main display - Optimized
 const MainVideo = memo(() => {
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleVideoError = useCallback(() => {
+  const handleVideoLoad = useCallback(() => {
+    setVideoLoaded(true);
+    setVideoError(false);
+  }, []);
+
+  const handleVideoError = useCallback((error: any) => {
+    console.error('Video loading error:', error);
     setVideoError(true);
+    // Retry loading after a short delay
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.load();
+      }
+    }, 1000);
+  }, []);
+
+  const handleCanPlay = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.error('Video play error:', error);
+        // Try again after a short delay
+        setTimeout(() => {
+          if (videoRef.current) {
+            videoRef.current.play().catch(() => {
+              console.warn('Video autoplay failed - user interaction required');
+            });
+          }
+        }, 500);
+      });
+    }
   }, []);
 
   const videoContainerStyle = useMemo(() => ({
@@ -153,36 +187,45 @@ const MainVideo = memo(() => {
     height: '100%',
     objectFit: 'cover' as const,
     display: 'block',
-    borderRadius: window?.innerWidth > 768 ? '32px 32px 0 0' : '24px 24px 0 0'
-  }), []);
+    borderRadius: window?.innerWidth > 768 ? '32px 32px 0 0' : '24px 24px 0 0',
+    opacity: videoLoaded ? 1 : 0,
+    transition: 'opacity 0.3s ease-in-out'
+  }), [videoLoaded]);
 
-  const fallbackStyle = useMemo(() => ({
-    width: "100%",
-    height: "100%",
-    backgroundImage: "url('/interview-dashboards.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    minHeight: { base: "200px", sm: "300px", md: "400px", lg: "500px" }
-  }), []);
+  const loadingStyle = useMemo(() => ({
+    position: 'absolute' as const,
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(16, 118, 209, 0.1)',
+    backdropFilter: 'blur(10px)',
+    opacity: videoLoaded ? 0 : 1,
+    transition: 'opacity 0.3s ease-in-out',
+    pointerEvents: videoLoaded ? 'none' as const : 'auto' as const
+  }), [videoLoaded]);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        setVideoError(true);
-      });
+    const video = videoRef.current;
+    if (video) {
+      // Preload the video
+      video.load();
+      
+      // Add event listeners
+      video.addEventListener('loadeddata', handleVideoLoad);
+      video.addEventListener('canplay', handleCanPlay);
+      video.addEventListener('error', handleVideoError);
+      
+      return () => {
+        video.removeEventListener('loadeddata', handleVideoLoad);
+        video.removeEventListener('canplay', handleCanPlay);
+        video.removeEventListener('error', handleVideoError);
+      };
     }
-  }, []);
-
-  if (videoError) {
-    // Fallback to original image if video fails
-    return (
-      <Box {...videoContainerStyle}>
-        <Box {...fallbackStyle} />
-        <FloatingUIOverlays />
-      </Box>
-    );
-  }
+  }, [handleVideoLoad, handleCanPlay, handleVideoError]);
 
   return (
     <Box {...videoContainerStyle}>
@@ -192,13 +235,38 @@ const MainVideo = memo(() => {
         loop
         muted
         playsInline
-        onError={handleVideoError}
+        preload="auto"
         style={videoStyle}
-        preload="metadata"
+        poster="" // Remove any poster to avoid flash
+        crossOrigin="anonymous"
       >
         <source src="/hero-video-clarivue.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
+        {/* Add multiple formats for better compatibility */}
+        <source src="/hero-video-clarivue.webm" type="video/webm" />
+        <source src="/hero-video-clarivue.ogv" type="video/ogg" />
       </video>
+      
+      {/* Loading indicator */}
+      <Box style={loadingStyle}>
+        <motion.div
+          animate={{
+            rotate: 360,
+            scale: [1, 1.1, 1]
+          }}
+          transition={{
+            rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+            scale: { duration: 1, repeat: Infinity, ease: "easeInOut" }
+          }}
+          style={{
+            width: '40px',
+            height: '40px',
+            border: '3px solid rgba(16, 118, 209, 0.3)',
+            borderTop: '3px solid #1076D1',
+            borderRadius: '50%'
+          }}
+        />
+      </Box>
+      
       <FloatingUIOverlays />
     </Box>
   );
@@ -969,17 +1037,35 @@ const usePerformanceOptimization = () => {
       document.documentElement.style.setProperty('--animation-duration', '0.1s');
     }
 
-    // Preload critical resources
-    const criticalImages = ['/hero-video-clarivue.mp4', '/interview-dashboards.png'];
-    criticalImages.forEach(src => {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = src;
-      document.head.appendChild(link);
-    });
+    // Preload video with proper priority
+    const videoPreloader = document.createElement('link');
+    videoPreloader.rel = 'prefetch';
+    videoPreloader.href = '/hero-video-clarivue.mp4';
+    videoPreloader.as = 'video';
+    document.head.appendChild(videoPreloader);
+
+    // Preload alternative video formats if available
+    const webmPreloader = document.createElement('link');
+    webmPreloader.rel = 'prefetch';
+    webmPreloader.href = '/hero-video-clarivue.webm';
+    webmPreloader.as = 'video';
+    document.head.appendChild(webmPreloader);
+
+    // Add global CSS for loading spinner animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
 
     return () => {
-      // Cleanup if needed
+      // Cleanup preload links
+      document.head.removeChild(videoPreloader);
+      document.head.removeChild(webmPreloader);
+      document.head.removeChild(style);
     };
   }, []);
 };
