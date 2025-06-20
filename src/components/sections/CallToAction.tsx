@@ -1,5 +1,6 @@
 import { Box, Container, Heading, Button, HStack, VStack, Image } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
+import { useNavigate } from 'react-router-dom'
 import { ResponsiveImage } from '../common/ResponsiveImage'
 
 const float = keyframes`
@@ -15,6 +16,12 @@ const gamepadFloat = keyframes`
 `
 
 export const CallToAction = () => {
+  const navigate = useNavigate()
+
+  const handleBookDemo = () => {
+    navigate('/book-demo')
+  }
+
   return (
     <Box py={{ base: 8, md: 10, lg: 12 }} bg="#F2F9FF">
       <Container maxW="container.xl" px={{ base: 4, md: 6 }}>
@@ -111,6 +118,7 @@ export const CallToAction = () => {
                   _hover={{ bg: 'whiteAlpha.100' }}
                   width={{ base: "100%", sm: "auto" }}
                   maxW={{ base: "280px", sm: "none" }}
+                  onClick={handleBookDemo}
                 >
                   Book a demo
                 </Button>
@@ -158,6 +166,7 @@ export const CallToAction = () => {
                 borderColor="primary.50"
                 borderRadius="26px"
                 _hover={{ bg: 'whiteAlpha.100' }}
+                onClick={handleBookDemo}
               >
                 Book a demo
               </Button>

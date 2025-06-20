@@ -16,6 +16,7 @@ import {
   Text
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
+import { Link as RouterLink } from 'react-router-dom'
 import { Logo } from '../brand/Logo'
 
 export const Header = () => {
