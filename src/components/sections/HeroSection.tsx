@@ -257,7 +257,7 @@ const MainVideo = memo(() => {
       {isMobile ? (
         // Mobile: Use GIF for better performance and compatibility
         <img
-          src="/hero-video-clarivue.gif"
+          src="@hero-video-clarivue.gif"
           alt="Clarivue AI Interview Co-Pilot Demo"
           style={mediaStyle}
           onLoad={handleImageLoad}
@@ -1083,7 +1083,7 @@ const usePerformanceOptimization = () => {
       // Preload GIF for mobile devices
       const gifPreloader = document.createElement('link');
       gifPreloader.rel = 'prefetch';
-      gifPreloader.href = '/hero-video-clarivue.gif';
+      gifPreloader.href = '@hero-video-clarivue.gif';
       gifPreloader.as = 'image';
       document.head.appendChild(gifPreloader);
     } else {
