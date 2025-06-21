@@ -16,11 +16,12 @@ import {
   Text
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import { Logo } from '../brand/Logo'
 
 export const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const navigate = useNavigate()
 
   const scrollToFeatures = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -28,6 +29,12 @@ export const Header = () => {
     if (featuresSection) {
       featuresSection.scrollIntoView({ behavior: 'smooth' });
     }
+    onClose(); // Close mobile menu after navigation
+  };
+
+  const handlePricingClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/pricing');
     onClose(); // Close mobile menu after navigation
   };
 
@@ -82,7 +89,15 @@ export const Header = () => {
               >
                 Features
               </Link>
-              <Link fontSize="18px" color="gray.600" _hover={{ color: 'primary.500' }}>Pricing</Link>
+              <Link 
+                href="#pricing"
+                onClick={handlePricingClick}
+                fontSize="18px" 
+                color="gray.600" 
+                _hover={{ color: 'primary.500' }}
+              >
+                Pricing
+              </Link>
               <Link fontSize="18px" color="gray.600" _hover={{ color: 'primary.500' }}>Resources</Link>
             </HStack>
 
@@ -147,7 +162,7 @@ export const Header = () => {
               <MobileNavLink href="#features" onClick={scrollToFeatures}>
                 Features
               </MobileNavLink>
-              <MobileNavLink href="#pricing" onClick={onClose}>
+              <MobileNavLink href="#pricing" onClick={handlePricingClick}>
                 Pricing
               </MobileNavLink>
               <MobileNavLink href="#resources" onClick={onClose}>

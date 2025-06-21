@@ -11,6 +11,7 @@ const ConversationSection = lazy(() => import('../components/sections/Conversati
 const ConversionOutputSection = lazy(() => import('../components/sections/ConversionOutputSection').then(mod => ({ default: mod.ConversionOutputSection })));
 const AudioAnalysisSection = lazy(() => import('../components/sections/AudioAnalysisSection').then(mod => ({ default: mod.AudioAnalysisSection })));
 const UserTestimonialsSection = lazy(() => import('../components/sections/UserTestimonialsSection').then(mod => ({ default: mod.UserTestimonialsSection })));
+const UserStatsSection = lazy(() => import('../components/sections/UserStatsSection').then(mod => ({ default: mod.UserStatsSection })));
 const FAQSection = lazy(() => import('../components/sections/FAQSection').then(mod => ({ default: mod.FAQSection })));
 const CallToAction = lazy(() => import('../components/sections/CallToAction').then(mod => ({ default: mod.CallToAction })));
 
@@ -39,6 +40,10 @@ export default function Home() {
 
       <Suspense fallback={<LoadingSpinner />}>
         <UserTestimonialsSection />
+      </Suspense>
+
+      <Suspense fallback={<LoadingSpinner />}>
+        <UserStatsSection />
       </Suspense>
 
       <Suspense fallback={<LoadingSpinner />}>

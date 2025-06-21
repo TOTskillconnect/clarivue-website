@@ -12,86 +12,164 @@ export default function BookDemo() {
     // Handle form submission here
   };
 
+  // Responsive helper function
+  const getResponsiveStyle = (mobile: any, tablet: any, desktop: any) => {
+    const isMobile = window.innerWidth < 768;
+    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+    return isMobile ? mobile : isTablet ? tablet : desktop;
+  };
+
   const pageStyle = {
     minHeight: '100vh',
     background: 'linear-gradient(135deg, #EBF4FF 0%, #C3DAFE 50%,rgb(81, 177, 247) 100%)',
-    padding: '120px 16px 48px',
+    padding: getResponsiveStyle('80px 12px 32px', '100px 16px 40px', '120px 16px 48px'),
     fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'
   };
 
   const containerStyle = {
-    maxWidth: '800px',
-    margin: '0 auto'
+    maxWidth: getResponsiveStyle('100%', '768px', '800px'),
+    margin: '0 auto',
+    padding: getResponsiveStyle('0 4px', '0 8px', '0')
   };
 
   const gridStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '25px',
-    marginBottom: '32px'
+    gridTemplateColumns: getResponsiveStyle('1fr', '1fr', 'repeat(2, 1fr)'),
+    gap: getResponsiveStyle('20px', '24px', '25px'),
+    marginBottom: getResponsiveStyle('24px', '28px', '32px')
   };
 
   const valueCardStyle = {
     background: 'white',
-    borderRadius: '16px',
-    padding: '18px',
-    marginBottom: '15px',
+    borderRadius: getResponsiveStyle('12px', '14px', '16px'),
+    padding: getResponsiveStyle('16px', '17px', '18px'),
+    marginBottom: getResponsiveStyle('12px', '13px', '15px'),
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
   };
 
   const valueItemStyle = {
     display: 'flex',
     alignItems: 'flex-start',
-    gap: '12px',
-    marginBottom: '15px'
+    gap: getResponsiveStyle('10px', '11px', '12px'),
+    marginBottom: getResponsiveStyle('12px', '13px', '15px')
   };
 
   const iconStyle = (bgColor: string) => ({
-    width: '30px',
-    height: '30px',
+    width: getResponsiveStyle('26px', '28px', '30px'),
+    height: getResponsiveStyle('26px', '28px', '30px'),
     background: bgColor,
-    borderRadius: '6px',
+    borderRadius: getResponsiveStyle('5px', '5.5px', '6px'),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '15px',
+    fontSize: getResponsiveStyle('13px', '14px', '15px'),
     flexShrink: 0
   });
 
   const testimonialStyle: React.CSSProperties = {
     background: '#0B1D42',
     color: 'white',
-    borderRadius: '16px',
-    padding: '32px 24px',
+    borderRadius: getResponsiveStyle('12px', '14px', '16px'),
+    padding: getResponsiveStyle('24px 20px', '28px 22px', '32px 24px'),
     position: 'relative',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '180px'
+    minHeight: getResponsiveStyle('200px', '190px', '180px')
   };
 
   const formCardStyle = {
     background: 'white',
-    borderRadius: '16px',
-    padding: '24px',
+    borderRadius: getResponsiveStyle('12px', '14px', '16px'),
+    padding: getResponsiveStyle('20px', '22px', '24px'),
     boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)'
   };
+
+  // Add responsive CSS
+  const responsiveCSS = `
+    @media (max-width: 767px) {
+      .demo-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+      
+      .testimonial-image {
+        width: 200px !important;
+        margin-top: 20px !important;
+        margin-bottom: 15px !important;
+      }
+      
+      .testimonial-quote {
+        margin-top: -30px !important;
+        margin-left: 5% !important;
+        font-size: 18px !important;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        padding: 12px !important;
+      }
+      
+      .stats-number {
+        font-size: 16px !important;
+      }
+      
+      .stats-text {
+        font-size: 10px !important;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .demo-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+      }
+      
+      .testimonial-image {
+        width: 250px !important;
+        margin-top: 30px !important;
+        margin-bottom: 20px !important;
+      }
+      
+      .testimonial-quote {
+        margin-top: -40px !important;
+        margin-left: 8% !important;
+        font-size: 20px !important;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 14px !important;
+        padding: 14px !important;
+      }
+    }
+  `;
+
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = responsiveCSS;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   return (
     <div style={pageStyle}>
       <div style={containerStyle}>
-        {/* Main 2-column grid */}
-        <div style={gridStyle}>
+        {/* Main grid */}
+        <div style={gridStyle} className="demo-grid">
           
           {/* Left Side */}
           <div>
             {/* Value Proposition Card */}
             <div style={valueCardStyle}>
               <h1 style={{ 
-                fontSize: '18px', 
+                fontSize: getResponsiveStyle('16px', '17px', '18px'), 
                 fontWeight: '600', 
                 color: '#1F2937', 
-                marginBottom: '15px',
+                marginBottom: getResponsiveStyle('12px', '13px', '15px'),
                 lineHeight: '1.5'
               }}>
                 Take the guesswork out of hiring with our intelligent interview assistant.
@@ -103,10 +181,19 @@ export default function BookDemo() {
                     ⏱️
                   </div>
                   <div>
-                    <div style={{ fontWeight: '600', color: '#1F2937', marginBottom: '3px', fontSize: '13px' }}>
+                    <div style={{ 
+                      fontWeight: '600', 
+                      color: '#1F2937', 
+                      marginBottom: '3px', 
+                      fontSize: getResponsiveStyle('12px', '12.5px', '13px')
+                    }}>
                       No more note-taking.
                     </div>
-                    <div style={{ color: '#6B7280', fontSize: '11px', lineHeight: '1.5' }}>
+                    <div style={{ 
+                      color: '#6B7280', 
+                      fontSize: getResponsiveStyle('10px', '10.5px', '11px'), 
+                      lineHeight: '1.5' 
+                    }}>
                       Clarivue captures everything — you stay focused.
                     </div>
                   </div>
@@ -117,10 +204,19 @@ export default function BookDemo() {
                     👁️
                   </div>
                   <div>
-                    <div style={{ fontWeight: '600', color: '#1F2937', marginBottom: '3px', fontSize: '13px' }}>
+                    <div style={{ 
+                      fontWeight: '600', 
+                      color: '#1F2937', 
+                      marginBottom: '3px', 
+                      fontSize: getResponsiveStyle('12px', '12.5px', '13px')
+                    }}>
                       Ask better questions.
                     </div>
-                    <div style={{ color: '#6B7280', fontSize: '11px', lineHeight: '1.5' }}>
+                    <div style={{ 
+                      color: '#6B7280', 
+                      fontSize: getResponsiveStyle('10px', '10.5px', '11px'), 
+                      lineHeight: '1.5' 
+                    }}>
                       Real-time cues and follow-ups, right when you need them.
                     </div>
                   </div>
@@ -131,10 +227,19 @@ export default function BookDemo() {
                     📊
                   </div>
                   <div>
-                    <div style={{ fontWeight: '600', color: '#1F2937', marginBottom: '3px', fontSize: '13px' }}>
+                    <div style={{ 
+                      fontWeight: '600', 
+                      color: '#1F2937', 
+                      marginBottom: '3px', 
+                      fontSize: getResponsiveStyle('12px', '12.5px', '13px')
+                    }}>
                       Decide with confidence.
                     </div>
-                    <div style={{ color: '#6B7280', fontSize: '11px', lineHeight: '1.5' }}>
+                    <div style={{ 
+                      color: '#6B7280', 
+                      fontSize: getResponsiveStyle('10px', '10.5px', '11px'), 
+                      lineHeight: '1.5' 
+                    }}>
                       Instant scoring and insights to hire the best, faster.
                     </div>
                   </div>
@@ -150,14 +255,15 @@ export default function BookDemo() {
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                marginTop: '45px',
-                marginBottom: '25px'
+                marginTop: getResponsiveStyle('25px', '35px', '45px'),
+                marginBottom: getResponsiveStyle('15px', '20px', '25px')
               }}>
                 <img 
                   src="/chrissy-moore.png"
                   alt="Chrissy Moore"
+                  className="testimonial-image"
                   style={{ 
-                    width: '300px', 
+                    width: getResponsiveStyle('220px', '260px', '300px'), 
                     height: 'auto', 
                     objectFit: 'cover',
                     objectPosition: 'center top',
@@ -172,17 +278,20 @@ export default function BookDemo() {
                 position: 'relative', 
                 zIndex: 10, 
                 textAlign: 'left',
-                marginTop: '-60px',
-                marginLeft: '10%'
+                marginTop: getResponsiveStyle('-40px', '-50px', '-60px'),
+                marginLeft: getResponsiveStyle('8%', '9%', '10%')
               }}>
-                <blockquote style={{ 
-                  fontSize: '24px', 
-                  fontWeight: '700', 
-                  marginBottom: '24px', 
-                  lineHeight: '1.3',
-                  color: 'white',
-                  margin: '0 0 24px 0'
-                }}>
+                <blockquote 
+                  className="testimonial-quote"
+                  style={{ 
+                    fontSize: getResponsiveStyle('20px', '22px', '24px'), 
+                    fontWeight: '700', 
+                    marginBottom: getResponsiveStyle('18px', '21px', '24px'), 
+                    lineHeight: '1.3',
+                    color: 'white',
+                    margin: '0 0 24px 0'
+                  }}
+                >
                   "We're hiring faster, more confidently, and with less effort."
                 </blockquote>
                 
@@ -190,7 +299,7 @@ export default function BookDemo() {
                 <div>
                   <div style={{ 
                     fontWeight: '700', 
-                    fontSize: '18px', 
+                    fontSize: getResponsiveStyle('16px', '17px', '18px'), 
                     color: 'white',
                     marginBottom: '4px'
                   }}>
@@ -198,7 +307,7 @@ export default function BookDemo() {
                   </div>
                   <div style={{ 
                     color: 'rgba(255, 255, 255, 0.8)', 
-                    fontSize: '16px',
+                    fontSize: getResponsiveStyle('14px', '15px', '16px'),
                     fontWeight: '400'
                   }}>
                     Head of Talent Acquisition
@@ -211,10 +320,10 @@ export default function BookDemo() {
           {/* Right Section - Booking Form */}
           <div style={formCardStyle}>
             <h3 style={{ 
-              fontSize: '20px', 
+              fontSize: getResponsiveStyle('18px', '19px', '20px'), 
               fontWeight: '700', 
               color: '#1F2937', 
-              marginBottom: '24px' 
+              marginBottom: getResponsiveStyle('20px', '22px', '24px')
             }}>
               Book a demo
             </h3>
@@ -231,7 +340,11 @@ export default function BookDemo() {
               >
                 <Input 
                   placeholder="Your name" 
-                  style={{ borderRadius: '8px', height: '40px' }}
+                  style={{ 
+                    borderRadius: getResponsiveStyle('6px', '7px', '8px'), 
+                    height: getResponsiveStyle('38px', '39px', '40px'),
+                    fontSize: getResponsiveStyle('14px', '15px', '16px')
+                  }}
                 />
               </Form.Item>
 
@@ -245,7 +358,10 @@ export default function BookDemo() {
               >
                 <Select 
                   placeholder="— Please select —" 
-                  style={{ borderRadius: '8px', height: '40px' }}
+                  style={{ 
+                    borderRadius: getResponsiveStyle('6px', '7px', '8px'), 
+                    height: getResponsiveStyle('38px', '39px', '40px')
+                  }}
                 >
                   <Option value="work">Work Email</Option>
                   <Option value="personal">Personal Email</Option>
@@ -259,7 +375,10 @@ export default function BookDemo() {
               >
                 <Select 
                   placeholder="— Please select —" 
-                  style={{ borderRadius: '8px', height: '40px' }}
+                  style={{ 
+                    borderRadius: getResponsiveStyle('6px', '7px', '8px'), 
+                    height: getResponsiveStyle('38px', '39px', '40px')
+                  }}
                 >
                   <Option value="recruiter">Recruiter</Option>
                   <Option value="hiring-manager">Hiring Manager</Option>
@@ -279,14 +398,15 @@ export default function BookDemo() {
                   <div style={{ 
                     display: 'flex', 
                     flexDirection: 'column', 
-                    gap: '8px',
+                    gap: getResponsiveStyle('6px', '7px', '8px'),
                     alignItems: 'flex-start'
                   }}>
                     <Radio.Button value="small" style={{ 
                       textAlign: 'left', 
                       width: 'auto',
                       minWidth: 'fit-content',
-                      padding: '0 16px'
+                      padding: getResponsiveStyle('0 12px', '0 14px', '0 16px'),
+                      fontSize: getResponsiveStyle('13px', '14px', '15px')
                     }}>
                       &lt; 100
                     </Radio.Button>
@@ -294,7 +414,8 @@ export default function BookDemo() {
                       textAlign: 'left', 
                       width: 'auto',
                       minWidth: 'fit-content',
-                      padding: '0 16px'
+                      padding: getResponsiveStyle('0 12px', '0 14px', '0 16px'),
+                      fontSize: getResponsiveStyle('13px', '14px', '15px')
                     }}>
                       100 to 500
                     </Radio.Button>
@@ -302,7 +423,8 @@ export default function BookDemo() {
                       textAlign: 'left', 
                       width: 'auto',
                       minWidth: 'fit-content',
-                      padding: '0 16px'
+                      padding: getResponsiveStyle('0 12px', '0 14px', '0 16px'),
+                      fontSize: getResponsiveStyle('13px', '14px', '15px')
                     }}>
                       500+
                     </Radio.Button>
@@ -316,7 +438,11 @@ export default function BookDemo() {
               >
                 <Input 
                   placeholder="Optional" 
-                  style={{ borderRadius: '8px', height: '40px' }}
+                  style={{ 
+                    borderRadius: getResponsiveStyle('6px', '7px', '8px'), 
+                    height: getResponsiveStyle('38px', '39px', '40px'),
+                    fontSize: getResponsiveStyle('14px', '15px', '16px')
+                  }}
                 />
               </Form.Item>
 
@@ -326,52 +452,97 @@ export default function BookDemo() {
                   htmlType="submit"
                   style={{
                     width: '100%',
-                    height: '48px',
+                    height: getResponsiveStyle('44px', '46px', '48px'),
                     background: 'linear-gradient(135deg, #1E2A78 0%, #5F9DF7 100%)',
                     border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '16px',
+                    borderRadius: getResponsiveStyle('6px', '7px', '8px'),
+                    fontSize: getResponsiveStyle('14px', '15px', '16px'),
                     fontWeight: '600',
                     boxShadow: '0 4px 12px rgba(31, 42, 120, 0.3)',
-                    marginBottom: '32px'
+                    marginBottom: getResponsiveStyle('24px', '28px', '32px')
                   }}
                 >
                   Pick a time
                 </Button>
                 
                 {/* Stats Bar */}
-                <div style={{
-                  background: 'linear-gradient(135deg, #8BE6A8, #7AC4E8)',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '16px',
-                  color: '#2D3748'
-                }}>
+                <div 
+                  className="stats-grid"
+                  style={{
+                    background: 'linear-gradient(135deg, #8BE6A8, #7AC4E8)',
+                    borderRadius: getResponsiveStyle('10px', '11px', '12px'),
+                    padding: getResponsiveStyle('14px', '15px', '16px'),
+                    display: 'grid',
+                    gridTemplateColumns: getResponsiveStyle('1fr', 'repeat(3, 1fr)', 'repeat(3, 1fr)'),
+                    gap: getResponsiveStyle('12px', '14px', '16px'),
+                    color: '#2D3748'
+                  }}
+                >
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '18px', fontWeight: '700', marginBottom: '4px' }}>
+                    <div 
+                      className="stats-number"
+                      style={{ 
+                        fontSize: getResponsiveStyle('16px', '17px', '18px'), 
+                        fontWeight: '700', 
+                        marginBottom: '4px' 
+                      }}
+                    >
                       6-10 hrs
                     </div>
-                    <div style={{ fontSize: '11px', opacity: 0.9, lineHeight: '1.3' }}>
+                    <div 
+                      className="stats-text"
+                      style={{ 
+                        fontSize: getResponsiveStyle('10px', '10.5px', '11px'), 
+                        opacity: 0.9, 
+                        lineHeight: '1.3' 
+                      }}
+                    >
                       Average time recruiters save per week.
                     </div>
                   </div>
                   
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '18px', fontWeight: '700', marginBottom: '4px' }}>
+                    <div 
+                      className="stats-number"
+                      style={{ 
+                        fontSize: getResponsiveStyle('16px', '17px', '18px'), 
+                        fontWeight: '700', 
+                        marginBottom: '4px' 
+                      }}
+                    >
                       91%
                     </div>
-                    <div style={{ fontSize: '11px', opacity: 0.9, lineHeight: '1.3' }}>
+                    <div 
+                      className="stats-text"
+                      style={{ 
+                        fontSize: getResponsiveStyle('10px', '10.5px', '11px'), 
+                        opacity: 0.9, 
+                        lineHeight: '1.3' 
+                      }}
+                    >
                       Satisfaction with interviewers and hiring managers.
                     </div>
                   </div>
                   
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '18px', fontWeight: '700', marginBottom: '4px' }}>
+                    <div 
+                      className="stats-number"
+                      style={{ 
+                        fontSize: getResponsiveStyle('16px', '17px', '18px'), 
+                        fontWeight: '700', 
+                        marginBottom: '4px' 
+                      }}
+                    >
                       28%
                     </div>
-                    <div style={{ fontSize: '11px', opacity: 0.9, lineHeight: '1.3' }}>
+                    <div 
+                      className="stats-text"
+                      style={{ 
+                        fontSize: getResponsiveStyle('10px', '10.5px', '11px'), 
+                        opacity: 0.9, 
+                        lineHeight: '1.3' 
+                      }}
+                    >
                       Fewer interviews per hire.
                     </div>
                   </div>
