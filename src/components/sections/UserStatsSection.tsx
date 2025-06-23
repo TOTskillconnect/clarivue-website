@@ -155,7 +155,7 @@ export const UserStatsSection = () => {
                 <VStack spacing={0} align="start">
                   <Text fontWeight="700" color="gray.800" fontSize="12px">Bongshim E.</Text>
                   <HStack spacing={1}>
-                    <Text color="gray.500" fontSize="12px">Talent Lead</Text>
+                    <Text color="gray.500" fontSize="12px">Engineering Lead</Text>
                     <Box w="1px" h="12px" bg="gray.300" />
                     <Text color="primary.600" fontSize="12px" fontWeight="600">Softello</Text>
                   </HStack>
