@@ -137,6 +137,19 @@ BackgroundDecorations.displayName = 'BackgroundDecorations';
 const VideoCallControls = memo(() => {
   const [micMuted, setMicMuted] = useState(false);
   const [videoOff, setVideoOff] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device for responsive controls
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Toggle states periodically to simulate real call
   useEffect(() => {
@@ -155,17 +168,19 @@ const VideoCallControls = memo(() => {
   }, []);
 
   const controlButtonStyle = {
-    width: '40px',
-    height: '40px',
+    width: isMobile ? '36px' : '40px',
+    height: isMobile ? '36px' : '40px',
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '18px',
+    fontSize: isMobile ? '16px' : '18px',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     border: '1px solid rgba(255, 255, 255, 0.3)',
-    backdropFilter: 'blur(10px)'
+    backdropFilter: 'blur(10px)',
+    minWidth: isMobile ? '36px' : '40px',
+    minHeight: isMobile ? '36px' : '40px'
   };
 
   return (
@@ -175,18 +190,20 @@ const VideoCallControls = memo(() => {
       transition={{ duration: 0.8, delay: 2 }}
       style={{
         position: 'absolute',
-        bottom: '16px',
-        left: '25%',
+        bottom: isMobile ? '12px' : '16px',
+        left: isMobile ? '50%' : '25%',
         transform: 'translateX(-50%)',
         display: 'flex',
         alignItems: 'center',
-        gap: '12px',
-        padding: '12px 16px',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        borderRadius: '24px',
+        gap: isMobile ? '8px' : '12px',
+        padding: isMobile ? '8px 12px' : '12px 16px',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        borderRadius: isMobile ? '20px' : '24px',
         backdropFilter: 'blur(20px)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
-        zIndex: 10
+        zIndex: 10,
+        maxWidth: isMobile ? '90%' : 'auto',
+        overflow: 'hidden'
       }}
     >
       {/* Microphone */}
@@ -196,7 +213,7 @@ const VideoCallControls = memo(() => {
           backgroundColor: micMuted ? '#EA4335' : 'rgba(255, 255, 255, 0.2)',
           color: micMuted ? 'white' : '#E8EAED'
         }}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: isMobile ? 1.05 : 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setMicMuted(!micMuted)}
       >
@@ -210,64 +227,72 @@ const VideoCallControls = memo(() => {
           backgroundColor: videoOff ? '#EA4335' : 'rgba(255, 255, 255, 0.2)',
           color: videoOff ? 'white' : '#E8EAED'
         }}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: isMobile ? 1.05 : 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setVideoOff(!videoOff)}
       >
         {videoOff ? '📹' : '📷'}
       </motion.div>
 
-      {/* Screen Share */}
-      <motion.div
-        style={{
-          ...controlButtonStyle,
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          color: '#E8EAED'
-        }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        🖥️
-      </motion.div>
+      {/* Screen Share - Hidden on very small mobile screens */}
+      {(!isMobile || window.innerWidth > 400) && (
+        <motion.div
+          style={{
+            ...controlButtonStyle,
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            color: '#E8EAED'
+          }}
+          whileHover={{ scale: isMobile ? 1.05 : 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          🖥️
+        </motion.div>
+      )}
 
-      {/* More Options */}
-      <motion.div
-        style={{
-          ...controlButtonStyle,
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          color: '#E8EAED'
-        }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        ⚙️
-      </motion.div>
+      {/* More Options - Hidden on mobile for space */}
+      {!isMobile && (
+        <motion.div
+          style={{
+            ...controlButtonStyle,
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            color: '#E8EAED'
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          ⚙️
+        </motion.div>
+      )}
 
-      {/* Chat */}
-      <motion.div
-        style={{
-          ...controlButtonStyle,
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          color: '#E8EAED'
-        }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        💬
-      </motion.div>
+      {/* Chat - Hidden on very small mobile screens */}
+      {(!isMobile || window.innerWidth > 400) && (
+        <motion.div
+          style={{
+            ...controlButtonStyle,
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            color: '#E8EAED'
+          }}
+          whileHover={{ scale: isMobile ? 1.05 : 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          💬
+        </motion.div>
+      )}
 
-      {/* Participants */}
-      <motion.div
-        style={{
-          ...controlButtonStyle,
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          color: '#E8EAED'
-        }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        👥
-      </motion.div>
+      {/* Participants - Hidden on mobile for space */}
+      {!isMobile && (
+        <motion.div
+          style={{
+            ...controlButtonStyle,
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            color: '#E8EAED'
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          👥
+        </motion.div>
+      )}
 
       {/* End Call */}
       <motion.div
@@ -275,9 +300,9 @@ const VideoCallControls = memo(() => {
           ...controlButtonStyle,
           backgroundColor: '#EA4335',
           color: 'white',
-          marginLeft: '8px'
+          marginLeft: isMobile ? '4px' : '8px'
         }}
-        whileHover={{ scale: 1.1, backgroundColor: '#D93025' }}
+        whileHover={{ scale: isMobile ? 1.05 : 1.1, backgroundColor: '#D93025' }}
         whileTap={{ scale: 0.95 }}
       >
         📞
@@ -347,33 +372,6 @@ const VideoComponent = memo(() => {
     setVideoError(true);
   }, []);
 
-  const mediaStyle = useMemo(() => ({
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover' as const,
-    display: 'block',
-    borderRadius: '24px 0 0 24px',
-    opacity: videoLoaded ? 1 : 0,
-    transition: 'opacity 0.3s ease-in-out'
-  }), [videoLoaded]);
-
-  const loadingStyle = useMemo(() => ({
-    position: 'absolute' as const,
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(16, 118, 209, 0.1)',
-    backdropFilter: 'blur(10px)',
-    opacity: videoLoaded ? 0 : 1,
-    transition: 'opacity 0.3s ease-in-out',
-    pointerEvents: videoLoaded ? 'none' as const : 'auto' as const,
-    borderRadius: '24px 0 0 24px'
-  }), [videoLoaded]);
-
   useEffect(() => {
     if (!isMobile) {
       const video = videoRef.current;
@@ -394,20 +392,28 @@ const VideoComponent = memo(() => {
 
   return (
     <Box 
-      width="95%" 
-      height="95%" 
+      width={{ base: "100%", md: "100%" }}
+      height={{ base: "100%", md: "100%" }}
+      maxWidth="100%"
+      maxHeight="100%"
       position="relative"
-      borderRadius="24px 0 0 24px"
+      borderRadius={{ base: "16px 16px 0 0", md: "24px 0 0 24px" }}
       overflow="hidden"
-      maxWidth="95%"
-      maxHeight="95%"
       aspectRatio="16/9"
     >
       {isMobile ? (
         <img
           src="/hero-video-clarivue.gif"
           alt="Clarivue AI Interview Co-Pilot Demo"
-          style={mediaStyle}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            borderRadius: '16px 16px 0 0',
+            opacity: videoLoaded ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out'
+          }}
           onLoad={handleImageLoad}
           onError={handleImageError}
           loading="eager"
@@ -421,7 +427,15 @@ const VideoComponent = memo(() => {
           muted
           playsInline
           preload="auto"
-          style={mediaStyle}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            borderRadius: '24px 0 0 24px',
+            opacity: videoLoaded ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out'
+          }}
           poster=""
           crossOrigin="anonymous"
         >
@@ -432,7 +446,22 @@ const VideoComponent = memo(() => {
       )}
       
       {/* Loading indicator */}
-      <Box style={loadingStyle}>
+      <Box 
+        position="absolute"
+        top={0}
+        left={0}
+        width="100%"
+        height="100%"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        backgroundColor="rgba(16, 118, 209, 0.1)"
+        backdropFilter="blur(10px)"
+        opacity={videoLoaded ? 0 : 1}
+        transition="opacity 0.3s ease-in-out"
+        pointerEvents={videoLoaded ? 'none' : 'auto'}
+        borderRadius={{ base: "16px 16px 0 0", md: "24px 0 0 24px" }}
+      >
         <motion.div
           animate={{
             rotate: 360,
@@ -469,6 +498,19 @@ const ClarivueSimulatedPane = memo(() => {
   const [currentCue, setCurrentCue] = useState(0);
   const [showCursor, setShowCursor] = useState(false);
   const [cursorPosition, setCursorPosition] = useState<'questions' | 'cues'>('questions');
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Enhanced mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Cycle through tones (slowed down by 1 second)
   useEffect(() => {
@@ -489,27 +531,37 @@ const ClarivueSimulatedPane = memo(() => {
   // Cycle through questions/cues with simulated clicking (slowed down by 1 second)
   useEffect(() => {
     const interval = setInterval(() => {
-      // Show cursor animation 500ms before switching
-      setTimeout(() => {
-        const nextTab = activeTab === 'questions' ? 'cues' : 'questions';
-        setCursorPosition(nextTab);
-        setShowCursor(true);
-        
-        // Hide cursor and switch tab after 300ms
+      // Show cursor animation 500ms before switching (only on desktop)
+      if (!isMobile) {
         setTimeout(() => {
-          setShowCursor(false);
-          setActiveTab(nextTab);
-          if (nextTab === 'questions') {
-            setCurrentQuestion((prev) => (prev + 1) % QUESTIONS.length);
-          } else {
-            setCurrentCue((prev) => (prev + 1) % CUES.length);
-          }
-        }, 300);
-      }, 4500); // Show cursor 500ms before the 5000ms interval completes
-      
+          const nextTab = activeTab === 'questions' ? 'cues' : 'questions';
+          setCursorPosition(nextTab);
+          setShowCursor(true);
+          
+          // Hide cursor and switch tab after 300ms
+          setTimeout(() => {
+            setShowCursor(false);
+            setActiveTab(nextTab);
+            if (nextTab === 'questions') {
+              setCurrentQuestion((prev) => (prev + 1) % QUESTIONS.length);
+    } else {
+              setCurrentCue((prev) => (prev + 1) % CUES.length);
+            }
+          }, 300);
+        }, 4500); // Show cursor 500ms before the 5000ms interval completes
+    } else {
+        // On mobile, just switch tabs without cursor animation
+        const nextTab = activeTab === 'questions' ? 'cues' : 'questions';
+        setActiveTab(nextTab);
+        if (nextTab === 'questions') {
+          setCurrentQuestion((prev) => (prev + 1) % QUESTIONS.length);
+    } else {
+          setCurrentCue((prev) => (prev + 1) % CUES.length);
+        }
+      }
     }, 5000);
     return () => clearInterval(interval);
-  }, [activeTab]);
+  }, [activeTab, isMobile]);
 
   // Get tone percentage (simulated)
   const getTonePercentage = () => {
@@ -534,29 +586,31 @@ const ClarivueSimulatedPane = memo(() => {
     <Box
       width="100%"
       height="100%"
-      background="white"
-      borderRadius="0 24px 24px 0"
+      background="linear-gradient(to bottom, #f2f9ff, #ffffff)"
+      borderRadius={{ base: "0 0 16px 16px", md: "0 24px 24px 0" }}
       position="relative"
       overflow="hidden"
-      p={{ base: 4, md: 5, lg: 6 }}
+      p={{ base: 4, sm: 5, md: 6, lg: 8 }}
       display="flex"
       flexDirection="column"
-      border="1px solid #E5E7EB"
+      borderLeft={{ base: "none", md: "4px solid #5f9df7" }}
+      borderTop={{ base: "4px solid #5f9df7", md: "none" }}
+      boxShadow="0px 4px 12px rgba(0,0,0,0.05)"
     >
       {/* Header */}
-      <Box mb={6}>
-        <Flex alignItems="center" justifyContent="space-between" mb={2}>
+      <Box mb={{ base: 3, md: 6 }}>
+        <Flex alignItems="center" justifyContent="space-between" mb={3}>
           <img
             src="/logo-transparent.png"
             alt="Clarivue"
             style={{
-              height: '24px',
+              height: isMobile ? '24px' : '28px',
               objectFit: 'contain'
             }}
           />
           <Box
-            width="8px"
-            height="8px"
+            width={{ base: "6px", md: "8px" }}
+            height={{ base: "6px", md: "8px" }}
             borderRadius="50%"
             bg="#10B981"
           />
@@ -564,12 +618,12 @@ const ClarivueSimulatedPane = memo(() => {
       </Box>
 
       {/* Tone Analysis Circle */}
-      <Box mb={6} textAlign="center">
-        <Box position="relative" display="inline-block" mb={4}>
-          <motion.div
-            style={{
-              width: '80px',
-              height: '80px',
+      <Box mb={{ base: 4, md: 6 }} textAlign="center">
+        <Box position="relative" display="inline-block" mb={{ base: 2, md: 4 }}>
+          <motion.div 
+            style={{ 
+              width: isMobile ? '80px' : '100px',
+              height: isMobile ? '80px' : '100px',
               borderRadius: '50%',
               background: `conic-gradient(${TONE_COLORS[TONE_STATES[currentTone]]} ${getTonePercentage() * 3.6}deg, #F3F4F6 0deg)`,
               display: 'flex',
@@ -579,8 +633,8 @@ const ClarivueSimulatedPane = memo(() => {
             }}
           >
             <Box
-              width="60px"
-              height="60px"
+              width={isMobile ? "64px" : "80px"}
+              height={isMobile ? "64px" : "80px"}
               borderRadius="50%"
               bg="white"
               display="flex"
@@ -589,7 +643,7 @@ const ClarivueSimulatedPane = memo(() => {
               flexDirection="column"
             >
               <Text
-                fontSize="18px"
+                fontSize={{ base: "16px", md: "20px" }}
                 fontWeight="700"
                 color={TONE_COLORS[TONE_STATES[currentTone]]}
                 fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
@@ -601,7 +655,7 @@ const ClarivueSimulatedPane = memo(() => {
         </Box>
         
         <AnimatePresence mode="wait">
-          <motion.div
+          <motion.div 
             key={currentTone}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -609,34 +663,37 @@ const ClarivueSimulatedPane = memo(() => {
             transition={{ duration: 0.5 }}
           >
             <Text
-              fontSize={{ base: "16px", md: "18px" }}
+              fontSize={{ base: "14px", sm: "16px", md: "20px" }}
               fontWeight="600"
               color={TONE_COLORS[TONE_STATES[currentTone]]}
               fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
               mb={1}
+              lineHeight="1.2"
             >
               {TONE_STATES[currentTone]}
             </Text>
             <Text
-              fontSize={{ base: "12px", md: "13px" }}
+              fontSize={{ base: "12px", sm: "13px", md: "15px" }}
               color="#6B7280"
               fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+              lineHeight="1.3"
+              px={{ base: 2, md: 0 }}
             >
               {getToneDescription()}
             </Text>
           </motion.div>
         </AnimatePresence>
 
-        <Flex alignItems="center" justifyContent="center" mt={3}>
+        <Flex alignItems="center" justifyContent="center" mt={{ base: 2, md: 3 }}>
           <Box
-            width="8px"
-            height="8px"
+            width={{ base: "6px", md: "8px" }}
+            height={{ base: "6px", md: "8px" }}
             borderRadius="50%"
             bg="#EF4444"
-            mr={2}
+            mr={{ base: 1, md: 2 }}
           />
           <Text
-            fontSize={{ base: "10px", md: "11px" }}
+            fontSize={{ base: "10px", sm: "11px", md: "12px" }}
             color="#6B7280"
             fontWeight="500"
             textTransform="uppercase"
@@ -649,34 +706,38 @@ const ClarivueSimulatedPane = memo(() => {
       </Box>
 
       {/* Tabs */}
-      <Box mb={4} position="relative">
-        <Flex gap={1}>
+      <Box mb={{ base: 3, md: 4 }} position="relative">
+        <Flex gap={{ base: 1, md: 1 }} justify="space-between">
           <Box
             as="button"
             onClick={() => setActiveTab('questions')}
-            px={3}
-            py={2}
+            px={{ base: 2, sm: 3, md: 4 }}
+            py={{ base: 1.5, md: 2.5 }}
             borderRadius="8px"
-            bg={activeTab === 'questions' ? '#3B82F6' : 'transparent'}
-            color={activeTab === 'questions' ? 'white' : '#6B7280'}
-            fontSize={{ base: "12px", md: "13px" }}
+            bg={activeTab === 'questions' ? '#5f9df7' : 'rgba(95, 157, 247, 0.1)'}
+            color={activeTab === 'questions' ? 'white' : '#5f9df7'}
+            fontSize={{ base: "12px", sm: "14px", md: "15px" }}
             fontWeight="600"
             fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
             position="relative"
             transition="all 0.2s ease"
-            _hover={{ bg: activeTab === 'questions' ? '#2563EB' : '#F3F4F6' }}
+            _hover={{ bg: activeTab === 'questions' ? '#4a8ae8' : 'rgba(95, 157, 247, 0.15)' }}
+            _active={{ transform: "scale(0.98)" }}
             display="flex"
             alignItems="center"
-            gap={1}
+            gap={{ base: 1, md: 1.5 }}
+            minH={{ base: "32px", md: "auto" }}
+            flex="1"
+            justifyContent="center"
           >
-            Questions
+            {isMobile ? "Questions" : "Questions"}
             <Box
-              width="18px"
-              height="18px"
+              width={{ base: "16px", md: "20px" }}
+              height={{ base: "16px", md: "20px" }}
               borderRadius="50%"
               bg={activeTab === 'questions' ? 'rgba(255,255,255,0.3)' : '#EF4444'}
               color={activeTab === 'questions' ? 'white' : 'white'}
-              fontSize="10px"
+              fontSize={{ base: "8px", md: "11px" }}
               fontWeight="700"
               display="flex"
               alignItems="center"
@@ -689,29 +750,33 @@ const ClarivueSimulatedPane = memo(() => {
           <Box
             as="button"
             onClick={() => setActiveTab('cues')}
-            px={3}
-            py={2}
+            px={{ base: 2, sm: 3, md: 4 }}
+            py={{ base: 1.5, md: 2.5 }}
             borderRadius="8px"
-            bg={activeTab === 'cues' ? '#3B82F6' : 'transparent'}
-            color={activeTab === 'cues' ? 'white' : '#6B7280'}
-            fontSize={{ base: "12px", md: "13px" }}
+            bg={activeTab === 'cues' ? '#5f9df7' : 'rgba(95, 157, 247, 0.1)'}
+            color={activeTab === 'cues' ? 'white' : '#5f9df7'}
+            fontSize={{ base: "12px", sm: "14px", md: "15px" }}
             fontWeight="600"
             fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
             position="relative"
             transition="all 0.2s ease"
-            _hover={{ bg: activeTab === 'cues' ? '#2563EB' : '#F3F4F6' }}
+            _hover={{ bg: activeTab === 'cues' ? '#4a8ae8' : 'rgba(95, 157, 247, 0.15)' }}
+            _active={{ transform: "scale(0.98)" }}
             display="flex"
             alignItems="center"
-            gap={1}
+            gap={{ base: 1, md: 1.5 }}
+            minH={{ base: "32px", md: "auto" }}
+            flex="1"
+            justifyContent="center"
           >
-            Cues
+            {isMobile ? "Cues" : "Cues"}
             <Box
-              width="18px"
-              height="18px"
+              width={{ base: "16px", md: "20px" }}
+              height={{ base: "16px", md: "20px" }}
               borderRadius="50%"
               bg={activeTab === 'cues' ? 'rgba(255,255,255,0.3)' : '#EF4444'}
               color={activeTab === 'cues' ? 'white' : 'white'}
-              fontSize="10px"
+              fontSize={{ base: "8px", md: "11px" }}
               fontWeight="700"
               display="flex"
               alignItems="center"
@@ -722,15 +787,15 @@ const ClarivueSimulatedPane = memo(() => {
           </Box>
         </Flex>
 
-        {/* Simulated Cursor Animation */}
-        <AnimatePresence>
-          {showCursor && (
-            <motion.div
+        {/* Simulated Cursor Animation - Desktop Only */}
+            <AnimatePresence>
+          {showCursor && !isMobile && (
+                <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
+                  animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.5 }}
               transition={{ duration: 0.2 }}
-              style={{
+                  style={{
                 position: 'absolute',
                 top: cursorPosition === 'questions' ? '8px' : '8px',
                 left: cursorPosition === 'questions' ? '30px' : '90px',
@@ -738,10 +803,10 @@ const ClarivueSimulatedPane = memo(() => {
                 fontSize: '16px',
                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
                 pointerEvents: 'none'
-              }}
-            >
-              <motion.div
-                animate={{ 
+                  }}
+                >
+                  <motion.div
+                    animate={{ 
                   scale: [1, 0.9, 1],
                   rotate: [0, -5, 0]
                 }}
@@ -749,34 +814,37 @@ const ClarivueSimulatedPane = memo(() => {
               >
                 🖱️
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                </motion.div>
+              )}
+            </AnimatePresence>
       </Box>
 
       {/* Smart suggestions label */}
       <Text
-        fontSize={{ base: "13px", md: "14px" }}
+        fontSize={{ base: "12px", sm: "14px", md: "16px" }}
         color="#6B7280"
         fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
-        mb={3}
+        mb={{ base: 2, md: 3 }}
+        lineHeight="1.3"
+        px={{ base: 1, md: 0 }}
       >
-        Smart {activeTab === 'questions' ? 'questions' : 'cues'} for your interview
+        {isMobile ? "Smart suggestions for your interview" : `Smart ${activeTab === 'questions' ? 'questions' : 'cues'} for your interview`}
       </Text>
 
       {/* Content Card */}
       <Box flex="1">
         <Box
-          background="#F9FAFB"
+          background="rgba(255, 255, 255, 0.8)"
           borderRadius="12px"
-          border="1px solid #E5E7EB"
-          p={4}
-          minHeight="120px"
+          border="1px solid rgba(95, 157, 247, 0.15)"
+          p={{ base: 3, sm: 4, md: 5 }}
+          minHeight={{ base: "100px", sm: "120px", md: "140px" }}
           position="relative"
+          boxShadow="0px 2px 8px rgba(0,0,0,0.04)"
         >
           <AnimatePresence mode="wait">
             {activeTab === 'questions' ? (
-              <motion.div
+              <motion.div 
                 key={`question-${currentQuestion}`}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -784,35 +852,36 @@ const ClarivueSimulatedPane = memo(() => {
                 transition={{ duration: 0.5 }}
               >
                 <Text
-                  fontSize={{ base: "13px", md: "14px" }}
+                  fontSize={{ base: "14px", sm: "16px", md: "18px" }}
                   color="#1F2937"
                   fontWeight="500"
-                  lineHeight="1.5"
+                  lineHeight="1.4"
                   fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
-                  mb={3}
+                  mb={{ base: 3, md: 4 }}
+                  pr={{ base: 6, md: 8 }}
                 >
                   {QUESTIONS[currentQuestion]}
                 </Text>
-                <Flex gap={2} flexWrap="wrap">
+                <Flex gap={{ base: 1.5, md: 2 }} flexWrap="wrap">
                   <Box
-                    px={2}
-                    py={1}
+                    px={{ base: 2, md: 3 }}
+                    py={{ base: 1, md: 1.5 }}
                     borderRadius="6px"
                     bg="#FEE2E2"
                     color="#DC2626"
-                    fontSize="10px"
+                    fontSize={{ base: "10px", md: "12px" }}
                     fontWeight="500"
                     fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
                   >
                     high
                   </Box>
                   <Box
-                    px={2}
-                    py={1}
+                    px={{ base: 2, md: 3 }}
+                    py={{ base: 1, md: 1.5 }}
                     borderRadius="6px"
                     bg="#F3F4F6"
                     color="#4B5563"
-                    fontSize="10px"
+                    fontSize={{ base: "10px", md: "12px" }}
                     fontWeight="500"
                     fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
                   >
@@ -821,7 +890,7 @@ const ClarivueSimulatedPane = memo(() => {
                 </Flex>
               </motion.div>
             ) : (
-              <motion.div
+              <motion.div 
                 key={`cue-${currentCue}`}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -829,35 +898,36 @@ const ClarivueSimulatedPane = memo(() => {
                 transition={{ duration: 0.5 }}
               >
                 <Text
-                  fontSize={{ base: "13px", md: "14px" }}
+                  fontSize={{ base: "14px", sm: "16px", md: "18px" }}
                   color="#1F2937"
                   fontWeight="500"
-                  lineHeight="1.5"
+                  lineHeight="1.4"
                   fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
-                  mb={3}
+                  mb={{ base: 3, md: 4 }}
+                  pr={{ base: 6, md: 8 }}
                 >
                   {CUES[currentCue]}
                 </Text>
-                <Flex gap={2} flexWrap="wrap">
+                <Flex gap={{ base: 1.5, md: 2 }} flexWrap="wrap">
                   <Box
-                    px={2}
-                    py={1}
+                    px={{ base: 2, md: 3 }}
+                    py={{ base: 1, md: 1.5 }}
                     borderRadius="6px"
                     bg="#DBEAFE"
                     color="#2563EB"
-                    fontSize="10px"
+                    fontSize={{ base: "10px", md: "12px" }}
                     fontWeight="500"
                     fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
                   >
                     suggestion
                   </Box>
                   <Box
-                    px={2}
-                    py={1}
+                    px={{ base: 2, md: 3 }}
+                    py={{ base: 1, md: 1.5 }}
                     borderRadius="6px"
                     bg="#F3F4F6"
                     color="#4B5563"
-                    fontSize="10px"
+                    fontSize={{ base: "10px", md: "12px" }}
                     fontWeight="500"
                     fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
                   >
@@ -871,23 +941,28 @@ const ClarivueSimulatedPane = memo(() => {
           {/* Action buttons in top right */}
           <Flex 
             position="absolute" 
-            top="12px" 
-            right="12px" 
-            gap={2}
+            top={{ base: "12px", md: "16px" }}
+            right={{ base: "12px", md: "16px" }}
+            gap={{ base: 1.5, md: 2 }}
           >
             <Box
-              width="24px"
-              height="24px"
+              width={{ base: "24px", md: "28px" }}
+              height={{ base: "24px", md: "28px" }}
               borderRadius="6px"
-              border="1px solid #E5E7EB"
-              bg="white"
+              border="1px solid rgba(95, 157, 247, 0.2)"
+              bg="rgba(255, 255, 255, 0.9)"
               display="flex"
               alignItems="center"
               justifyContent="center"
               cursor="pointer"
-              _hover={{ bg: "#F9FAFB" }}
+              _hover={{ bg: "rgba(95, 157, 247, 0.05)" }}
+              _active={{ transform: "scale(0.95)" }}
+              transition="all 0.2s ease"
+              minW={{ base: "24px", md: "28px" }}
+              minH={{ base: "24px", md: "28px" }}
+              boxShadow="0px 1px 4px rgba(0,0,0,0.03)"
             >
-              <Text fontSize="12px">⎘</Text>
+              <Text fontSize={{ base: "12px", md: "14px" }} color="#5f9df7">⎘</Text>
             </Box>
           </Flex>
         </Box>
@@ -900,51 +975,90 @@ ClarivueSimulatedPane.displayName = 'ClarivueSimulatedPane';
 
 // New Media Section that splits into video (left) and UI pane (right)
 const MediaSection = memo(() => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Enhanced mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const containerStyle = useMemo(() => ({
-    w: { base: "95vw", sm: "90vw", md: "85vw", lg: "80vw", xl: "75vw", "2xl": "70vw" },
-    maxW: { base: "450px", sm: "600px", md: "900px", lg: "1200px", xl: "1400px", "2xl": "1600px" },
+    w: { base: "95vw", sm: "95vw", md: "85vw", lg: "80vw", xl: "75vw", "2xl": "70vw" },
+    maxW: { base: "100%", sm: "600px", md: "900px", lg: "1200px", xl: "1400px", "2xl": "1600px" },
     minW: { base: "320px", md: "600px" },
     mx: "auto",
     position: "relative" as const,
-    borderRadius: { base: "24px", md: "24px" },
+    borderRadius: { base: "16px", sm: "16px", md: "24px" },
     overflow: "hidden",
-    boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)",
+    boxShadow: { 
+      base: "0 10px 25px -5px rgba(59, 130, 246, 0.15)", 
+      sm: "0 10px 25px -5px rgba(59, 130, 246, 0.15)", 
+      md: "0 25px 50px -12px rgba(59, 130, 246, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)"
+    },
     zIndex: 2,
     height: "auto",
     transition: "all 0.3s ease-in-out",
     _hover: {
-      transform: "scale(1.02)",
-      boxShadow: "0 35px 60px -12px rgba(59, 130, 246, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1)"
+      transform: { base: "none", md: "scale(1.02)" },
+      boxShadow: { 
+        base: "0 15px 35px -5px rgba(59, 130, 246, 0.2)", 
+        md: "0 35px 60px -12px rgba(59, 130, 246, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1)"
+      }
     }
+  }), []);
+
+  const videoContainerStyle = useMemo(() => ({
+    position: "relative" as const,
+    w: "100%",
+    display: "flex",
+    justifyContent: "center",
+    px: { base: 2, sm: 3, md: 6 },
+    zIndex: 3,
+    mt: { base: 6, sm: 8, md: 12, lg: 14 },
+    mb: { base: 2, sm: 4, md: 8 }
   }), []);
 
   return (
     <Box {...containerStyle}>
-      <Flex width="100%" height="100%">
-        {/* Left side - Video (75%) */}
+      <Flex 
+        width="100%" 
+        height="100%" 
+        direction={{ base: "column", md: "row" }}
+        minH={{ base: "auto", md: "400px" }}
+      >
+        {/* Video Section - Full width on mobile, 75% on desktop */}
         <Box 
-          width="75%" 
-          height="100%"
+          width={{ base: "100%", md: "75%" }}
+          height={{ base: "280px", sm: "320px", md: "100%" }}
           overflow="hidden"
           position="relative"
-          maxWidth="75%"
           flexShrink={0}
-          pr={{ base: 1, md: 2 }}
+          pr={{ base: 0, md: 1 }}
           display="flex"
           alignItems="center"
-          justifyContent="flex-end"
+          justifyContent="center"
+          p={{ base: 0, md: 0 }}
         >
           <VideoComponent />
         </Box>
         
-        {/* Right side - Simulated UI Pane (25%) */}
+        {/* UI Pane Section - Full width on mobile, 25% on desktop */}
         <Box 
-          width="25%" 
-          height="100%"
+          width={{ base: "100%", md: "25%" }}
+          height={{ base: "auto", md: "100%" }}
+          minH={{ base: "300px", sm: "320px", md: "auto" }}
           overflow="hidden"
           position="relative"
-          maxWidth="25%"
           flexShrink={0}
+          bg="white"
+          borderRadius={{ base: "0 0 16px 16px", md: "0 24px 24px 0" }}
         >
           <ClarivueSimulatedPane />
         </Box>
@@ -1032,10 +1146,10 @@ export const HeroSection = memo(() => {
     w: "100%",
     display: "flex",
     justifyContent: "center",
-    px: { base: 4, md: 6 },
+    px: { base: 2, sm: 3, md: 6 },
     zIndex: 3,
-    mt: { base: 8, sm: 10, md: 12, lg: 14 },
-    mb: { base: 4, sm: 6, md: 8 }
+    mt: { base: 6, sm: 8, md: 12, lg: 14 },
+    mb: { base: 2, sm: 4, md: 8 }
   }), []);
 
   return (
@@ -1064,17 +1178,7 @@ export const HeroSection = memo(() => {
               mb={3}
               fontWeight="600"
             >
-              Real-time notes. Live follow-up questions. Instant scoring.
-            </Text>
-            <Text
-              fontSize={{ base: "16px", sm: "18px", md: "20px" }}
-              lineHeight={{ base: "24px", sm: "28px", md: "32px" }}
-              color="whiteAlpha.900"
-              maxW="815px"
-              mx="auto"
-              px={{ base: 2, sm: 0 }}
-            >
-              Purpose-built for recruiting, trusted by modern hiring teams.
+              Ask smarter questions, spot hidden signals, and make faster hiring decisions with real-time cues, tone detection, instant scoring, and automated notes.
             </Text>
           </Box>
 
